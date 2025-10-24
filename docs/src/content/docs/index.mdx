@@ -1,0 +1,75 @@
+---
+title: Preschool
+description: A minimal, extensible CSS framework and web component library
+template: splash
+hero:
+  title: Preschool
+  tagline: A minimal, extensible CSS framework and web component library. Built to be customized, not followed.
+  actions:
+    - text: Get Started
+      link: /introduction/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/yourusername/preschool
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components'
+
+## Why Preschool?
+
+<CardGrid>
+  <Card title="Minimal & Unopinionated" icon="pencil">
+    Only the essentials. No bloat, no opinions. Just a solid foundation to build upon.
+  </Card>
+  <Card title="Framework Agnostic" icon="puzzle">
+    Web components work everywhere - React, Vue, Astro, WordPress, or plain HTML.
+  </Card>
+  <Card title="Flexible Theming" icon="setting">
+    Apply different color schemes globally or scope them to individual sections.
+  </Card>
+  <Card title="Fluid Spacing" icon="bars">
+    Built-in fluid spacing using the Utopia methodology for responsive layouts.
+  </Card>
+</CardGrid>
+
+## Quick Start
+
+Install via npm:
+
+```bash
+npm install preschool
+```
+
+Import and use:
+
+```js
+import 'preschool'
+import 'preschool/styles'
+```
+
+```html
+<button class="btn" data-variant="outline">
+  Get Started
+</button>
+
+<ps-dropdown>
+  <button slot="trigger" class="btn">Menu</button>
+  <div slot="content">
+    <a href="#">Option 1</a>
+    <a href="#">Option 2</a>
+  </div>
+</ps-dropdown>
+```
+
+## Philosophy
+
+Preschool is designed to be **extended, not used as-is**:
+
+- Start with minimal styles
+- Customize design tokens for your brand
+- Add only the components you need
+- Fork it if you want complete control
+
+Think of it as a starter kit, not a finished product.

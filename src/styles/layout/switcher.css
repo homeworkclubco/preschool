@@ -1,0 +1,72 @@
+@layer base {
+	/**
+       * SWITCHER LAYOUT
+       * 
+       * A layout that switches between a horizontal and vertical configuration at a given,
+       * container-based breakpoint. Useful for responsive design without media queries.
+       * 
+       * When elements fit comfortably in the horizontal space (each wider than the threshold),
+       * they arrange horizontally. When space is constrained, they stack vertically.
+       * 
+       * Default behavior:
+       * - Switches at 250px per element threshold
+       * - Equal distribution of space when horizontal
+       * - Stacks when elements would be narrower than threshold
+       * 
+       * Usage:
+       *   <div class="switcher switcher-threshold-300 switcher-space-l">
+       *     <div>Item 1</div>
+       *     <div>Item 2</div>
+       *     <div>Item 3</div>
+       *   </div>
+       * 
+       * Custom properties:
+       * - --switcher-threshold: Width threshold for switching (default: 250px)
+       * - --switcher-space: Gap between elements (default: var(--spacing-sm))
+       * - --switcher-limit: Maximum items per row (default: 4)
+       * 
+       * Modifiers:
+       * - switcher-threshold-*: Sets switching threshold
+       * - switcher-space-*: Controls gap between elements  
+       * - switcher-limit-*: Limits items per horizontal row
+       */
+	.switcher {
+		--switcher-threshold: 250px;
+		--switcher-space: var(--spacing-sm);
+		--switcher-limit: 4;
+
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--switcher-space);
+	}
+
+	.switcher > * {
+		flex-grow: 1;
+		flex-basis: calc((var(--switcher-threshold) - 100%) * 999);
+	}
+
+	.switcher > :nth-last-child(n + var(--switcher-limit)) {
+		flex-basis: 100%;
+	}
+}
+
+@utility switcher-threshold-* {
+	--switcher-threshold: --value(--size-*);
+}
+
+@utility switcher-space-* {
+	--switcher-space: --value(--spacing-*);
+}
+
+@utility switcher-limit-2 {
+	--switcher-limit: 2;
+}
+@utility switcher-limit-3 {
+	--switcher-limit: 3;
+}
+@utility switcher-limit-4 {
+	--switcher-limit: 4;
+}
+@utility switcher-limit-5 {
+	--switcher-limit: 5;
+}

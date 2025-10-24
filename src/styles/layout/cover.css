@@ -1,0 +1,65 @@
+@layer base {
+	/**
+     * COVER LAYOUT
+     * 
+     * A layout that centers a principal element vertically within a container, with 
+     * optional header and footer elements that stick to the top and bottom. The 
+     * centered element takes up only the space it needs.
+     * 
+     * Default behavior:
+     * - Centers the middle element vertically
+     * - Header/footer elements stick to edges
+     * - Minimum height of 100vh
+     * - Padding around the edges
+     * 
+     * Usage:
+     *   <div class="cover cover-min-height-screen cover-space-xl">
+     *     <header>Header (optional)</header>
+     *     <main class="cover-centered">Main content</main>
+     *     <footer>Footer (optional)</footer>
+     *   </div>
+     * 
+     * Custom properties:
+     * - --cover-min-height: Minimum height of container (default: 100vh)
+     * - --cover-space: Padding around edges (default: var(--spacing-sm))
+     * 
+     * Modifiers:
+     * - cover-min-height-*: Sets minimum height
+     * - cover-space-*: Controls padding around edges
+     * - cover-centered: Apply to the element that should be centered
+     */
+	.cover {
+		--cover-min-height: 100vh;
+		--cover-space: var(--spacing-sm);
+
+		display: flex;
+		flex-direction: column;
+		min-height: var(--cover-min-height);
+		padding: var(--cover-space);
+	}
+
+	.cover > .cover-centered {
+		margin-top: auto;
+		margin-bottom: auto;
+	}
+}
+
+@utility cover-min-height-* {
+	--cover-min-height: --value(--size-*);
+}
+
+@utility cover-space-* {
+	--cover-space: --value(--spacing-*);
+}
+
+@utility cover-min-height-screen {
+	--cover-min-height: 100vh;
+}
+@utility cover-min-height-full {
+	--cover-min-height: 100%;
+}
+
+@utility cover-centered {
+	margin-top: auto;
+	margin-bottom: auto;
+}

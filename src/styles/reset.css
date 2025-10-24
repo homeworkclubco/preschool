@@ -1,0 +1,91 @@
+/*
+ * Base Styles
+ *
+ * Minimal resets and defaults
+ */
+
+@layer reset {
+  /* Use a more-intuitive box-sizing model */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  /* Enable keyword animations */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      interpolate-size: allow-keywords;
+    }
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    font-family: var(--font-family-heading, var(--font-family));
+    line-height: var(--line-height-tight);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  body {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    line-height: var(--line-height-normal);
+    -webkit-font-smoothing: antialiased;
+    tab-size: 2;
+    hanging-punctuation: first allow-end last;
+    word-break: break-word;
+    overflow-x: clip;
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+  a {
+    color: currentColor;
+
+    &:not([href]) {
+      cursor: not-allowed;
+    }
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: rgb(var(--color-text-secondary));
+  }
+
+  ::selection {
+    color: var(--color-bg);
+    background-color: rgb(var(--color-text));
+  }
+}

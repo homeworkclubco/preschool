@@ -1,0 +1,11 @@
+/*
+ * Preschool Framework Styles
+ *
+ * Main entry point for all CSS
+ */
+
+@layer reset, base, layout, components, utilities;
+
+@import-glob "./{tokens,reset,utilities}.css";
+@import-glob "./layout/*.css" layer(layout);
+@import-glob "./components/*.css" layer(components);

@@ -1,0 +1,46 @@
+/* --------------------------------------
+ * Container
+ * -------------------------------------- */
+@layer base {
+	.container {
+		--container-padding: var(--spacing-md-lg);
+		--container-max-width: 79rem;
+
+		max-width: var(--container-max-width);
+		margin-inline: auto;
+		padding-inline: var(--container-padding);
+	}
+}
+
+@utility container-narrow {
+	--container-max-width: 640px;
+}
+
+@utility container-prose {
+	--container-max-width: 65ch;
+}
+
+@utility container-wide {
+	--container-max-width: 1400px;
+}
+
+@utility container-full {
+	--container-max-width: none;
+}
+
+.container-full-bleed {
+	padding-inline: 0;
+	max-width: unset;
+	display: grid;
+	grid-template-columns:
+		minmax(0, 1fr) repeat(
+			12,
+			minmax(0, calc(var(--container-max-width) / 12))
+		)
+		minmax(0, 1fr);
+}
+
+/* Padding modifiers using Tailwind's spacing scale */
+@utility container-padding-* {
+	--container-padding: *;
+}

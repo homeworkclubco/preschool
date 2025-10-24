@@ -1,0 +1,59 @@
+/* --------------------------------------
+ * Stack
+ * 
+ * A layout that arranges elements vertically with optional spacing and 
+ * splitting functionality. The base stack only applies spacing to direct 
+ * children, while the recursive variant applies spacing to all nested children.
+ * 
+ * Default behavior:
+ * - Only direct children get spacing
+ * - No splitting functionality
+ * 
+ * Usage:
+ *   <div class="stack stack-space-l">
+ *     <div>Item 1</div>
+ *     <div>Item 2</div>
+ *     <div>Item 3</div>
+ *   </div>
+ * 
+ * Custom properties:
+ * - --stack-space: Gap between elements (default: var(--spacing-sm))
+ * - --stack-split: Which child gets extra space (default: null)
+ * 
+ * Modifiers:
+ * - stack-space-*: Sets spacing between elements
+ * - stack-split-*: Sets which child gets extra space
+ * - stack-recursive: Applies spacing to all nested children
+ * -------------------------------------- */
+
+/* Base stack - only direct children get spacing */
+.stack {
+	--stack-space: var(--spacing-sm);
+	--stack-split: null;
+}
+
+.stack > * {
+	margin-block: 0;
+}
+
+.stack > * + * {
+	margin-block-start: var(--stack-space);
+}
+/* Split functionality - nth-child gets extra space */
+.stack[style*="--stack-split"] > :nth-child(var(--stack-split)) {
+	margin-block-end: auto;
+}
+
+.stack-recursive * {
+	--stack-space: inherit;
+}
+
+/* Spacing modifiers */
+@utility stack-space-* {
+	--stack-space: --value(--spacing-*);
+}
+
+/* Recursive stack */
+@utility stack-recursive {
+	--stack-space: inherit;
+}

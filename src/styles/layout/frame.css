@@ -1,0 +1,69 @@
+@layer base {
+	/**
+     * FRAME LAYOUT
+     * 
+     * A layout that enforces specific aspect ratios for content, typically images
+     * or video. Content is cropped to fit the frame using object-fit.
+     * 
+     * Usage:
+     *   <div class="frame frame-ratio-16-9">
+     *     <img src="image.jpg" alt="Description">
+     *   </div>
+     * 
+     * Custom properties:
+     * - --frame-ratio: Aspect ratio as width/height (default: 4/3)
+     * 
+     * Modifiers:
+     * - frame-ratio-*: Sets aspect ratio
+     */
+	.frame {
+		--frame-ratio: 4/3;
+
+		aspect-ratio: var(--frame-ratio);
+		overflow: hidden;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.frame > * {
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+		display: block;
+	}
+}
+
+.frame-ratio-unset {
+	--frame-ratio: unset;
+	position: relative;
+	height: 100%;
+
+	> * {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+}
+
+.frame-ratio-16-9 {
+	--frame-ratio: 16/9;
+}
+.frame-ratio-4-3 {
+	--frame-ratio: 4/3;
+}
+.frame-ratio-1-1 {
+	--frame-ratio: 1/1;
+}
+.frame-ratio-square {
+	--frame-ratio: 1/1;
+}
+.frame-ratio-3-2 {
+	--frame-ratio: 3/2;
+}
+.frame-ratio-21-9 {
+	--frame-ratio: 21/9;
+}
+.frame-ratio-2-1 {
+	--frame-ratio: 2/1;
+}

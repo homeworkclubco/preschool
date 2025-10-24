@@ -1,0 +1,233 @@
+---
+title: Dropdown
+description: Interactive dropdown menu web component built with Lit
+---
+
+import Iframe from "../../../components/Iframe.astro"
+import Example from "../../../components/Example.astro"
+
+A framework-agnostic dropdown menu component for interactive menus.
+
+## Basic Usage
+
+```html
+<ps-dropdown>
+  <button slot="trigger" class="btn">Open Menu</button>
+  <div slot="content">
+    <a href="#">Option 1</a>
+    <a href="#">Option 2</a>
+    <a href="#">Option 3</a>
+  </div>
+</ps-dropdown>
+```
+
+<Iframe height="lg">
+  <ps-dropdown>
+    <button slot="trigger" class="btn">
+      Open Menu
+    </button>
+    <div
+      slot="content"
+      style="display: flex; flex-direction: column; gap: 0.5rem;"
+    >
+      <a
+        href="#"
+        style="padding: 0.5rem; text-decoration: none; border-radius: 0.25rem;"
+      >
+        Option 1
+      </a>
+      <a
+        href="#"
+        style="padding: 0.5rem; text-decoration: none; border-radius: 0.25rem;"
+      >
+        Option 2
+      </a>
+      <a
+        href="#"
+        style="padding: 0.5rem; text-decoration: none; border-radius: 0.25rem;"
+      >
+        Option 3
+      </a>
+    </div>
+  </ps-dropdown>
+</Iframe>
+
+## How It Works
+
+The dropdown uses two slots:
+
+- `trigger` - The button or element that opens the dropdown
+- `content` - The menu content
+
+## Features
+
+- **Click outside to close** - Automatically closes when clicking outside
+- **Escape key support** - Press Escape to close
+- **Toggle behavior** - Click trigger again to close
+- **Custom events** - Dispatches `ps-dropdown-open` and `ps-dropdown-close` events
+- **Framework-agnostic** - Works with any framework or vanilla HTML
+
+## Styling the Content
+
+Style the content slot however you need:
+
+```html
+<ps-dropdown>
+  <button slot="trigger" class="btn" data-variant="outline">
+    Account Menu
+  </button>
+  <div
+    slot="content"
+    style="display: flex; flex-direction: column; gap: 0.5rem;"
+  >
+    <a href="/profile" style="padding: 0.5rem; text-decoration: none;">
+      Profile
+    </a>
+    <a href="/settings" style="padding: 0.5rem; text-decoration: none;">
+      Settings
+    </a>
+    <hr style="margin: 0;" />
+    <a
+      href="/logout"
+      style="padding: 0.5rem; text-decoration: none; color: #dc2626;"
+    >
+      Logout
+    </a>
+  </div>
+</ps-dropdown>
+```
+
+<ps-dropdown>
+  <button slot="trigger" class="btn" data-variant="outline">
+    Account Menu
+  </button>
+  <div
+    slot="content"
+    style="display: flex; flex-direction: column; gap: 0.5rem;"
+  >
+    <a
+      href="/profile"
+      style="padding: 0.5rem; text-decoration: none; border-radius: 0.25rem;"
+    >
+      Profile
+    </a>
+    <a
+      href="/settings"
+      style="padding: 0.5rem; text-decoration: none; border-radius: 0.25rem;"
+    >
+      Settings
+    </a>
+    <hr style="margin: 0; border-color: var(--color-border);" />
+    <a
+      href="/logout"
+      style="padding: 0.5rem; text-decoration: none; color: #dc2626; border-radius: 0.25rem;"
+    >
+      Logout
+    </a>
+  </div>
+</ps-dropdown>
+
+## Listening to Events
+
+```js
+const dropdown = document.querySelector("ps-dropdown");
+
+dropdown.addEventListener("ps-dropdown-open", () => {
+  console.log("Dropdown opened");
+});
+
+dropdown.addEventListener("ps-dropdown-close", () => {
+  console.log("Dropdown closed");
+});
+```
+
+## Programmatic Control
+
+Control the dropdown with JavaScript:
+
+```js
+const dropdown = document.querySelector("ps-dropdown");
+
+// Check if open
+console.log(dropdown.open); // true or false
+
+// Open
+dropdown.open = true;
+
+// Close
+dropdown.open = false;
+
+// Toggle
+dropdown.open = !dropdown.open;
+```
+
+## Framework Integration
+
+### React
+
+```jsx
+import "preschool";
+
+function Menu() {
+  return (
+    <ps-dropdown>
+      <button slot="trigger" className="btn">
+        Menu
+      </button>
+      <div slot="content">
+        <a href="#">Option 1</a>
+        <a href="#">Option 2</a>
+      </div>
+    </ps-dropdown>
+  );
+}
+```
+
+### Vue
+
+```vue
+<template>
+  <ps-dropdown>
+    <button slot="trigger" class="btn">Menu</button>
+    <div slot="content">
+      <a href="#">Option 1</a>
+      <a href="#">Option 2</a>
+    </div>
+  </ps-dropdown>
+</template>
+
+<script setup>
+  import "preschool";
+</script>
+```
+
+## Customization
+
+The dropdown respects CSS variables from your color scheme:
+
+```css
+ps-dropdown {
+  /* Adjust positioning */
+  --space-2xs: 0.5rem;
+
+  /* Change appearance */
+  --color-bg-alt: your-color;
+  --color-border: your-border-color;
+  --shadow-lg: your-shadow;
+}
+```
+
+## Accessibility
+
+The dropdown component includes:
+
+- `role="menu"` on content
+- Focus management
+- Keyboard navigation (Escape to close)
+- Click outside to close
+
+For better accessibility, consider:
+
+- Adding `aria-label` to icon-only triggers
+- Using semantic navigation elements
+- Ensuring sufficient color contrast

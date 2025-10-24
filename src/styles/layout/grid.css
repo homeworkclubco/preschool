@@ -1,0 +1,46 @@
+@import "../breakpoints.css";
+
+@layer base {
+  /**
+     * GRID LAYOUT
+     * 
+     * An auto-fitting grid layout that creates as many columns as will fit, based on 
+     * a minimum column width. Columns grow to fill available space equally.
+     * 
+     * Default behavior:
+     * - Minimum column width of 250px
+     * - Equal-width columns that grow to fill space
+     * - Responsive without media queries
+     * 
+     * Usage:
+     *   <div class="grid grid-min-300 grid-space-l">
+     *     <div>Item 1</div>
+     *     <div>Item 2</div>
+     *     <div>Item 3</div>
+     *   </div>
+     * 
+     * Custom properties:
+     * - --grid-min-width: Minimum width of each column (default: 250px)
+     * - --grid-space: Gap between grid items (default: var(--spacing-sm))
+     * 
+     * Modifiers:
+     * - grid-min-*: Sets minimum column width
+     * - grid-space-*: Controls gap between items
+     */
+  .grid {
+    --grid-min-width: 250px;
+    --grid-space: var(--spacing-sm);
+
+    display: grid;
+    gap: var(--grid-space);
+    grid-template-columns: repeat(auto-fit, minmax(var(--grid-min-width), 1fr));
+  }
+}
+
+@utility grid-min-* {
+  --grid-min-width: calc(--value(integer) * 1px);
+}
+
+@utility grid-space-* {
+  --grid-space: --value(--spacing- *);
+}

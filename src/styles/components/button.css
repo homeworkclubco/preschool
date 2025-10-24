@@ -1,0 +1,102 @@
+/*
+ * Button Component
+ *
+ * CSS-only button styles using BEM modifier classes
+ * Usage: <button class="btn btn--primary btn--lg">Button</button>
+ */
+
+.btn {
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  height: var(--button-height, auto);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  user-select: none;
+  vertical-align: top;
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  line-height: var(--line-height-tight);
+  text-decoration: none;
+  border: 1px solid var(--button-border-color, transparent);
+  border-radius: var(--button-radius, 0);
+  cursor: pointer;
+  transition: color, background-color, border-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    --button-bg-color-hover: var(--color-button-primary-hover-bg);
+    --button-text-color-hover: var(--color-button-primary-hover-text);
+    --button-border-color-hover: var(--color-button-primary-hover-border);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+/* Sizes */
+
+.btn,
+.btn--md {
+  padding-block: var(--button-padding-block, var(--space-sm));
+  padding-inline: var(--button-padding-inline, var(--space-md));
+  gap: var(--button-gap, var(--space-2xs));
+  font-size: var(--button-font-size, var(--font-size));
+}
+
+.btn--sm {
+  padding-block: var(--button-padding-block-sm, var(--space-2xs));
+  padding-inline: var(--button-padding-inline-sm, var(--space-sm));
+  gap: var(--button-gap-sm, var(--space-2xs));
+  font-size: var(--button-font-size-sm, var(--font-size-sm));
+}
+
+.btn--lg {
+  padding-block: var(--button-padding-block-lg, var(--space-sm));
+  padding-inline: var(--button-padding-inline-lg, var(--space-lg));
+  gap: var(--button-gap-lg, var(--space-2xs));
+  font-size: var(--button-font-size-lg, var(--font-size-lg));
+}
+
+/* Variants */
+.btn--primary {
+  --button-bg-color: var(--color-button-primary-bg);
+  --button-text-color: var(--color-button-primary-text);
+  --button-border-color: var(--color-button-primary-border);
+
+  &:hover,
+  &:focus-visible {
+    --button-bg-color-hover: var(--color-button-primary-hover-bg);
+    --button-text-color-hover: var(--color-button-primary-hover-text);
+    --button-border-color-hover: var(--color-button-primary-hover-border);
+  }
+}
+
+.btn--secondary {
+  --button-bg-color: var(--color-button-secondary-bg);
+  --button-text-color: var(--color-button-secondary-text);
+  --button-border-color: var(--color-button-secondary-border);
+
+  &:hover,
+  &:focus-visible {
+    --button-bg-color-hover: var(--color-button-secondary-hover-bg);
+    --button-text-color-hover: var(--color-button-secondary-hover-text);
+    --button-border-color-hover: var(--color-button-secondary-hover-border);
+  }
+}
+
+.btn--outline {
+  --button-bg-color: transparent;
+  --button-text-color: var(--color-button-outline-text);
+  --button-border-color: var(--color-button-outline-border);
+
+  &:hover,
+  &:focus-visible {
+    --button-bg-color-hover: var(--color-button-outline-hover-bg);
+    --button-text-color-hover: var(--color-button-outline-hover-text);
+    --button-border-color-hover: var(--color-button-outline-hover-border);
+  }
+}

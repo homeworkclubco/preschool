@@ -1,0 +1,142 @@
+---
+title: Button
+description: CSS-only button component with variants and sizes
+---
+
+import Iframe from "../../../components/Iframe.astro"
+import Example from "../../../components/Example.astro"
+
+A simple, accessible button component styled with CSS only.
+
+Buttons rely on CSS custom properties coming from the `[data-color-scheme]`
+
+## Theming
+
+```html
+<section data-color-scheme="light">
+    <button class="btn btn--primary">Click me</button>
+</section>
+```
+
+```css
+[data-color-scheme="light"] {
+
+}
+  
+```
+
+## Basic Usage
+
+```html
+<button class="btn">Click me</button>
+```
+
+<Iframe>
+    <button class="btn">Click me</button>
+</Iframe>
+
+## Variants
+
+Use BEM modifier classes to change button style.
+
+```html
+<button class="btn btn--primary">Primary Button</button>
+<button class="btn btn--secondary">Secondary Button</button>
+<button class="btn btn--outline">Outline Button</button>
+```
+
+<Iframe>
+    <div class="flex gap-md">
+        <button class="btn btn--primary">Primary Button</button>
+        <button class="btn btn--secondary">Secondary Button</button>
+        <button class="btn btn--outline">Outline Button</button>
+    </div>
+</Iframe>
+
+## Sizes
+
+Use BEM modifier classes to change button size. Medium (md) is the default size.
+
+
+```html
+<button class="btn btn--sm btn--primary">Small Button</button>
+<button class="btn btn--md btn--primary">Medium Button</button>
+<button class="btn btn--lg btn--primary">Large Button</button>
+```
+
+<Iframe>
+    <div class="flex gap-md">
+        <button class="btn btn--sm btn--primary">Small Button</button>
+        <button class="btn btn--md btn--primary">Medium Button</button>
+        <button class="btn btn--lg btn--primary">Large Button</button>
+    </div>
+</Iframe>
+
+## States
+
+### Disabled
+
+```html
+<button class="btn" disabled>Disabled Button</button>
+```
+
+<button class="btn" disabled>Disabled Button</button>
+
+## Customization
+
+Override button styles with CSS variables:
+
+```css
+.btn {
+  /* Change button appearance */
+  --button-bg-color: #your-bg-color;
+  --button-text-color: #your-text-color;
+  --button-border-color: #your-border-color;
+
+  /* Adjust spacing */
+  --button-padding-block: var(--space-sm);
+  --button-padding-inline: var(--space-lg);
+  --button-gap: var(--space-xs);
+
+  /* Modify typography */
+  --button-font-size: var(--font-size-lg);
+  --button-font-weight: 600;
+
+  /* Customize border radius */
+  --button-radius: var(--radius-md);
+}
+```
+
+Or create your own variant:
+
+```css
+.btn--danger {
+  --button-bg-color: var(--color-red-600);
+  --button-text-color: white;
+  --button-border-color: var(--color-red-700);
+}
+
+.btn--danger:hover,
+.btn--danger:focus-visible {
+  --button-bg-color-hover: var(--color-red-700);
+  --button-text-color-hover: white;
+  --button-border-color-hover: var(--color-red-800);
+}
+```
+
+## Accessibility
+
+The button component includes:
+
+- Proper focus states
+- Disabled state styling
+- Semantic HTML elements
+- Adequate color contrast (WCAG AA)
+
+For icon-only buttons, always include accessible text:
+
+```html
+<button class="btn" aria-label="Close menu">
+  <span aria-hidden="true">×</span>
+</button>
+```

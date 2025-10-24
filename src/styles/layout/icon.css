@@ -1,0 +1,72 @@
+@layer base {
+	/**
+     * ICON LAYOUT
+     * 
+     * A layout for inline icons that align with text. Icons scale with
+     * font size and align properly with text baseline.
+     * 
+     * Usage:
+     *   <span class="icon">
+     *     <svg>...</svg>
+     *   </span>
+     * 
+     * Custom properties:
+     * - --icon-size: Size of icon relative to font (default: 0.75em)
+     * - --icon-color: Icon color (default: currentColor)
+     */
+	.icon {
+		--icon-size: 1.25em;
+		--icon-color: currentColor;
+
+		height: var(--icon-size);
+		width: var(--icon-size);
+		display: inline-block;
+		vertical-align: middle;
+		color: var(--icon-color);
+		flex-shrink: 0;
+	}
+
+	.icon > svg {
+		height: 100%;
+		width: 100%;
+		fill: currentColor;
+	}
+
+	/* Icon color variants */
+	.icon--primary {
+		--icon-color: var(--color-foreground-primary);
+	}
+
+	.icon--muted {
+		--icon-color: var(--color-foreground-muted);
+	}
+
+	.icon--inherit {
+		--icon-color: inherit;
+	}
+
+	/* Social icon hover effects */
+	.icon--social {
+		transition: color 0.2s ease;
+	}
+
+	.icon--social:hover {
+		--icon-color: var(--color-primary-400);
+	}
+}
+
+@utility icon-size-xs {
+	--icon-size: 0.5em;
+}
+@utility icon-size-sm {
+	--icon-size: 0.75em;
+}
+@utility icon-size-md {
+	--icon-size: 1em;
+}
+@utility icon-size-lg {
+	--icon-size: 1.25em;
+}
+@utility icon-size-xl {
+	--icon-size: 1.5em;
+}

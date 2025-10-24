@@ -1,0 +1,69 @@
+---
+interface Props {
+  html?: string
+  height?: ['md' | 'lg' | 'xl']
+}
+  const { html: propHtml, height = 'md' } = Astro.props
+  const slotHtml = await Astro.slots.render('default')
+  const html = propHtml || slotHtml
+
+import css from '../../../dist/style.css?inline'
+import js from '../../../dist/preschool.umd.cjs?raw'
+
+
+
+---
+
+<iframe
+  srcdoc={`<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      
+      <style>${css}</style>
+      <script type="module">${js}</script>
+      
+      
+        
+      <style>
+        html {height: 100%;}
+        body {
+          display: grid;
+          place-items: center;
+          height: 100%;
+        }
+      </style>
+    </head>
+    <body>
+      ${html}
+      
+    </body>
+  </html>`}
+  class=`w-full border border-gray-200 rounded-lg overflow-hidden`
+  data-height=`${height}`
+  loading="lazy"
+  sandbox="allow-scripts allow-same-origin" 
+></iframe>
+
+
+<style>
+  iframe {
+    border: 1px solid rgb(0 0 0 /10%);
+    width: 100%;
+
+    &[data-height="md"] {
+      height: 400px;
+    }
+
+    &[data-height="lg"] {
+      height: 600px;
+    }
+
+    &[data-height="xl"] {
+      height: 800px;
+    }
+
+    
+  }
+</style>

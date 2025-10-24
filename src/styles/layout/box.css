@@ -1,0 +1,61 @@
+@layer base {
+	/**
+     * BOX LAYOUT
+     * 
+     * A content-agnostic wrapper that applies consistent padding and can enforce
+     * a border and background. Useful for creating cards, panels, and other boxed
+     * content with consistent spacing.
+     * 
+     * Default behavior:
+     * - Applies padding on all sides
+     * - No border or background by default
+     * - Can be made borderless or apply different border styles
+     * 
+     * Usage:
+     *   <div class="box box-padding-l box-border">
+     *     <h2>Card Title</h2>
+     *     <p>Card content</p>
+     *   </div>
+     * 
+     * Custom properties:
+     * - --box-padding: Padding applied to all sides (default: var(--spacing-sm))
+     * - --box-border-width: Border width (default: 1px)
+     * - --box-border-color: Border color (default: currentColor)
+     * 
+     * Modifiers:
+     * - box-padding-*: Controls internal padding
+     * - box-border: Adds border around the box
+     * - box-borderless: Removes border (useful for overrides)
+     */
+	.box {
+		--box-padding: var(--spacing-sm);
+		--box-border-width: 1px;
+		--box-border-color: var(--color-border);
+
+		padding: var(--box-padding);
+	}
+
+	.box * {
+		color: inherit;
+	}
+
+	.box-border {
+		border: var(--box-border-width) solid var(--box-border-color);
+	}
+
+	.box-borderless {
+		border: 0;
+	}
+}
+
+@utility box-padding-* {
+	--box-padding: --value(--spacing-*);
+}
+
+@utility box-border {
+	border: var(--box-border-width) solid var(--box-border-color);
+}
+
+@utility box-borderless {
+	border: 0;
+}

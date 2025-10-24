@@ -1,0 +1,55 @@
+@layer base {
+	/**
+     * IMPOSTER LAYOUT
+     * 
+     * A layout that positions an element over another element, typically
+     * for overlays, badges, or floating content. Uses absolute positioning.
+     * 
+     * Usage:
+     *   <div class="imposter imposter-contain">
+     *     <div>Base content</div>
+     *     <div class="imposter-element">Overlay content</div>
+     *   </div>
+     * 
+     * Custom properties:
+     * - --imposter-margin: Margin around the imposter element (default: 0px)
+     */
+	.imposter {
+		--imposter-margin: 0px;
+		position: relative;
+	}
+
+	.imposter-contain {
+		overflow: hidden;
+	}
+
+	.imposter-element {
+		position: absolute;
+		top: var(--imposter-margin);
+		bottom: var(--imposter-margin);
+		left: var(--imposter-margin);
+		right: var(--imposter-margin);
+	}
+
+	.imposter-fixed {
+		position: fixed;
+	}
+}
+
+@utility imposter-margin-* {
+	--imposter-margin: --value(--spacing-*);
+}
+
+@utility imposter-contain {
+	overflow: hidden;
+}
+@utility imposter-fixed {
+	position: fixed;
+}
+@utility imposter-element {
+	position: absolute;
+	top: var(--imposter-margin);
+	bottom: var(--imposter-margin);
+	left: var(--imposter-margin);
+	right: var(--imposter-margin);
+}

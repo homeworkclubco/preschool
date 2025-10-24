@@ -1,0 +1,73 @@
+@layer base {
+	/**
+     * CENTER LAYOUT
+     * 
+     * A layout that centers content horizontally and sets a maximum measure (width).
+     * Can optionally center text content and provide intrinsic centering for 
+     * elements that don't fill the full width.
+     * 
+     * Default behavior:
+     * - Centers content horizontally with auto margins
+     * - Sets maximum width for optimal readability
+     * - Preserves natural text alignment
+     * 
+     * Usage:
+     *   <div class="center center-measure-prose center-text">
+     *     <p>This content will be centered and have optimal line length</p>
+     *   </div>
+     * 
+     * Custom properties:
+     * - --center-max-width: Maximum width of centered content (default: 60ch)
+     * - --center-padding: Horizontal padding when at small widths (default: var(--spacing-sm))
+     * 
+     * Modifiers:
+     * - center-measure-*: Sets maximum width
+     * - center-text: Centers text content as well
+     * - center-intrinsic: Centers child elements that don't fill width
+     */
+	.center {
+		--center-max-width: 60ch;
+		--center-padding: var(--spacing-sm);
+
+		box-sizing: content-box;
+		margin-left: auto;
+		margin-right: auto;
+		max-width: var(--center-max-width);
+		padding-left: var(--center-padding);
+		padding-right: var(--center-padding);
+	}
+
+	.center-text {
+		text-align: center;
+	}
+
+	.center-intrinsic {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+@utility center-measure-* {
+	--center-max-width: --value(--size-*);
+}
+
+@utility center-measure-prose {
+	--center-max-width: 65ch;
+}
+@utility center-measure-narrow {
+	--center-max-width: 45ch;
+}
+@utility center-measure-wide {
+	--center-max-width: 80ch;
+}
+
+@utility center-text {
+	text-align: center;
+}
+
+@utility center-intrinsic {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}

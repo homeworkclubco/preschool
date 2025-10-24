@@ -1,0 +1,70 @@
+/* --------------------------------------
+ * Cluster
+ * 
+ * A layout that arranges elements horizontally with optional spacing and 
+ * alignment. The base cluster only applies spacing to direct children, while 
+ * the recursive variant applies spacing to all nested children.
+ * 
+ * Default behavior:
+ * - Only direct children get spacing
+ * - No alignment modifiers
+ * 
+ * Usage:
+ *   <div class="cluster cluster-space-l">
+ *     <div>Item 1</div>
+ *     <div>Item 2</div>
+ *     <div>Item 3</div>
+ *   </div>
+ * 
+ * Custom properties:
+ * - --cluster-space: Gap between elements (default: var(--spacing-sm))
+ * - --cluster-justify: Justify content (default: flex-start)
+ * - --cluster-align: Align content (default: center)
+ * 
+ * Modifiers:
+ * - cluster-space-*: Sets spacing between elements
+ * - cluster-justify-start/end/center/between: Sets justify-content
+ * - cluster-align-start/end/center: Sets align-items
+ * - cluster-recursive: Applies spacing to all nested children
+ * -------------------------------------- */
+@layer base {
+	.cluster {
+		--cluster-space: var(--spacing-sm);
+		--cluster-justify: flex-start;
+		--cluster-align: center;
+
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--cluster-space);
+		justify-content: var(--cluster-justify);
+		align-items: var(--cluster-align);
+	}
+}
+
+/* Spacing modifiers */
+@utility cluster-space-* {
+	--cluster-space: --value(--spacing-*);
+}
+
+@utility cluster-justify-start {
+	--cluster-justify: flex-start;
+}
+@utility cluster-justify-center {
+	--cluster-justify: center;
+}
+@utility cluster-justify-end {
+	--cluster-justify: flex-end;
+}
+@utility cluster-justify-between {
+	--cluster-justify: space-between;
+}
+
+@utility cluster-align-start {
+	--cluster-align: flex-start;
+}
+@utility cluster-align-center {
+	--cluster-align: center;
+}
+@utility cluster-align-end {
+	--cluster-align: flex-end;
+}

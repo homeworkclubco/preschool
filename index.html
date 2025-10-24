@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preschool - Development Preview</title>
+</head>
+<body>
+  <div style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+    <h1>Preschool Framework</h1>
+    <p>Development preview</p>
+
+    <section class="p-lg">
+      <h2>Buttons</h2>
+      <div class="flex gap-md" style="flex-wrap: wrap;">
+        <button class="btn btn--primary">Default Button</button>
+        <button class="btn btn--outline">Outline Button</button>
+        <button class="btn btn--ghost">Ghost Button</button>
+        <button class="btn btn--primary btn--sm">Small Button</button>
+        <button class="btn btn--primary btn--lg">Large Button</button>
+        <button class="btn btn--primary" disabled>Disabled</button>
+      </div>
+    </section>
+
+    <section class="p-lg">
+      <h2>Dropdown</h2>
+      <ps-dropdown>
+        <button slot="trigger" class="btn btn--primary">Open Menu</button>
+        <div slot="content">
+          <a href="#" style="padding: 0.5rem; display: block;">Option 1</a>
+          <a href="#" style="padding: 0.5rem; display: block;">Option 2</a>
+          <a href="#" style="padding: 0.5rem; display: block;">Option 3</a>
+        </div>
+      </ps-dropdown>
+    </section>
+
+    <section class="p-lg">
+      <h2>Color Schemes</h2>
+      <div class="flex gap-md" style="flex-direction: column;">
+        <div data-color-scheme="light" class="p-md" style="border: 1px solid var(--color-border);">
+          <p>Light scheme (default)</p>
+          <button class="btn btn--primary">Button</button>
+        </div>
+        <div data-color-scheme="dark" class="p-md" style="border: 1px solid var(--color-border);">
+          <p>Dark scheme</p>
+          <button class="btn btn--primary">Button</button>
+        </div>
+        <div data-color-scheme="accent" class="p-md" style="border: 1px solid var(--color-border);">
+          <p>Accent scheme</p>
+          <button class="btn btn--primary">Button</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="/src/index.js"></script>
+</body>
+</html>

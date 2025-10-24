@@ -1,0 +1,40 @@
+@layer base {
+	/**
+     * REEL LAYOUT
+     * 
+     * A horizontal scrolling layout for a series of items. Items maintain
+     * their intrinsic width and scroll horizontally when they overflow.
+     * 
+     * Usage:
+     *   <div class="reel reel-space-m">
+     *     <div>Item 1</div>
+     *     <div>Item 2</div>
+     *     <div>Item 3</div>
+     *   </div>
+     * 
+     * Custom properties:
+     * - --reel-space: Gap between items (default: var(--spacing-sm))
+     * - --reel-height: Fixed height for items (default: auto)
+     */
+	.reel {
+		--reel-space: var(--spacing-sm);
+		--reel-height: auto;
+
+		display: flex;
+		gap: var(--reel-space);
+		overflow-x: auto;
+		block-size: var(--reel-height);
+	}
+
+	.reel > * {
+		flex: none;
+	}
+}
+
+@utility reel-space-* {
+	--reel-space: --value(--spacing-*);
+}
+
+@utility reel-height-* {
+	--reel-height: --value(--size-*);
+}
