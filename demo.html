@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Preschool AOS Demo</title>
+        <link rel="stylesheet" href="./dist/style.css" />
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    sans-serif;
+                line-height: 1.6;
+            }
+
+            .hero {
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+                margin: 0 0 1rem;
+            }
+
+            .hero p {
+                font-size: 1.5rem;
+                margin: 0;
+            }
+
+            section {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 4rem 2rem;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                max-width: 1200px;
+                width: 100%;
+            }
+
+            .card {
+                background: white;
+                padding: 2rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .card h3 {
+                margin-top: 0;
+                color: #667eea;
+            }
+
+            section:nth-child(even) {
+                background: #f7fafc;
+            }
+
+            .demo-section {
+                text-align: center;
+            }
+
+            .demo-section h2 {
+                font-size: 2.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .scroll-indicator {
+                position: absolute;
+                bottom: 2rem;
+                left: 50%;
+                transform: translateX(-50%);
+                animation: bounce 2s infinite;
+            }
+
+            @keyframes bounce {
+                0%,
+                20%,
+                50%,
+                80%,
+                100% {
+                    transform: translateX(-50%) translateY(0);
+                }
+                40% {
+                    transform: translateX(-50%) translateY(-20px);
+                }
+                60% {
+                    transform: translateX(-50%) translateY(-10px);
+                }
+            }
+            .debug {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                background: rgba(0, 0, 0, 0.9);
+                color: #0f0;
+                padding: 10px;
+                font-size: 11px;
+                border-radius: 4px;
+                max-width: 250px;
+                z-index: 1000;
+                font-family: monospace;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="hero">
+            <h1 data-aos="fade-down" data-aos-duration="1000">
+                Preschool AOS Demo
+            </h1>
+            <p data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
+                Modern scroll animations powered by Lenis
+            </p>
+            <div
+                class="scroll-indicator"
+                data-aos="fade-in"
+                data-aos-delay="1000"
+            >
+                <svg
+                    width="24"
+                    height="24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path d="M12 5v14m0 0l-7-7m7 7l7-7" />
+                </svg>
+            </div>
+        </div>
+
+        <section class="demo-section">
+            <div class="debug" id="debug">Loading...</div>
+            <div>
+                <h2 data-aos="fade-up">Fade Animations</h2>
+                <div class="grid">
+                    <div class="card" data-aos="fade-up">
+                        <h3>Fade Up</h3>
+                        <p>Fades in from below</p>
+                    </div>
+                    <div class="card" data-aos="fade-down">
+                        <h3>Fade Down</h3>
+                        <p>Fades in from above</p>
+                    </div>
+                    <div class="card" data-aos="fade-left">
+                        <h3>Fade Left</h3>
+                        <p>Fades in from right</p>
+                    </div>
+                    <div class="card" data-aos="fade-right">
+                        <h3>Fade Right</h3>
+                        <p>Fades in from left</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <div>
+                <h2 data-aos="zoom-in">Zoom Animations</h2>
+                <div class="grid">
+                    <div class="card" data-aos="zoom-in" data-aos-delay="100">
+                        <h3>Zoom In</h3>
+                        <p>Scales up from small</p>
+                    </div>
+                    <div
+                        class="card"
+                        data-aos="zoom-in-up"
+                        data-aos-delay="200"
+                    >
+                        <h3>Zoom In Up</h3>
+                        <p>Scales and slides up</p>
+                    </div>
+                    <div
+                        class="card"
+                        data-aos="zoom-in-left"
+                        data-aos-delay="300"
+                    >
+                        <h3>Zoom In Left</h3>
+                        <p>Scales and slides left</p>
+                    </div>
+                    <div class="card" data-aos="zoom-out" data-aos-delay="400">
+                        <h3>Zoom Out</h3>
+                        <p>Scales down to normal</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <div>
+                <h2 data-aos="flip-left">Flip Animations</h2>
+                <div class="grid">
+                    <div
+                        class="card"
+                        data-aos="flip-up"
+                        data-aos-duration="1000"
+                    >
+                        <h3>Flip Up</h3>
+                        <p>Flips on X axis</p>
+                    </div>
+                    <div
+                        class="card"
+                        data-aos="flip-down"
+                        data-aos-duration="1000"
+                    >
+                        <h3>Flip Down</h3>
+                        <p>Flips on X axis</p>
+                    </div>
+                    <div
+                        class="card"
+                        data-aos="flip-left"
+                        data-aos-duration="1000"
+                    >
+                        <h3>Flip Left</h3>
+                        <p>Flips on Y axis</p>
+                    </div>
+                    <div
+                        class="card"
+                        data-aos="flip-right"
+                        data-aos-duration="1000"
+                    >
+                        <h3>Flip Right</h3>
+                        <p>Flips on Y axis</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <div>
+                <h2 data-aos="fade-up">Custom Configuration</h2>
+                <div class="grid">
+                    <div
+                        class="card"
+                        data-aos="fade-up"
+                        data-aos-duration="1200"
+                        data-aos-easing="ease-in-out-back"
+                    >
+                        <h3>Slow + Bounce</h3>
+                        <p>1200ms with back easing</p>
+                    </div>
+                    <div
+                        class="card"
+                        data-aos="zoom-in"
+                        data-aos-delay="300"
+                        data-aos-duration="600"
+                    >
+                        <h3>Delayed Zoom</h3>
+                        <p>300ms delay, 600ms duration</p>
+                    </div>
+                    <div
+                        class="card"
+                        data-aos="fade-left"
+                        data-aos-offset="200"
+                        data-aos-mirror="true"
+                    >
+                        <h3>Large Offset + Mirror</h3>
+                        <p>
+                            Triggers 200px into viewport, reverses on scroll up
+                        </p>
+                    </div>
+                    <div
+                        class="card"
+                        data-aos="fade-right"
+                        data-aos-once="true"
+                    >
+                        <h3>Animate Once</h3>
+                        <p>Only animates once (scroll back up to test)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="demo-section"
+            style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+            "
+        >
+            <div>
+                <h2 data-aos="zoom-in" style="color: white">
+                    Smooth Scrolling Enabled
+                </h2>
+                <p
+                    data-aos="fade-up"
+                    data-aos-delay="200"
+                    style="font-size: 1.25rem; max-width: 600px; margin: 0 auto"
+                >
+                    All scrolling is powered by Lenis for a buttery-smooth
+                    experience. Try scrolling with your mouse wheel, trackpad,
+                    or touch gestures.
+                </p>
+            </div>
+        </section>
+
+        <script type="module" src="./dist/preschool.js"></script>
+
+        <script type="module">
+            import { getLenis, refreshAOS } from './dist/preschool.js';
+
+            refreshAOS({
+                // mirror: true,
+            });
+
+            // Optional: Log scroll position
+            const lenis = getLenis();
+            if (lenis) {
+                lenis.on('scroll', e => {
+                    // Uncomment to see scroll events
+                    // console.log('Scroll:', e.animatedScroll)
+                });
+            }
+
+            function updateDebug() {
+                const debugEl = document.getElementById('debug');
+                if (!debugEl) return;
+
+                const lenis = getLenis();
+                const aosElements = document.querySelectorAll('[data-aos]');
+                const animatedElements = document.querySelectorAll(
+                    '[data-aos].aos-animate'
+                );
+
+                debugEl.innerHTML = `
+        <strong>AOS Debug</strong><br>
+        Lenis: ${lenis ? '✓' : '✗'}<br>
+        Elements: ${aosElements.length}<br>
+        Animated: ${animatedElements.length}<br>
+        Scroll: ${lenis ? Math.round(lenis.scroll || 0) : 0}
+      `;
+            }
+
+            // Initialize debug
+            setTimeout(() => {
+                updateDebug();
+
+                const lenis = getLenis();
+                if (lenis) {
+                    console.log('✓ Lenis initialized');
+                    lenis.on('scroll', updateDebug);
+                } else {
+                    console.error('✗ Lenis NOT initialized');
+                }
+
+                refreshAOS();
+                updateDebug();
+            }, 500);
+
+            // Update every second as fallback
+            setInterval(updateDebug, 1000);
+        </script>
+    </body>
+</html>

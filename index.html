@@ -4,11 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Preschool - Development Preview</title>
+  <style>
+    .debug {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.9);
+      color: #0f0;
+      padding: 10px;
+      font-size: 11px;
+      border-radius: 4px;
+      max-width: 250px;
+      z-index: 1000;
+      font-family: monospace;
+    }
+    .section-spacer {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
 <body>
+  <div class="debug" id="debug">Loading...</div>
+
   <div style="max-width: 800px; margin: 0 auto; padding: 2rem;">
-    <h1>Preschool Framework</h1>
-    <p>Development preview</p>
+    <h1 data-aos="fade-down">Preschool Framework</h1>
+    <p data-aos="fade-up" data-aos-delay="200">Development preview with AOS animations</p>
 
     <section class="p-lg">
       <h2>Buttons</h2>
@@ -51,8 +74,80 @@
         </div>
       </div>
     </section>
+
+    <div class="section-spacer">
+      <h2 data-aos="fade-up">Scroll Down for Animations</h2>
+    </div>
+
+    <section class="p-lg">
+      <h2 data-aos="zoom-in">AOS Animations Test</h2>
+      <div class="flex gap-md" style="flex-direction: column;">
+        <div data-aos="fade-right" data-aos-duration="800" class="p-md" style="border: 1px solid var(--color-border);">
+          <p>Fade Right Animation</p>
+        </div>
+        <div data-aos="fade-left" data-aos-duration="800" class="p-md" style="border: 1px solid var(--color-border);">
+          <p>Fade Left Animation</p>
+        </div>
+        <div data-aos="zoom-in" data-aos-delay="200" class="p-md" style="border: 1px solid var(--color-border);">
+          <p>Zoom In with Delay</p>
+        </div>
+        <div data-aos="slide-up" data-aos-duration="1000" class="p-md" style="border: 1px solid var(--color-border);">
+          <p>Slide Up Animation</p>
+        </div>
+        <div data-aos="flip-left" data-aos-duration="1200" class="p-md" style="border: 1px solid var(--color-border);">
+          <p>Flip Left Animation</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-spacer">
+      <div data-aos="fade-up" data-aos-easing="ease-in-out-back">
+        <h2>More Animations</h2>
+        <button class="btn btn--primary" data-aos="zoom-in" data-aos-delay="300">Animated Button</button>
+      </div>
+    </div>
   </div>
 
   <script type="module" src="/src/index.js"></script>
+
+  <script type="module">
+    import { getLenis, refreshAOS } from '/src/index.js'
+
+    function updateDebug() {
+      const debugEl = document.getElementById('debug')
+      if (!debugEl) return
+
+      const lenis = getLenis()
+      const aosElements = document.querySelectorAll('[data-aos]')
+      const animatedElements = document.querySelectorAll('[data-aos].aos-animate')
+
+      debugEl.innerHTML = `
+        <strong>AOS Debug</strong><br>
+        Lenis: ${lenis ? '✓' : '✗'}<br>
+        Elements: ${aosElements.length}<br>
+        Animated: ${animatedElements.length}<br>
+        Scroll: ${lenis ? Math.round(lenis.scroll || 0) : 0}
+      `
+    }
+
+    // Initialize debug
+    setTimeout(() => {
+      updateDebug()
+
+      const lenis = getLenis()
+      if (lenis) {
+        console.log('✓ Lenis initialized')
+        lenis.on('scroll', updateDebug)
+      } else {
+        console.error('✗ Lenis NOT initialized')
+      }
+
+      refreshAOS()
+      updateDebug()
+    }, 500)
+
+    // Update every second as fallback
+    setInterval(updateDebug, 1000)
+  </script>
 </body>
 </html>
