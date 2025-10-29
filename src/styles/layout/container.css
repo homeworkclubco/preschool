@@ -1,46 +1,54 @@
 /* --------------------------------------
  * Container
  * -------------------------------------- */
-@layer base {
-	.container {
-		--container-padding: var(--spacing-md-lg);
-		--container-max-width: 79rem;
 
-		max-width: var(--container-max-width);
-		margin-inline: auto;
-		padding-inline: var(--container-padding);
-	}
-}
+.container {
+    --_container-padding: var(--container-padding, var(--spacing-md-lg));
+    --_container-max-width: var(--container-max-width, 79rem);
 
-@utility container-narrow {
-	--container-max-width: 640px;
-}
+    max-width: var(--_container-max-width);
+    margin-inline: auto;
+    padding-inline: var(--_container-padding);
 
-@utility container-prose {
-	--container-max-width: 65ch;
-}
+    &.is-narrow {
+        --_container-max-width: var(--measure-s);
+    }
 
-@utility container-wide {
-	--container-max-width: 1400px;
-}
+    &.is-prose {
+        --_container-max-width: var(--measure);
+    }
 
-@utility container-full {
-	--container-max-width: none;
-}
+    &.is-wide {
+        --_container-max-width: var(--measure-l);
+    }
 
-.container-full-bleed {
-	padding-inline: 0;
-	max-width: unset;
-	display: grid;
-	grid-template-columns:
-		minmax(0, 1fr) repeat(
-			12,
-			minmax(0, calc(var(--container-max-width) / 12))
-		)
-		minmax(0, 1fr);
-}
+    &.is-full {
+        --_container-max-width: none;
+    }
 
-/* Padding modifiers using Tailwind's spacing scale */
-@utility container-padding-* {
-	--container-padding: *;
+    &[class^='is-full-bleed'] {
+        --_container-columns: va(--container-columns, 2);
+        padding-inline: 0;
+        max-width: unset;
+        display: grid;
+        grid-template-columns:
+            minmax(0, 1fr) repeat(
+                12,
+                minmax(
+                    0,
+                    calc(
+                        var(--_container-max-width) / var(--_container-columns)
+                    )
+                )
+            )
+            minmax(0, 1fr);
+    }
+
+    &.is-full-bleed-12 {
+        --container-columns: 12;
+    }
+
+    &.is-full-bleed-6 {
+        --container-columns: 12;
+    }
 }

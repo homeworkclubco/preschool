@@ -292,75 +292,23 @@
         >
             <div>
                 <h2 data-aos="zoom-in" style="color: white">
-                    Smooth Scrolling Enabled
+                    Performant Scroll Animations
                 </h2>
                 <p
                     data-aos="fade-up"
                     data-aos-delay="200"
                     style="font-size: 1.25rem; max-width: 600px; margin: 0 auto"
                 >
-                    All scrolling is powered by Lenis for a buttery-smooth
-                    experience. Try scrolling with your mouse wheel, trackpad,
-                    or touch gestures.
+                    All animations use hardware-accelerated CSS transforms and
+                    IntersectionObserver for optimal performance. Scroll up and
+                    down to see animations trigger.
                 </p>
             </div>
         </section>
 
-        <script type="module" src="./dist/preschool.js"></script>
+        <script type="module" src="/src/index.js"></script>
 
-        <script type="module">
-            import { getLenis, refreshAOS } from './dist/preschool.js';
-
-            refreshAOS({
-                // mirror: true,
-            });
-
-            // Optional: Log scroll position
-            const lenis = getLenis();
-            if (lenis) {
-                lenis.on('scroll', e => {
-                    // Uncomment to see scroll events
-                    // console.log('Scroll:', e.animatedScroll)
-                });
-            }
-
-            function updateDebug() {
-                const debugEl = document.getElementById('debug');
-                if (!debugEl) return;
-
-                const lenis = getLenis();
-                const aosElements = document.querySelectorAll('[data-aos]');
-                const animatedElements = document.querySelectorAll(
-                    '[data-aos].aos-animate'
-                );
-
-                debugEl.innerHTML = `
-        <strong>AOS Debug</strong><br>
-        Lenis: ${lenis ? '✓' : '✗'}<br>
-        Elements: ${aosElements.length}<br>
-        Animated: ${animatedElements.length}<br>
-        Scroll: ${lenis ? Math.round(lenis.scroll || 0) : 0}
-      `;
-            }
-
-            // Initialize debug
-            setTimeout(() => {
-                updateDebug();
-
-                const lenis = getLenis();
-                if (lenis) {
-                    console.log('✓ Lenis initialized');
-                    lenis.on('scroll', updateDebug);
-                } else {
-                    console.error('✗ Lenis NOT initialized');
-                }
-
-                refreshAOS();
-                updateDebug();
-            }, 500);
-
-            // Update every second as fallback
-            setInterval(updateDebug, 1000);
-        </script>
+        <!-- Uncomment to use the built version instead of source -->
+        <!-- <script type="module" src="./dist/preschool.js"></script> -->
     </body>
 </html>

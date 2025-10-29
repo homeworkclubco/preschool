@@ -11,18 +11,18 @@ Override CSS variables in your own stylesheet:
 
 ```css
 :root {
-  /* Adjust spacing scale */
-  --space-md: clamp(1.5rem, 1.37rem + 0.65vw, 2rem);
+    /* Adjust spacing scale */
+    --space-md: clamp(1.5rem, 1.37rem + 0.65vw, 2rem);
 
-  /* Change typography */
-  --font-family: "Inter", system-ui, sans-serif;
-  --font-size: 1.125rem;
+    /* Change typography */
+    --font-family: 'Inter', system-ui, sans-serif;
+    --font-size: 1.125rem;
 
-  /* Modify border radius */
-  --radius-md: 0.75rem;
+    /* Modify border radius */
+    --radius-md: 0.75rem;
 
-  /* Update shadows */
-  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.1);
+    /* Update shadows */
+    --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 ```
 
@@ -32,9 +32,9 @@ Follow the [Utopia](https://utopia.fyi) methodology to generate new fluid space 
 
 ```css
 :root {
-  /* Add new sizes */
-  --space-3xl: clamp(6rem, 5.48rem + 2.61vw, 7.5rem);
-  --space-4xl: clamp(8rem, 7.3rem + 3.48vw, 10rem);
+    /* Add new sizes */
+    --space-3xl: clamp(6rem, 5.48rem + 2.61vw, 7.5rem);
+    --space-4xl: clamp(8rem, 7.3rem + 3.48vw, 10rem);
 }
 ```
 
@@ -46,26 +46,26 @@ Build new CSS components following the same pattern:
 /* src/styles/components/badge.css */
 
 .badge {
-  display: inline-flex;
-  padding: var(--space-3xs) var(--space-xs);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  border-radius: var(--radius-full);
-  background-color: var(--color-bg-alt);
-  border: 1px solid var(--color-border);
+    display: inline-flex;
+    padding: var(--space-3xs) var(--space-xs);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    border-radius: var(--radius-full);
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
 }
 
-.badge[data-variant="primary"] {
-  background-color: var(--color-primary);
-  color: var(--color-primary-text);
-  border-color: transparent;
+.badge[data-variant='primary'] {
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
+    border-color: transparent;
 }
 ```
 
 Then import it:
 
 ```js
-import "./styles/components/badge.css";
+import './styles/components/badge.css';
 ```
 
 ## Adding Utility Classes
@@ -77,25 +77,25 @@ Extend the utility system:
 
 /* New spacing utilities */
 .p-xl {
-  padding: var(--space-xl);
+    padding: var(--space-xl);
 }
 .gap-xl {
-  gap: var(--space-xl);
+    gap: var(--space-xl);
 }
 
 /* New layout utilities */
 .container {
-  max-width: 80rem;
-  margin-inline: auto;
-  padding-inline: var(--space-md);
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: var(--space-md);
 }
 
 /* New text utilities */
 .text-xl {
-  font-size: var(--font-size-xl);
+    font-size: var(--font-size-xl);
 }
 .text-bold {
-  font-weight: 700;
+    font-weight: 700;
 }
 ```
 
@@ -105,30 +105,30 @@ Build new Lit components:
 
 ```js
 // src/components/tooltip.js
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css } from 'lit';
 
 export class Tooltip extends LitElement {
-  static properties = {
-    text: { type: String },
-  };
+    static properties = {
+        text: { type: String },
+    };
 
-  static styles = css`
-    :host {
-      position: relative;
-      display: inline-block;
-    }
-    /* Add your styles */
-  `;
-
-  render() {
-    return html`
-      <slot></slot>
-      <div class="tooltip-content">${this.text}</div>
+    static styles = css`
+        :host {
+            position: relative;
+            display: inline-block;
+        }
+        /* Add your styles */
     `;
-  }
+
+    render() {
+        return html`
+            <slot></slot>
+            <div class="tooltip-content">${this.text}</div>
+        `;
+    }
 }
 
-customElements.define("ps-tooltip", Tooltip);
+customElements.define('hc-tooltip', Tooltip);
 ```
 
 ## Forking the Framework

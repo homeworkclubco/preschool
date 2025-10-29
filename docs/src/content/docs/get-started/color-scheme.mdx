@@ -1,0 +1,195 @@
+---
+title: Color Scheme
+---
+
+import Iframe from '../../../components/Iframe.astro';
+
+Preschool ships with a minimal starter theme that you can build upon.
+
+Theming is done using a data attribute, `data-color-scheme` which can be applied to the body, content sections, or any other element.
+
+By default we support
+
+- `data-color-scheme="light"` (default, applied to root)
+- `data-color-scheme="dark"`
+
+By default, the framework has a simple greyscale color scheme. You can override any of these colors in the root element.
+
+The main tokens are:
+
+```css
+:root,
+[data-color-scheme='light'] {
+    --color-bg: var(--color-neutral-50);
+    --color-bg-alt: var(--color-neutral-100);
+
+    --color-border: var(--color-neutral-200);
+    --color-border-strong: var(--color-neutral-600);
+
+    --color-foreground: var(--color-neutral-950);
+    --color-foreground-secondary: var(--color-neutral-800);
+
+    --color-accent: var(--color-neutral-950);
+    --color-accent-hover: var(--color-neutral-800);
+    --color-on-accent: var(--color-neutral-50);
+    --color-on-accent-hover: var(--color-neutral-50);
+
+    --button-primary-bg: var(--color-accent);
+    --button-primary-label: var(--color-on-accent);
+    --button-primary-border: var(--color-accent);
+    --button-primary-hover-bg: var(--color-accent-hover);
+    --button-primary-hover-label: var(--color-on-accent-hover);
+    --button-primary-hover-border: var(--color-accent-hover);
+
+    --button-secondary-bg: var(--color-neutral-50);
+    --button-secondary-label: var(--color-neutral-950);
+    --button-secondary-border: var(--color-neutral-200);
+    --button-secondary-hover-bg: var(--color-neutral-100);
+    --button-secondary-hover-label: var(--color-neutral-950);
+    --button-secondary-hover-border: var(--color-neutral-200);
+
+    --button-tertiary-bg: var(--color-neutral-50);
+    --button-tertiary-label: var(--color-neutral-950);
+    --button-tertiary-border: var(--color-neutral-200);
+    --button-tertiary-hover-bg: var(--color-neutral-100);
+    --button-tertiary-hover-label: var(--color-neutral-950);
+    --button-tertiary-hover-border: var(--color-neutral-200);
+
+    /* --color-positive: oklch(62.7% 0.194 149.214);
+    --color-negative: oklch(57.7% 0.245 27.325); */
+}
+
+[data-color-scheme='dark'] {
+    --color-bg: var(--color-neutral-900);
+    --color-bg-alt: var(--color-neutral-800);
+
+    --color-border: var(--color-neutral-800);
+    --color-border-strong: var(--color-neutral-600);
+
+    --color-foreground: var(--color-neutral-50);
+    --color-foreground-secondary: var(--color-neutral-400);
+
+    --color-accent: var(--color-white);
+    --color-accent-hover: var(--color-neutral-300);
+    --color-on-accent: var(--color-neutral-950);
+    --color-on-accent-hover: var(--color-neutral-950);
+
+    --button-primary-bg: var(--color-accent);
+    --button-primary-label: var(--color-on-accent);
+    --button-primary-border: var(--color-accent);
+    --button-primary-hover-bg: var(--color-accent-hover);
+    --button-primary-hover-label: var(--color-on-accent-hover);
+    --button-primary-hover-border: var(--color-accent-hover);
+
+    --button-secondary-bg: var(--color-neutral-900);
+    --button-secondary-label: var(--color-neutral-50);
+    --button-secondary-border: var(--color-neutral-800);
+    --button-secondary-hover-bg: var(--color-neutral-800);
+    --button-secondary-hover-label: var(--color-neutral-50);
+    --button-secondary-hover-border: var(--color-neutral-800);
+
+    --button-tertiary-bg: var(--color-neutral-900);
+    --button-tertiary-label: var(--color-neutral-50);
+    --button-tertiary-border: var(--color-neutral-800);
+    --button-tertiary-hover-bg: var(--color-neutral-800);
+    --button-tertiary-hover-label: var(--color-neutral-50);
+    --button-tertiary-hover-border: var(--color-neutral-800);
+
+    /* --color-positive: oklch(79.2% 0.209 151.711);
+    --color-negative: oklch(70.4% 0.191 22.216); */
+}
+```
+
+We ship with some default colors to get started. You can override any of these colors in the root element. We
+
+```css
+:root {
+    --color-white: oklch(100% 0 0);
+    --color-black: oklch(5% 0 0);
+
+    --color-neutral-50: oklch(98.5% 0 0);
+    --color-neutral-100: oklch(97% 0 0);
+    --color-neutral-200: oklch(92.2% 0 0);
+    --color-neutral-300: oklch(87% 0 0);
+    --color-neutral-400: oklch(70.8% 0 0);
+    --color-neutral-500: oklch(55.6% 0 0);
+    --color-neutral-600: oklch(43.9% 0 0);
+    --color-neutral-700: oklch(47.1% 0 0);
+    --color-neutral-800: oklch(26.9% 0 0);
+    --color-neutral-900: oklch(20.5% 0 0);
+    --color-neutral-950: oklch(14.5% 0 0);
+}
+```
+
+To extend this, you can add your own colors to the root element. Feel free to use a tailwind inspired scale like we use for neutral or any other color system you prefer.
+
+The raw color tokens should never be used in components. Always use semantic tokens to ensure that color schemes are applied correctly.
+
+For an accent scale (or primary color, or another name), we recommend using a scale like this:
+
+```css
+:root {
+    --color-accent-50: <user defined>;
+    --color-accent-100: <user defined>;
+    --color-accent-200: <user defined>;
+    --color-accent-300: <user defined>;
+    --color-accent-400: <user defined>;
+    --color-accent-500: <user defined>;
+    --color-accent-600: <user defined>;
+    --color-accent-700: <user defined>;
+    --color-accent-800: <user defined>;
+    --color-accent-900: <user defined>;
+    --color-accent-950: <user defined>;
+}
+```
+
+You can then use these tokens in your components like this:
+
+```css
+[data-color-scheme='light'] {
+    --button-primary-bg: var(--color-accent-500);
+}
+```
+
+## Adding more color schemes
+
+If you want to add more color schemes, copy an existing scheme to get all the tokens and customize as required. For example, if you wanted to add a section
+
+## Extending the theme variables
+
+The starting set of color theme variables is just the barebones to get you started. You can add more color variables to extend the themes as required. Just remember to add the tokens to all color schemes.
+
+You might want to add color schemes for positive or negative elements. You can do this by adding a new color scheme and customizing the tokens as required.
+
+```css
+[data-color-scheme='positive'] {
+    --color-primary: oklch(62.7% 0.194 149.214);
+    --color-primary-hover: oklch(57.7% 0.245 27.325);
+}
+
+[data-color-scheme='negative'] {
+    --color-primary: oklch(62.7% 0.194 149.214);
+    --color-primary-hover: oklch(57.7% 0.245 27.325);
+}
+```
+
+## Properties
+
+By default, applying the color scheme will also set a background, sometimes we don't want this. You can use the `data-bg-transparent` property to disable this.
+
+We also have an alternative background property `data-bg-alt` which can be used to set a different background color. This is useful for sections that should have a different background color than the main content but maintain the same color scheme.
+
+<Iframe>
+    <section data-color-scheme="dark">
+        <h2>Section Title</h2>
+        <p color="var(--color-foreground-secondary)">Section content</p>
+    </section>
+    <section data-color-scheme="dark" data-bg-transparent>
+        <h2>Section Title</h2>
+        <p color="var(--color-foreground-secondary)">Section content</p>
+    </section>
+    <section data-color-scheme="dark" data-bg-alt>
+        <h2>Section Title</h2>
+        <p color="var(--color-foreground-secondary)">Section content</p>
+    </section>
+</Iframe>

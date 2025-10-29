@@ -6,7 +6,7 @@
 
 @layer reset, base, layout, components, utilities, animations;
 
-@import-glob "./{tokens,reset,utilities}.css";
+@import-glob "./{reset,utilities}.css";
 @import-glob "./tokens/*.css" layer(tokens);
 @import-glob "./layout/*.css" layer(layout);
 @import-glob "./components/*.css" layer(components);

@@ -15,11 +15,11 @@ Preschool is a barebones starter framework meant to be extended and customized f
 
 - **CSS-only components** for simple presentational elements (buttons, cards)
 - **Web components** for interactive elements (framework-agnostic)
-- **Scroll animations** - modern AOS replacement with Lenis smooth scrolling
+- **Scroll animations** - modern AOS implementation using IntersectionObserver
 - **Flexible theme system** using `data-color-scheme` attributes (light, dark, accent, etc.)
 - **Scoped theming** - apply themes globally or to individual sections/components
 - **Fluid spacing** using the Utopia methodology
-- **Smooth scrolling** powered by Lenis for fluid, performant page navigation
+- **Performant animations** - hardware-accelerated CSS transforms with IntersectionObserver
 
 ## Installation
 
@@ -34,6 +34,15 @@ npm install preschool
 ```js
 import 'preschool'
 import 'preschool/styles'
+```
+
+### Import AOS only (scroll animations)
+
+If you only need the scroll animations without the full framework:
+
+```js
+import 'preschool/aos'
+import 'preschool/aos.css'
 ```
 
 ### Import selectively
@@ -66,7 +75,14 @@ Apply color schemes globally or to specific sections:
 
 ### Scroll Animations
 
-Preschool includes a modern replacement for AOS (Animate On Scroll) powered by Lenis for smooth, performant scroll animations.
+Preschool includes a modern implementation of scroll animations using the IntersectionObserver API for performant, hardware-accelerated animations.
+
+**How it works:**
+- Uses **IntersectionObserver** to detect when elements enter/exit the viewport
+- Applies CSS classes (`aos-animate`) to trigger **hardware-accelerated CSS transforms**
+- Supports **ResizeObserver** to handle dynamic content and responsive layouts
+- Automatically recalculates positions when new elements are added (via MutationObserver)
+- Zero dependencies - just native browser APIs
 
 #### Basic Usage
 
@@ -92,18 +108,20 @@ Add the `data-aos` attribute to any element:
 
 **Flip:** `flip-up`, `flip-down`, `flip-left`, `flip-right`
 
-#### Configuration Attributes
+#### Per-Element Configuration Attributes
 
-- `data-aos` - Animation type (required)
-- `data-aos-duration` - Animation duration in ms (50-3000, steps of 50)
-- `data-aos-delay` - Animation delay in ms (50-3000, steps of 50)
+Animation timing and behavior can be customized per-element using HTML `data-aos-*` attributes. These are handled by CSS, not JavaScript:
+
+- `data-aos` - Animation type (required) - see Available Animations above
+- `data-aos-duration` - Animation duration in ms (50-1000, steps of 50)
+- `data-aos-delay` - Animation delay in ms (50-3000, steps of 50+)
 - `data-aos-easing` - Easing function (e.g., `ease`, `ease-in-out`, `ease-in-back`)
-- `data-aos-offset` - Offset from viewport in pixels (default: 120)
-- `data-aos-once` - Animate only once (`true`/`false`)
-- `data-aos-mirror` - Reverse animation when scrolling up (`true`/`false`)
-- `data-aos-anchor-placement` - Trigger position (e.g., `top-bottom`, `center-center`)
+- `data-aos-once` - Animate only once (`true`/`false`) - overrides global setting
+- `data-aos-root-margin` - Custom trigger point for this element (CSS margin syntax)
+- `data-aos-threshold` - Custom intersection threshold for this element (0-1)
+- `data-aos-id` - Optional ID for debugging/tracking
 
-#### Example with Configuration
+#### Example with Per-Element Configuration
 
 ```html
 <div
@@ -113,47 +131,71 @@ Add the `data-aos` attribute to any element:
   data-aos-easing="ease-in-out"
   data-aos-once="true"
 >
-  Content
+  This element animates with custom timing
+</div>
+
+<div
+  data-aos="zoom-in"
+  data-aos-root-margin="0px 0px -30% 0px"
+>
+  This triggers when 30% from bottom of viewport
 </div>
 ```
 
-#### Custom Configuration
+#### Global Configuration Options
 
-You can configure AOS globally:
+You can configure AOS globally with these JavaScript options:
 
 ```js
-import { initAOS } from 'preschool'
+import AOS from 'preschool/aos'
 
-initAOS({
-  duration: 600,
-  easing: 'ease-out',
-  once: true,
-  offset: 100,
+AOS.init({
+  // IntersectionObserver options
+  rootMargin: '0px 0px -20% 0px',  // When to trigger (CSS margin syntax)
+  threshold: 0,                     // Intersection threshold (0-1)
+
+  // Behavior options
+  once: true,                       // Animate only once (true/false)
+
+  // Class names
+  animatedClassName: 'aos-animate', // Class added when animated
+  initClassName: 'aos-init',        // Class added on initialization
+
+  // Advanced options
+  startEvent: 'DOMContentLoaded',   // When to start observing
+  useClassNames: false,             // Use data-aos value as class name
+  disableMutationObserver: false,   // Disable auto-detection of new elements
 })
 ```
 
-#### Access Lenis Instance
+**Note:** Animation properties like `duration`, `delay`, and `easing` are set via HTML `data-aos-*` attributes, not JavaScript options. These are handled purely by CSS.
 
-Lenis is available for custom scroll interactions:
+#### Programmatic Control
+
+AOS provides methods for manual control:
 
 ```js
-import { getLenis, scrollTo } from 'preschool'
+import AOS from 'preschool/aos'
 
-// Get Lenis instance
-const lenis = getLenis()
+// Refresh AOS (recalculate element positions)
+AOS.refresh()
 
-// Custom scroll event
-lenis.on('scroll', (e) => {
-  console.log('Scroll position:', e.animatedScroll)
-})
+// Disable all animations
+AOS.disable()
 
-// Smooth scroll to element
-scrollTo('#target', { duration: 2 })
+// Get current state
+const state = AOS.getState()
+console.log(state) // { initialized: true, elementCount: 10, ... }
+
+// Get all AOS elements
+const elements = AOS.getElements()
 ```
 
 #### WordPress/Non-Bundled Usage
 
 For WordPress or direct browser usage, include the UMD build:
+
+**Full Framework:**
 
 ```html
 <!-- Include CSS -->
@@ -162,13 +204,32 @@ For WordPress or direct browser usage, include the UMD build:
 <!-- Include JS -->
 <script src="path/to/preschool/dist/preschool.umd.cjs"></script>
 
-<!-- AOS is auto-initialized, Lenis is available via window.Preschool -->
-<script>
-  // Access Lenis
-  const lenis = window.Preschool.getLenis()
+<!-- AOS is auto-initialized -->
+```
 
-  // Smooth scroll
-  window.Preschool.scrollTo('#section', { duration: 1.5 })
+**AOS Only (scroll animations):**
+
+If you only need scroll animations without the full framework:
+
+```html
+<!-- Include AOS CSS -->
+<link rel="stylesheet" href="path/to/preschool/dist/aos.css">
+
+<!-- Include AOS JS -->
+<script src="path/to/preschool/dist/aos.umd.cjs"></script>
+
+<!-- AOS is auto-initialized and available via window.PreschoolAOS -->
+<script>
+  // Optional: Reconfigure AOS with global options
+  window.PreschoolAOS.init({
+    rootMargin: '0px 0px -20% 0px',
+    once: true
+  })
+
+  // Or refresh manually
+  window.PreschoolAOS.refresh()
+
+  // Note: duration, delay, easing are set via data-aos-* HTML attributes, not JS options
 </script>
 ```
 

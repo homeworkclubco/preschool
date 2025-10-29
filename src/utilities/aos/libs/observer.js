@@ -24,9 +24,9 @@ function check(mutations) {
   if (!mutations) return;
 
   mutations.forEach(mutation => {
-    const addedNodes = Array.prototype.slice.call(mutation.addedNodes);
-    const removedNodes = Array.prototype.slice.call(mutation.removedNodes);
-    const allNodes = addedNodes.concat(removedNodes);
+    const addedNodes = Array.from(mutation.addedNodes);
+    const removedNodes = Array.from(mutation.removedNodes);
+    const allNodes = [...addedNodes, ...removedNodes];
 
     if (containsAOSNode(allNodes)) {
       return callback();
@@ -34,22 +34,12 @@ function check(mutations) {
   });
 }
 
-function getMutationObserver() {
-  return (
-    window.MutationObserver ||
-    window.WebKitMutationObserver ||
-    window.MozMutationObserver
-  );
-}
-
 function isSupported() {
-  return !!getMutationObserver();
+  return 'MutationObserver' in window;
 }
 
 function ready(selector, fn) {
   const doc = window.document;
-  const MutationObserver = getMutationObserver();
-
   const observer = new MutationObserver(check);
   callback = fn;
 

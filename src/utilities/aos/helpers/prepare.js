@@ -1,38 +1,59 @@
-/* Clearing variables */
+import getOption from './getOption';
 
-import { getPositionIn, getPositionOut } from './offsetCalculator';
-import getInlineOption from './getInlineOption';
-
+/**
+ * Prepare elements for Intersection Observer
+ * Extracts options from data attributes and groups elements by observer config
+ *
+ * @param {Array} $elements - Array of element objects
+ * @param {Object} options - Global options
+ * @returns {Map} Map of observer configs to element arrays
+ */
 const prepare = function($elements, options) {
-  $elements.forEach((el, i) => {
-    const mirror = getInlineOption(el.node, 'mirror', options.mirror);
-    const once = getInlineOption(el.node, 'once', options.once);
-    const id = getInlineOption(el.node, 'id');
-    const customClassNames =
-      options.useClassNames && el.node.getAttribute('data-aos');
+  const observerGroups = new Map();
 
-    const animatedClassNames = [options.animatedClassName]
-      .concat(customClassNames ? customClassNames.split(' ') : [])
-      .filter(className => typeof className === 'string');
+  $elements.forEach(({ node }) => {
+    // Get per-element options
+    const rootMargin = getOption(node, 'root-margin', options.rootMargin);
+    const threshold = getOption(node, 'threshold', options.threshold);
+    const once = getOption(node, 'once', options.once);
+    const id = getOption(node, 'id', null);
 
-    if (options.initClassName) {
-      el.node.classList.add(options.initClassName);
+    // Build animation class names
+    const customClassNames = options.useClassNames ? node.getAttribute('data-aos') : null;
+    const animatedClassNames = [
+      options.animatedClassName,
+      ...(customClassNames ? customClassNames.split(' ') : [])
+    ].filter(className => typeof className === 'string');
+
+    // Add init class
+    options.initClassName && node.classList.add(options.initClassName);
+
+    // Store metadata on element for intersection callback
+    node._aosMeta = {
+      options: {
+        once,
+        animatedClassNames,
+        id
+      },
+      animated: false
+    };
+
+    // Group elements by observer configuration
+    const configKey = `${rootMargin}|${threshold}`;
+    const group = observerGroups.get(configKey) ?? {
+      rootMargin,
+      threshold,
+      elements: []
+    };
+
+    if (!observerGroups.has(configKey)) {
+      observerGroups.set(configKey, group);
     }
 
-    el.position = {
-      in: getPositionIn(el.node, options.offset, options.anchorPlacement),
-      out: mirror && getPositionOut(el.node, options.offset)
-    };
-
-    el.options = {
-      once,
-      mirror,
-      animatedClassNames,
-      id
-    };
+    group.elements.push(node);
   });
 
-  return $elements;
+  return observerGroups;
 };
 
 export default prepare;

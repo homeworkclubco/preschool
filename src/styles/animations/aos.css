@@ -7,7 +7,7 @@
 
 :root {
     --aos-easing: var(--easing);
-    --aos-duration: 400ms;
+    --aos-duration: 600ms;
     --aos-distance: 100px;
     --aos-distance-negative: calc(-1 * var(--aos-distance));
     --aos-zoom-in-scale: 0.6;
@@ -226,7 +226,6 @@
 /* =============== FLIP ANIMATIONS =============== */
 
 [data-aos^='flip'][data-aos^='flip'] {
-    color: red;
     backface-visibility: hidden;
     opacity: 0;
     transition-property: opacity, transform;
@@ -258,407 +257,229 @@
 }
 
 /* Animation durations - can be overridden with data-aos-duration */
-[data-aos][data-aos-duration='50'] {
-    transition-duration: 50ms;
-}
 
-[data-aos][data-aos-duration='100'] {
-    transition-duration: 100ms;
-}
+[data-aos] {
+    &[data-aos-duration='50'] {
+        transition-duration: 50ms;
+    }
 
-[data-aos][data-aos-duration='150'] {
-    transition-duration: 150ms;
-}
+    &[data-aos-duration='100'] {
+        transition-duration: 100ms;
+    }
 
-[data-aos][data-aos-duration='200'] {
-    transition-duration: 200ms;
-}
+    &[data-aos-duration='150'] {
+        transition-duration: 150ms;
+    }
 
-[data-aos][data-aos-duration='250'] {
-    transition-duration: 250ms;
-}
+    &[data-aos-duration='200'] {
+        transition-duration: 200ms;
+    }
 
-[data-aos][data-aos-duration='300'] {
-    transition-duration: 300ms;
-}
+    &[data-aos-duration='250'] {
+        transition-duration: 250ms;
+    }
 
-[data-aos][data-aos-duration='350'] {
-    transition-duration: 350ms;
-}
+    &[data-aos-duration='300'] {
+        transition-duration: 300ms;
+    }
 
-[data-aos][data-aos-duration='400'] {
-    transition-duration: 400ms;
-}
+    &[data-aos-duration='350'] {
+        transition-duration: 350ms;
+    }
 
-[data-aos][data-aos-duration='450'] {
-    transition-duration: 450ms;
-}
+    &[data-aos-duration='400'] {
+        transition-duration: 400ms;
+    }
 
-[data-aos][data-aos-duration='500'] {
-    transition-duration: 500ms;
-}
+    &[data-aos-duration='450'] {
+        transition-duration: 450ms;
+    }
 
-[data-aos][data-aos-duration='550'] {
-    transition-duration: 550ms;
-}
+    &[data-aos-duration='500'] {
+        transition-duration: 500ms;
+    }
+    &[data-aos-duration='550'] {
+        transition-duration: 550ms;
+    }
 
-[data-aos][data-aos-duration='600'] {
-    transition-duration: 600ms;
-}
+    &[data-aos-duration='600'] {
+        transition-duration: 600ms;
+    }
 
-[data-aos][data-aos-duration='650'] {
-    transition-duration: 650ms;
-}
+    &[data-aos-duration='650'] {
+        transition-duration: 650ms;
+    }
 
-[data-aos][data-aos-duration='700'] {
-    transition-duration: 700ms;
-}
+    &[data-aos-duration='700'] {
+        transition-duration: 700ms;
+    }
 
-[data-aos][data-aos-duration='750'] {
-    transition-duration: 750ms;
-}
+    &[data-aos-duration='750'] {
+        transition-duration: 750ms;
+    }
 
-[data-aos][data-aos-duration='800'] {
-    transition-duration: 800ms;
-}
+    &[data-aos-duration='800'] {
+        transition-duration: 800ms;
+    }
 
-[data-aos][data-aos-duration='850'] {
-    transition-duration: 850ms;
-}
+    &[data-aos-duration='850'] {
+        transition-duration: 850ms;
+    }
 
-[data-aos][data-aos-duration='900'] {
-    transition-duration: 900ms;
-}
+    &[data-aos-duration='900'] {
+        transition-duration: 900ms;
+    }
 
-[data-aos][data-aos-duration='950'] {
-    transition-duration: 950ms;
-}
+    &[data-aos-duration='950'] {
+        transition-duration: 950ms;
+    }
 
-[data-aos][data-aos-duration='1000'] {
-    transition-duration: 1000ms;
+    &[data-aos-duration='1000'] {
+        transition-duration: 1000ms;
+    }
+
+    &[data-aos-duration='1250'] {
+        transition-duration: 1250ms;
+    }
+
+    &[data-aos-duration='1500'] {
+        transition-duration: 1500ms;
+    }
+
+    &[data-aos-duration='1750'] {
+        transition-duration: 1750ms;
+    }
+
+    &[data-aos-duration='2000'] {
+        transition-duration: 2000ms;
+    }
 }
 
 /* Animation delays - can be overridden with data-aos-delay */
 [data-aos] {
-    [data-aos-delay='50'] {
+    &[data-aos-delay] {
         transition-delay: 0;
-
-        &.aos-animate {
-            transition-delay: 50ms;
-        }
     }
-}
 
-[data-aos][data-aos-delay='100'] {
-    transition-delay: 0;
+    &[data-aos-delay='50'].aos-animate {
+        transition-delay: 50ms;
+    }
 
-    &.aos-animate {
+    &[data-aos-delay='100'].aos-animate {
         transition-delay: 100ms;
     }
-}
 
-[data-aos][data-aos-delay='150'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='150'].aos-animate {
         transition-delay: 150ms;
     }
-}
 
-[data-aos][data-aos-delay='200'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='200'].aos-animate {
         transition-delay: 200ms;
     }
-}
 
-[data-aos][data-aos-delay='250'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='250'].aos-animate {
         transition-delay: 250ms;
     }
-}
 
-[data-aos][data-aos-delay='300'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='300'].aos-animate {
         transition-delay: 300ms;
     }
-}
 
-[data-aos][data-aos-delay='350'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='350'].aos-animate {
         transition-delay: 350ms;
     }
-}
 
-[data-aos][data-aos-delay='400'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='400'].aos-animate {
         transition-delay: 400ms;
     }
-}
 
-[data-aos][data-aos-delay='450'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='450'].aos-animate {
         transition-delay: 450ms;
     }
-}
 
-[data-aos][data-aos-delay='500'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='500'].aos-animate {
         transition-delay: 500ms;
     }
-}
 
-[data-aos][data-aos-delay='550'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='550'].aos-animate {
         transition-delay: 550ms;
     }
-}
 
-[data-aos][data-aos-delay='600'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='600'].aos-animate {
         transition-delay: 600ms;
     }
-}
 
-[data-aos][data-aos-delay='650'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='650'].aos-animate {
         transition-delay: 650ms;
     }
-}
 
-[data-aos][data-aos-delay='700'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='700'].aos-animate {
         transition-delay: 700ms;
     }
-}
 
-[data-aos][data-aos-delay='750'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='750'].aos-animate {
         transition-delay: 750ms;
     }
-}
 
-[data-aos][data-aos-delay='800'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='800'].aos-animate {
         transition-delay: 800ms;
     }
-}
 
-[data-aos][data-aos-delay='850'] {
-    transition-delay: 0;
-
-    &.aos-animate {
+    &[data-aos-delay='850'].aos-animate {
         transition-delay: 850ms;
     }
-}
 
-[data-aos][data-aos-delay='900'] {
-    transition-delay: 0;
-}
+    &[data-aos-delay='900'].aos-animate {
+        transition-delay: 900ms;
+    }
 
-[data-aos][data-aos-delay='900'].aos-animate {
-    transition-delay: 900ms;
-}
+    &[data-aos-delay='950'].aos-animate {
+        transition-delay: 950ms;
+    }
 
-[data-aos][data-aos-delay='950'] {
-    transition-delay: 0;
-}
+    &[data-aos-delay='1000'].aos-animate {
+        transition-delay: 1000ms;
+    }
 
-[data-aos][data-aos-delay='950'].aos-animate {
-    transition-delay: 950ms;
-}
+    &[data-aos-delay='1100'].aos-animate {
+        transition-delay: 1100ms;
+    }
 
-[data-aos][data-aos-delay='1000'] {
-    transition-delay: 0;
-}
+    &[data-aos-delay='1200'].aos-animate {
+        transition-delay: 1200ms;
+    }
 
-[data-aos][data-aos-delay='1000'].aos-animate {
-    transition-delay: 1000ms;
-}
+    &[data-aos-delay='1300'].aos-animate {
+        transition-delay: 1300ms;
+    }
 
-[data-aos][data-aos-delay='1100'] {
-    transition-delay: 0;
-}
+    &[data-aos-delay='1400'].aos-animate {
+        transition-delay: 1400ms;
+    }
 
-[data-aos][data-aos-delay='1100'].aos-animate {
-    transition-delay: 1100ms;
-}
+    &[data-aos-delay='1500'].aos-animate {
+        transition-delay: 1500ms;
+    }
 
-[data-aos][data-aos-delay='1200'] {
-    transition-delay: 0;
-}
+    &[data-aos-delay='1600'].aos-animate {
+        transition-delay: 1600ms;
+    }
 
-[data-aos][data-aos-delay='1200'].aos-animate {
-    transition-delay: 1200ms;
-}
+    &[data-aos-delay='1700'].aos-animate {
+        transition-delay: 1700ms;
+    }
 
-[data-aos][data-aos-delay='1300'] {
-    transition-delay: 0;
-}
+    &[data-aos-delay='1800'].aos-animate {
+        transition-delay: 1800ms;
+    }
 
-[data-aos][data-aos-delay='1300'].aos-animate {
-    transition-delay: 1300ms;
-}
+    &[data-aos-delay='1900'].aos-animate {
+        transition-delay: 1900ms;
+    }
 
-[data-aos][data-aos-delay='1400'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='1400'].aos-animate {
-    transition-delay: 1400ms;
-}
-
-[data-aos][data-aos-delay='1500'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='1500'].aos-animate {
-    transition-delay: 1500ms;
-}
-
-[data-aos][data-aos-delay='1600'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='1600'].aos-animate {
-    transition-delay: 1600ms;
-}
-
-[data-aos][data-aos-delay='1700'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='1700'].aos-animate {
-    transition-delay: 1700ms;
-}
-
-[data-aos][data-aos-delay='1800'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='1800'].aos-animate {
-    transition-delay: 1800ms;
-}
-
-[data-aos][data-aos-delay='1900'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='1900'].aos-animate {
-    transition-delay: 1900ms;
-}
-
-[data-aos][data-aos-delay='2000'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='2000'].aos-animate {
-    transition-delay: 2000ms;
-}
-
-[data-aos][data-aos-delay='2100'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='2100'].aos-animate {
-    transition-delay: 2100ms;
-}
-
-[data-aos][data-aos-delay='2200'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='2200'].aos-animate {
-    transition-delay: 2200ms;
-}
-
-[data-aos][data-aos-delay='2300'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='2300'].aos-animate {
-    transition-delay: 2300ms;
-}
-
-[data-aos][data-aos-delay='2400'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='2400'].aos-animate {
-    transition-delay: 2400ms;
-}
-
-[data-aos][data-aos-delay='2500'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='2500'].aos-animate {
-    transition-delay: 2500ms;
-}
-
-[data-aos][data-aos-delay='2600'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='2600'].aos-animate {
-    transition-delay: 2600ms;
-}
-
-[data-aos][data-aos-delay='2700'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='2700'].aos-animate {
-    transition-delay: 2700ms;
-}
-
-[data-aos][data-aos-delay='2800'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='2800'].aos-animate {
-    transition-delay: 2800ms;
-}
-
-[data-aos][data-aos-delay='2900'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='2900'].aos-animate {
-    transition-delay: 2900ms;
-}
-
-[data-aos][data-aos-delay='3000'] {
-    transition-delay: 0;
-}
-
-[data-aos][data-aos-delay='3000'].aos-animate {
-    transition-delay: 3000ms;
+    &[data-aos-delay='2000'].aos-animate {
+        transition-delay: 2000ms;
+    }
 }
 
 /* Easing options */

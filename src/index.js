@@ -2,22 +2,20 @@
 import './styles/index.css';
 
 // Import all web components
-import './components/dropdown.js';
+import './components/dropdown/dropdown.js';
+import './components/accordion-item/accordion-item.ts';
+import './components/accordion/accordion.ts';
 
 // Import and auto-initialize AOS
-import AOS from './utilities/aos/aos.js';
+// import AOS from './utilities/aos/aos.js';
 
-// Auto-initialize AOS on DOM ready
-AOS.init();
+// // Auto-initialize AOS on DOM ready
+// AOS.init({
+//     rootMargin: '0px 0px -10% 0px',
+// });
 
 // Export components for programmatic use
-export { Dropdown } from './components/dropdown.js';
-
-// Export AOS functions for manual control and Lenis access
-// export {
-//     init as initAOS,
-//     refresh as refreshAOS,
-//     getLenis,
-//     scrollTo,
-//     destroy as destroyAOS,
-// } from './components/aos.js';
+export { default as AOS } from './utilities/aos/aos.js';
+export { Dropdown } from './components/dropdown/dropdown.js';
+export { HcAccordion } from './components/accordion/accordion.ts';
+export { HcAccordionItem } from './components/accordion-item/accordion-item.ts';

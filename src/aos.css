@@ -1,0 +1,14 @@
+/**
+ * Preschool AOS (Animate on Scroll) - Styles
+ * Standalone CSS for scroll animations
+ *
+ * Includes:
+ * - Easing tokens (transition timing functions)
+ * - AOS animation styles
+ */
+
+/* Import easing tokens required by AOS animations */
+@import './styles/tokens/easing.css';
+
+/* Import AOS animation styles */
+@import './styles/animations/aos.css';

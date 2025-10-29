@@ -1,8 +1,8 @@
-import viteConfig from './vite.config.js'
+import viteConfig from './vite.config.js';
 
 export default {
-  ...viteConfig.build,
-  watch: {
-    include: 'src/**',
-  },
-}
+    ...viteConfig.build,
+    watch: {
+        include: 'src/**',
+    },
+};

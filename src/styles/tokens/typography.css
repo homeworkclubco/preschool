@@ -1,0 +1,33 @@
+:root {
+    --font-family-body: system-ui, sans-serif;
+    --font-family-heading: system-ui, sans-serif;
+    --font-family-alt: system-ui, sans-serif;
+    --letter-spacing-tight: -0.05em;
+    --letter-spacing-normal: 0;
+    --letter-spacing-loose: 0.05em;
+    --letter-spacing-looser: 0.17em;
+    --line-height-tighter: 0.75;
+    --line-height-tight: 1;
+    --line-height-snug: 1.25;
+    --line-height: 1.5;
+    --line-height-loose: 1.75;
+    --font-weight-thin: 100;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 800;
+    --font-weight-black: 900;
+
+    --measure: 65ch;
+    --measure-heading-1: 30ch;
+    --measure-heading-2: var(--measure-s);
+    --measure-heading-3: var(--measure-s);
+    --measure-heading-4: var(--measure-s);
+    --measure-heading-5: var(--measure-s);
+    --measure-heading-6: var(--measure-s);
+    --measure-l: 75ch;
+    --measure-m: 50ch;
+    --measure-s: 45ch;
+    --measure-xs: 20ch;
+}

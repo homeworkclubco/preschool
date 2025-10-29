@@ -1,21 +1,21 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
-// Default config for dev server
+// AOS standalone bundle config
 export default defineConfig({
     build: {
+        emptyOutDir: false, // Don't empty dist folder (main bundle already there)
         lib: {
-            entry: resolve(__dirname, 'src/index.js'),
-            name: 'Preschool',
+            entry: resolve(__dirname, 'src/aos.js'),
+            name: 'PreschoolAOS',
             formats: ['es', 'umd'],
-            fileName: format =>
-                format === 'es' ? 'preschool.js' : 'preschool.umd.cjs',
+            fileName: format => (format === 'es' ? 'aos.js' : 'aos.umd.cjs'),
         },
         rollupOptions: {
             output: {
                 assetFileNames: assetInfo => {
                     if (assetInfo.name && assetInfo.name.endsWith('.css')) {
-                        return 'style.css';
+                        return 'aos.css';
                     }
                     return assetInfo.name;
                 },

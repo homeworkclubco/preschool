@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
-// Default config for dev server
+// Main Preschool bundle config
 export default defineConfig({
     build: {
         lib: {

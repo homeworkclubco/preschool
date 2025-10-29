@@ -1,223 +1,230 @@
 /**
  * *******************************************************
- * AOS (Animate on scroll) - wowjs alternative
- * made to animate elements on scroll in both directions
+ * AOS (Animate on scroll) - Modern Intersection Observer
+ * Animate elements on scroll in both directions
  * *******************************************************
  */
-// import styles from './../sass/aos.scss';
 
-// Modules & helpers
-import { throttle, debounce } from 'es-toolkit';
+import { debounce } from 'es-toolkit';
 import observer from './libs/observer';
-import detect from './helpers/detector';
-import handleScroll from './helpers/handleScroll';
+import handleIntersection from './helpers/handleIntersection';
 import prepare from './helpers/prepare';
 import elements from './helpers/elements';
 
 /**
  * Private variables
  */
-let $aosElements = [];
+let observerInstances = [];
+let resizeObserver = null;
 let initialized = false;
 
 /**
  * Default options
  */
 let options = {
-    offset: 120,
-    delay: 0,
-    easing: 'ease',
-    duration: 400,
-    disable: false,
+    rootMargin: '0px 0px -10% 0px', // Trigger when element is 10% from bottom of viewport
+    threshold: 0,
     once: false,
-    mirror: false,
-    anchorPlacement: 'top-bottom',
     startEvent: 'DOMContentLoaded',
     animatedClassName: 'aos-animate',
     initClassName: 'aos-init',
     useClassNames: false,
     disableMutationObserver: false,
-    throttleDelay: 99,
-    debounceDelay: 50,
 };
 
-// Detect not supported browsers (<=IE9)
-// http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
-const isBrowserNotSupported = () => document.all && !window.atob;
+/**
+ * Setup ResizeObserver to watch for element size changes
+ */
+const setupResizeObserver = allElements => {
+    // Disconnect existing resize observer
+    resizeObserver?.disconnect();
 
-const initializeScroll = function initializeScroll() {
-    // Extend elements objects in $aosElements with their positions
-    $aosElements = prepare($aosElements, options);
-    // Perform scroll event, to refresh view and show/hide elements
-    handleScroll($aosElements);
-
-    /**
-     * Handle scroll event to animate elements on scroll
-     */
-    window.addEventListener(
-        'scroll',
-        throttle(() => {
-            handleScroll($aosElements, options.once);
-        }, options.throttleDelay)
+    // Create new ResizeObserver
+    resizeObserver = new ResizeObserver(
+        debounce(() => {
+            if (initialized) createObservers();
+        }, 150)
     );
 
-    return $aosElements;
-};
-
-/**
- * Refresh AOS
- */
-const refresh = function refresh(initialize = false) {
-    // Allow refresh only when it was first initialized on startEvent
-    if (initialize) initialized = true;
-    if (initialized) initializeScroll();
-};
-
-/**
- * Hard refresh
- * create array with new elements and trigger refresh
- */
-const refreshHard = function refreshHard() {
-    $aosElements = elements();
-
-    if (isDisabled(options.disable) || isBrowserNotSupported()) {
-        return disable();
-    }
-
-    refresh();
-};
-
-/**
- * Disable AOS
- * Remove all attributes to reset applied styles
- */
-const disable = function () {
-    $aosElements.forEach(function (el, i) {
-        el.node.removeAttribute('data-aos');
-        el.node.removeAttribute('data-aos-easing');
-        el.node.removeAttribute('data-aos-duration');
-        el.node.removeAttribute('data-aos-delay');
-
-        if (options.initClassName) {
-            el.node.classList.remove(options.initClassName);
-        }
-
-        if (options.animatedClassName) {
-            el.node.classList.remove(options.animatedClassName);
-        }
+    // Observe all AOS elements
+    allElements.forEach(element => {
+        resizeObserver.observe(element);
     });
 };
 
 /**
- * Check if AOS should be disabled based on provided setting
+ * Create Intersection Observers for element groups
  */
-const isDisabled = function (optionDisable) {
-    return (
-        optionDisable === true ||
-        (optionDisable === 'mobile' && detect.mobile()) ||
-        (optionDisable === 'phone' && detect.phone()) ||
-        (optionDisable === 'tablet' && detect.tablet()) ||
-        (typeof optionDisable === 'function' && optionDisable() === true)
-    );
+const createObservers = function () {
+    // Disconnect existing observers
+    observerInstances.forEach(obs => obs.disconnect());
+    observerInstances = [];
+
+    // Get elements and prepare them
+    const $elements = elements();
+    const observerGroups = prepare($elements, options);
+
+    // Collect all elements for ResizeObserver
+    const allElements = [];
+
+    // Create an observer for each unique configuration
+    observerGroups.forEach(config => {
+        const { rootMargin, threshold, elements: groupElements } = config;
+
+        const observerOptions = {
+            root: null,
+            rootMargin,
+            threshold,
+        };
+
+        const intersectionObserver = new IntersectionObserver(
+            handleIntersection,
+            observerOptions
+        );
+
+        // Observe all elements in this group
+        groupElements.forEach(element => {
+            intersectionObserver.observe(element);
+            allElements.push(element);
+        });
+
+        observerInstances.push(intersectionObserver);
+    });
+
+    // Setup ResizeObserver for all elements
+    setupResizeObserver(allElements);
 };
 
 /**
- * Initializing AOS
- * - Create options merging defaults with user defined options
- * - Set attributes on <body> as global setting - css relies on it
- * - Attach preparing elements to options.startEvent,
- *   window resize and orientation change
- * - Attach function that handle scroll and everything connected to it
- *   to window scroll event and fire once document is ready to set initial state
+ * Refresh AOS - recreate observers
  */
-const init = function init(settings) {
-    const body = document.querySelector('body');
-    options = Object.assign(options, settings);
+const refresh = (initialize = false) => {
+    if (initialize) initialized = true;
+    initialized && createObservers();
+};
 
-    // Create initial array with elements -> to be fullfilled later with prepare()
-    $aosElements = elements();
+/**
+ * Disable AOS - disconnect all observers and remove classes
+ */
+const disable = () => {
+    // Disconnect all observers
+    observerInstances.forEach(obs => obs.disconnect());
+    observerInstances = [];
 
-    /**
-     * Disable mutation observing if not supported
-     */
+    // Disconnect ResizeObserver
+    resizeObserver?.disconnect();
+    resizeObserver = null;
+
+    // Remove classes from all elements
+    document.querySelectorAll('[data-aos]').forEach(element => {
+        options.initClassName &&
+            element.classList.remove(options.initClassName);
+        options.animatedClassName &&
+            element.classList.remove(options.animatedClassName);
+        delete element._aosMeta;
+    });
+
+    initialized = false;
+};
+
+/**
+ * Initialize AOS
+ */
+const init = (settings = {}) => {
+    // Merge options
+    options = { ...options, ...settings };
+
+    // Check MutationObserver support
     if (!options.disableMutationObserver && !observer.isSupported()) {
-        console.info(`
-      aos: MutationObserver is not supported on this browser,
-      code mutations observing has been disabled.
-      You may have to call "refreshHard()" by yourself.
-    `);
+        console.info(
+            'AOS: MutationObserver is not supported. ' +
+                'Call refresh() manually when adding new elements.'
+        );
         options.disableMutationObserver = true;
     }
 
-    /**
-     * Observe [aos] elements
-     * If something is loaded by AJAX
-     * it'll refresh plugin automatically
-     */
-    if (!options.disableMutationObserver) {
-        observer.ready('[data-aos]', refreshHard);
-    }
+    // Setup MutationObserver to detect new elements
+    !options.disableMutationObserver && observer.ready('[data-aos]', refresh);
 
-    /**
-     * Don't init plugin if option `disable` is set
-     * or when browser is not supported
-     */
-    if (isDisabled(options.disable) || isBrowserNotSupported()) {
-        return disable();
-    }
+    // Handle initialization timing
+    const startObserving = () => {
+        createObservers();
+        initialized = true;
+    };
 
-    /**
-     * Set global settings on body, based on options
-     * so CSS can use it
-     */
-    body.setAttribute('data-aos-easing', options.easing);
-    body.setAttribute('data-aos-duration', options.duration);
-    body.setAttribute('data-aos-delay', options.delay);
+    const { startEvent } = options;
+    const isDocReady = ['complete', 'interactive'].includes(
+        document.readyState
+    );
 
-    /**
-     * Handle initializing
-     */
-    if (['DOMContentLoaded', 'load'].indexOf(options.startEvent) === -1) {
-        // Listen to options.startEvent and initialize AOS
-        document.addEventListener(options.startEvent, function () {
-            refresh(true);
-        });
+    if (startEvent === 'DOMContentLoaded' && isDocReady) {
+        startObserving();
     } else {
-        window.addEventListener('load', function () {
-            refresh(true);
-        });
+        const eventName = startEvent === 'load' ? 'load' : startEvent;
+        const target = startEvent === 'load' ? window : document;
+        target.addEventListener(eventName, startObserving);
     }
+};
 
-    if (
-        options.startEvent === 'DOMContentLoaded' &&
-        ['complete', 'interactive'].indexOf(document.readyState) > -1
-    ) {
-        // Initialize AOS if default startEvent was already fired
-        refresh(true);
+/**
+ * Event listeners for AOS events
+ */
+const eventListeners = new Map();
+
+/**
+ * Add event listener
+ */
+const on = (eventName, callback) => {
+    if (!eventListeners.has(eventName)) {
+        eventListeners.set(eventName, []);
     }
+    eventListeners.get(eventName).push(callback);
+    return api;
+};
 
-    /**
-     * Refresh plugin on window resize or orientation change
-     */
-    window.addEventListener(
-        'resize',
-        debounce(refresh, options.debounceDelay, true)
-    );
+/**
+ * Get current state
+ */
+const getState = () => ({
+    initialized,
+    elementCount: document.querySelectorAll('[data-aos]').length,
+    observerCount: observerInstances.length,
+    options: { ...options },
+});
 
-    window.addEventListener(
-        'orientationchange',
-        debounce(refresh, options.debounceDelay, true)
-    );
+/**
+ * Get all AOS elements
+ */
+const getElements = () => Array.from(document.querySelectorAll('[data-aos]'));
 
-    return $aosElements;
+/**
+ * Get observer instances
+ */
+const getObservers = () => [...observerInstances];
+
+/**
+ * Public API object
+ */
+const api = {
+    init: settings => {
+        init(settings);
+        return api;
+    },
+    refresh: initialize => {
+        refresh(initialize);
+        return api;
+    },
+    disable: () => {
+        disable();
+        return api;
+    },
+    on,
+    getState,
+    getElements,
+    getObservers,
 };
 
 /**
  * Export Public API
  */
-
-export default {
-    init,
-    refresh,
-    refreshHard,
-};
+export default api;

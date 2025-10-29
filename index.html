@@ -1,153 +1,302 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-color-scheme="light">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Preschool - Development Preview</title>
-  <style>
-    .debug {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: rgba(0, 0, 0, 0.9);
-      color: #0f0;
-      padding: 10px;
-      font-size: 11px;
-      border-radius: 4px;
-      max-width: 250px;
-      z-index: 1000;
-      font-family: monospace;
-    }
-    .section-spacer {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
-</head>
-<body>
-  <div class="debug" id="debug">Loading...</div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Preschool - Development Preview</title>
+        <style>
+            .debug {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                background: rgba(0, 0, 0, 0.9);
+                color: #0f0;
+                padding: 10px;
+                font-size: 11px;
+                border-radius: 4px;
+                max-width: 250px;
+                z-index: 1000;
+                font-family: monospace;
+            }
+            .section-spacer {
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="debug" id="debug">Loading...</div>
 
-  <div style="max-width: 800px; margin: 0 auto; padding: 2rem;">
-    <h1 data-aos="fade-down">Preschool Framework</h1>
-    <p data-aos="fade-up" data-aos-delay="200">Development preview with AOS animations</p>
+        <div style="max-width: 800px; margin: 0 auto; padding: 2rem">
+            <h1 data-aos="fade-down">Preschool Framework</h1>
+            <p data-aos="fade-up" data-aos-delay="200">
+                Development preview with AOS animations
+            </p>
 
-    <section class="p-lg">
-      <h2>Buttons</h2>
-      <div class="flex gap-md" style="flex-wrap: wrap;">
-        <button class="btn btn--primary">Default Button</button>
-        <button class="btn btn--outline">Outline Button</button>
-        <button class="btn btn--ghost">Ghost Button</button>
-        <button class="btn btn--primary btn--sm">Small Button</button>
-        <button class="btn btn--primary btn--lg">Large Button</button>
-        <button class="btn btn--primary" disabled>Disabled</button>
-      </div>
-    </section>
+            <section class="p-lg">
+                <h2>Buttons</h2>
+                <div class="flex gap-md" style="flex-wrap: wrap">
+                    <button class="btn btn--primary">Default Button</button>
+                    <button class="btn btn--outline">Outline Button</button>
+                    <button class="btn btn--ghost">Ghost Button</button>
+                    <button class="btn btn--primary btn--sm">
+                        Small Button
+                    </button>
+                    <button class="btn btn--primary btn--lg">
+                        Large Button
+                    </button>
+                    <button class="btn btn--primary" disabled>Disabled</button>
+                </div>
+            </section>
 
-    <section class="p-lg">
-      <h2>Dropdown</h2>
-      <ps-dropdown>
-        <button slot="trigger" class="btn btn--primary">Open Menu</button>
-        <div slot="content">
-          <a href="#" style="padding: 0.5rem; display: block;">Option 1</a>
-          <a href="#" style="padding: 0.5rem; display: block;">Option 2</a>
-          <a href="#" style="padding: 0.5rem; display: block;">Option 3</a>
+            <section class="p-lg">
+                <h2>Dropdown</h2>
+                <ps-dropdown>
+                    <button slot="trigger" class="btn btn--primary">
+                        Open Menu
+                    </button>
+                    <div slot="content">
+                        <a href="#" style="padding: 0.5rem; display: block"
+                            >Option 1</a
+                        >
+                        <a href="#" style="padding: 0.5rem; display: block"
+                            >Option 2</a
+                        >
+                        <a href="#" style="padding: 0.5rem; display: block"
+                            >Option 3</a
+                        >
+                    </div>
+                </ps-dropdown>
+            </section>
+
+            <section class="p-lg">
+                <h2>Accordion (Single Expand)</h2>
+                <hc-accordion>
+                    <hc-accordion-item label="What is Preschool?">
+                        <p>
+                            Preschool is a minimal, extensible CSS framework and
+                            web component library designed for modern web
+                            applications.
+                        </p>
+                    </hc-accordion-item>
+                    <hc-accordion-item label="Key Features" expanded>
+                        <ul>
+                            <li>
+                                Fully accessible components following WAI-ARIA
+                                patterns
+                            </li>
+                            <li>TypeScript support with Lit framework</li>
+                            <li>Customizable with CSS custom properties</li>
+                            <li>Smooth animations with Web Animations API</li>
+                        </ul>
+                    </hc-accordion-item>
+                    <hc-accordion-item label="How to Use">
+                        <p>
+                            Simply import the components and use them in your
+                            HTML. All components are framework-agnostic and work
+                            with vanilla JavaScript, React, Vue, or any other
+                            framework.
+                        </p>
+                        <button class="btn btn--primary">Get Started</button>
+                    </hc-accordion-item>
+                    <hc-accordion-item label="Disabled Item" disabled>
+                        <p>This item is disabled and cannot be expanded.</p>
+                    </hc-accordion-item>
+                </hc-accordion>
+            </section>
+
+            <section class="p-lg">
+                <h2>Accordion (Multiple Expand)</h2>
+                <hc-accordion allow-multiple>
+                    <hc-accordion-item>
+                        <span class="label" slot="label">
+                            <span style="color: red">Label using slot</span>
+                        </span>
+                        <pre
+                            style="
+                                background: #f5f5f5;
+                                padding: 1rem;
+                                border-radius: 0.5rem;
+                                overflow-x: auto;
+                            "
+                        >
+                        npm install preschool
+                        </pre>
+                    </hc-accordion-item>
+                    <hc-accordion-item label="Configuration" expanded>
+                        <p>
+                            Configure your components using CSS custom
+                            properties or JavaScript properties.
+                        </p>
+                    </hc-accordion-item>
+                    <hc-accordion-item label="Customization" expanded>
+                        <p>
+                            All components can be styled using CSS custom
+                            properties. You can also extend the base classes to
+                            create your own custom components.
+                        </p>
+                    </hc-accordion-item>
+                </hc-accordion>
+            </section>
+
+            <section class="p-lg">
+                <h2>Accordion (Icon Customization)</h2>
+                <hc-accordion>
+                    <hc-accordion-item label="Default Icon (End)">
+                        <p>
+                            This uses the default chevron icon at the end
+                            position.
+                        </p>
+                    </hc-accordion-item>
+                    <hc-accordion-item
+                        label="Default Icon (Start)"
+                        icon-placement="start"
+                    >
+                        <p>
+                            This uses the default chevron icon at the start
+                            position.
+                        </p>
+                    </hc-accordion-item>
+                    <hc-accordion-item
+                        label="Custom Icon (Plus/Minus)"
+                        icon-placement="start"
+                        expanded
+                    >
+                        <svg
+                            slot="icon"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        <p>
+                            This uses a custom plus icon that doesn't rotate.
+                            You could use CSS to change it on expand!
+                        </p>
+                    </hc-accordion-item>
+                    <hc-accordion-item
+                        label="Custom Icon (Arrow)"
+                        icon-placement="end"
+                    >
+                        <svg
+                            slot="icon"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path d="M9 18l6-6-6-6" />
+                        </svg>
+                        <p>
+                            This uses a custom arrow icon at the end position.
+                        </p>
+                    </hc-accordion-item>
+                </hc-accordion>
+            </section>
+
+            <section class="p-lg">
+                <h2>Color Schemes</h2>
+                <div class="flex gap-md" style="flex-direction: column">
+                    <div
+                        data-color-scheme="light"
+                        class="p-md"
+                        style="border: 1px solid var(--color-border)"
+                    >
+                        <p>Light scheme (default)</p>
+                        <button class="btn btn--primary">Button</button>
+                    </div>
+                    <div
+                        data-color-scheme="dark"
+                        class="p-md"
+                        style="border: 1px solid var(--color-border)"
+                    >
+                        <p>Dark scheme</p>
+                        <button class="btn btn--primary">Button</button>
+                    </div>
+                    <div
+                        data-color-scheme="accent"
+                        class="p-md"
+                        style="border: 1px solid var(--color-border)"
+                    >
+                        <p>Accent scheme</p>
+                        <button class="btn btn--primary">Button</button>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-spacer">
+                <h2 data-aos="fade-up">Scroll Down for Animations</h2>
+            </div>
+
+            <section class="p-lg">
+                <h2 data-aos="zoom-in">AOS Animations Test</h2>
+                <div class="flex gap-md" style="flex-direction: column">
+                    <div
+                        data-aos="fade-right"
+                        data-aos-duration="800"
+                        class="p-md"
+                        style="border: 1px solid var(--color-border)"
+                    >
+                        <p>Fade Right Animation</p>
+                    </div>
+                    <div
+                        data-aos="fade-left"
+                        data-aos-duration="800"
+                        class="p-md"
+                        style="border: 1px solid var(--color-border)"
+                    >
+                        <p>Fade Left Animation</p>
+                    </div>
+                    <div
+                        data-aos="zoom-in"
+                        data-aos-delay="200"
+                        class="p-md"
+                        style="border: 1px solid var(--color-border)"
+                    >
+                        <p>Zoom In with Delay</p>
+                    </div>
+                    <div
+                        data-aos="slide-up"
+                        data-aos-duration="1000"
+                        class="p-md"
+                        style="border: 1px solid var(--color-border)"
+                    >
+                        <p>Slide Up Animation</p>
+                    </div>
+                    <div
+                        data-aos="flip-left"
+                        data-aos-duration="1200"
+                        class="p-md"
+                        style="border: 1px solid var(--color-border)"
+                    >
+                        <p>Flip Left Animation</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-spacer">
+                <div data-aos="fade-up" data-aos-easing="ease-in-out-back">
+                    <h2>More Animations</h2>
+                    <button
+                        class="btn btn--primary"
+                        data-aos="zoom-in"
+                        data-aos-delay="300"
+                    >
+                        Animated Button
+                    </button>
+                </div>
+            </div>
         </div>
-      </ps-dropdown>
-    </section>
 
-    <section class="p-lg">
-      <h2>Color Schemes</h2>
-      <div class="flex gap-md" style="flex-direction: column;">
-        <div data-color-scheme="light" class="p-md" style="border: 1px solid var(--color-border);">
-          <p>Light scheme (default)</p>
-          <button class="btn btn--primary">Button</button>
-        </div>
-        <div data-color-scheme="dark" class="p-md" style="border: 1px solid var(--color-border);">
-          <p>Dark scheme</p>
-          <button class="btn btn--primary">Button</button>
-        </div>
-        <div data-color-scheme="accent" class="p-md" style="border: 1px solid var(--color-border);">
-          <p>Accent scheme</p>
-          <button class="btn btn--primary">Button</button>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-spacer">
-      <h2 data-aos="fade-up">Scroll Down for Animations</h2>
-    </div>
-
-    <section class="p-lg">
-      <h2 data-aos="zoom-in">AOS Animations Test</h2>
-      <div class="flex gap-md" style="flex-direction: column;">
-        <div data-aos="fade-right" data-aos-duration="800" class="p-md" style="border: 1px solid var(--color-border);">
-          <p>Fade Right Animation</p>
-        </div>
-        <div data-aos="fade-left" data-aos-duration="800" class="p-md" style="border: 1px solid var(--color-border);">
-          <p>Fade Left Animation</p>
-        </div>
-        <div data-aos="zoom-in" data-aos-delay="200" class="p-md" style="border: 1px solid var(--color-border);">
-          <p>Zoom In with Delay</p>
-        </div>
-        <div data-aos="slide-up" data-aos-duration="1000" class="p-md" style="border: 1px solid var(--color-border);">
-          <p>Slide Up Animation</p>
-        </div>
-        <div data-aos="flip-left" data-aos-duration="1200" class="p-md" style="border: 1px solid var(--color-border);">
-          <p>Flip Left Animation</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-spacer">
-      <div data-aos="fade-up" data-aos-easing="ease-in-out-back">
-        <h2>More Animations</h2>
-        <button class="btn btn--primary" data-aos="zoom-in" data-aos-delay="300">Animated Button</button>
-      </div>
-    </div>
-  </div>
-
-  <script type="module" src="/src/index.js"></script>
-
-  <script type="module">
-    import { getLenis, refreshAOS } from '/src/index.js'
-
-    function updateDebug() {
-      const debugEl = document.getElementById('debug')
-      if (!debugEl) return
-
-      const lenis = getLenis()
-      const aosElements = document.querySelectorAll('[data-aos]')
-      const animatedElements = document.querySelectorAll('[data-aos].aos-animate')
-
-      debugEl.innerHTML = `
-        <strong>AOS Debug</strong><br>
-        Lenis: ${lenis ? '✓' : '✗'}<br>
-        Elements: ${aosElements.length}<br>
-        Animated: ${animatedElements.length}<br>
-        Scroll: ${lenis ? Math.round(lenis.scroll || 0) : 0}
-      `
-    }
-
-    // Initialize debug
-    setTimeout(() => {
-      updateDebug()
-
-      const lenis = getLenis()
-      if (lenis) {
-        console.log('✓ Lenis initialized')
-        lenis.on('scroll', updateDebug)
-      } else {
-        console.error('✗ Lenis NOT initialized')
-      }
-
-      refreshAOS()
-      updateDebug()
-    }, 500)
-
-    // Update every second as fallback
-    setInterval(updateDebug, 1000)
-  </script>
-</body>
+        <script type="module" src="/src/index.js"></script>
+    </body>
 </html>
