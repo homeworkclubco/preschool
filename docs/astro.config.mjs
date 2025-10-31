@@ -9,7 +9,7 @@ export default defineConfig({
             title: 'Preschool',
             customCss: [
                 // Relative path to your custom CSS file
-                // '../dist/style.css'
+                // '../dist/styles/index.css'
             ],
             social: [
                 {
@@ -22,6 +22,10 @@ export default defineConfig({
                 {
                     label: 'Getting Started',
                     autogenerate: { directory: 'get-started' },
+                },
+                {
+                    label: 'Layouts',
+                    autogenerate: { directory: 'layouts' },
                 },
                 {
                     label: 'Components',

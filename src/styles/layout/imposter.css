@@ -1,5 +1,4 @@
-@layer base {
-	/**
+/**
      * IMPOSTER LAYOUT
      * 
      * A layout that positions an element over another element, typically
@@ -13,43 +12,36 @@
      * 
      * Custom properties:
      * - --imposter-margin: Margin around the imposter element (default: 0px)
+	 *
+	 * Modifiers:
+	 * - imposter--margin-*: Sets margin around the imposter element
+	 * - imposter--contain: Contains the imposter element
+	 * - imposter--fixed: Fixes the imposter element in place
      */
-	.imposter {
-		--imposter-margin: 0px;
-		position: relative;
-	}
-
-	.imposter-contain {
-		overflow: hidden;
-	}
-
-	.imposter-element {
-		position: absolute;
-		top: var(--imposter-margin);
-		bottom: var(--imposter-margin);
-		left: var(--imposter-margin);
-		right: var(--imposter-margin);
-	}
-
-	.imposter-fixed {
-		position: fixed;
-	}
+.imposter {
+    --_imposter-margin: var(--imposter-margin, 0px);
+    position: relative;
 }
 
-@utility imposter-margin-* {
-	--imposter-margin: --value(--spacing-*);
+.imposter-contain {
+    overflow: hidden;
 }
 
-@utility imposter-contain {
-	overflow: hidden;
+.imposter-element {
+    position: absolute;
+    top: var(--_imposter-margin);
+    bottom: var(--_imposter-margin);
+    left: var(--_imposter-margin);
+    right: var(--_imposter-margin);
 }
-@utility imposter-fixed {
-	position: fixed;
+
+.imposter-fixed {
+    position: fixed;
 }
-@utility imposter-element {
-	position: absolute;
-	top: var(--imposter-margin);
-	bottom: var(--imposter-margin);
-	left: var(--imposter-margin);
-	right: var(--imposter-margin);
-}
+
+@ruler utility({
+    selector: '.imposter--margin',
+    property: '--imposter-margin',
+    scale: 'space',
+    generateAllCrossPairs: true,
+});

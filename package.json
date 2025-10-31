@@ -2,82 +2,90 @@
     "name": "preschool",
     "version": "0.0.1",
     "description": "A minimal, extensible CSS framework and web component library",
-    "type": "module",
-    "main": "./dist/preschool.umd.cjs",
-    "module": "./dist/preschool.js",
+    "source": "src/index.ts",
+    "targets": {
+        "main": {
+            "source": "src/index.ts",
+            "optimize": true,
+            "outputFormat": "commonjs"
+        },
+        "module": {
+            "source": "src/index.ts",
+            "optimize": true,
+            "outputFormat": "esmodule"
+        },
+        "browser": {
+            "source": "src/index.ts",
+            "optimize": true,
+            "outputFormat": "esmodule",
+            "includeNodeModules": true
+        },
+        "styles": {
+            "source": "src/styles/index.css",
+            "distDir": "./dist",
+            "outputFormat": "global"
+        }
+    },
+    "main": "dist/preschool.cjs",
+    "module": "dist/preschool.mjs",
+    "browser": "dist/preschool.browser.js",
+    "style": "dist/styles/index.css",
     "exports": {
         ".": {
-            "import": "./dist/preschool.js",
-            "require": "./dist/preschool.umd.cjs"
+            "import": "./dist/preschool.mjs",
+            "require": "./dist/preschool.cjs",
+            "types": "./dist/preschool.d.ts"
         },
-        "./styles": "./dist/style.css",
-        "./aos": {
-            "import": "./dist/aos.js",
-            "require": "./dist/aos.umd.cjs"
-        },
-        "./aos.css": "./dist/aos.css"
+        "./styles": "./dist/styles/index.css"
     },
-    "files": [
-        "dist"
-    ],
+    "@parcel/transformer-css": {
+        "drafts": {
+            "nesting": true
+        }
+    },
     "scripts": {
-        "dev": "vite",
-        "watch": "vite build --watch",
-        "build": "vite build --config vite.config.preschool.js && vite build --config vite.config.aos.js",
-        "build:preschool": "vite build --config vite.config.preschool.js",
-        "build:aos": "vite build --config vite.config.aos.js",
-        "preview": "vite preview",
+        "dev": "parcel serve src/**/*.html",
+        "watch": "parcel watch",
+        "build": "parcel build",
+        "preview": "parcel serve dist/preschool.js",
         "test": "vitest run",
         "test:watch": "vitest",
         "test:ui": "vitest --ui",
-        "format": "prettier --write \"**/*.{js,css,html,json,md}\"",
-        "format:check": "prettier --check \"**/*.{js,css,html,json,md}\"",
+        "format": "prettier --write \"**/*.{js,ts,css,html,json,md}\"",
+        "format:check": "prettier --check \"**/*.{js,ts,css,html,json,md}\"",
         "docs:dev": "cd docs && npm run dev",
         "docs:build": "cd docs && npm run build",
-        "docs:preview": "cd docs && npm run preview",
-        "storybook": "storybook dev -p 6006",
-        "build-storybook": "storybook build"
+        "docs:preview": "cd docs && npm run preview"
     },
-    "keywords": [
-        "css",
-        "framework",
-        "web-components",
-        "design-system",
-        "ui",
-        "accessible",
-        "animations",
-        "scroll-animations",
-        "aos",
-        "lenis",
-        "smooth-scroll"
-    ],
     "author": "",
     "license": "MIT",
     "dependencies": {
+        "@parcel/bundler-library": "^2.16.0",
+        "@swc/helpers": "^0.5.17",
         "es-toolkit": "^1.40.0",
         "lenis": "^1.3.11",
         "lit": "^3.2.1",
-        "postcss-import-ext-glob": "^2.1.1"
+        "postcss-import-ext-glob": "^2.1.1",
+        "postcss-ruler": "^1.1.0",
+        "postcss-utopia": "^1.1.0",
+        "postcss-value-parser": "^4.2.0"
     },
     "devDependencies": {
-        "@chromatic-com/storybook": "^4.1.1",
-        "@storybook/addon-a11y": "^9.1.10",
-        "@storybook/addon-docs": "^9.1.10",
-        "@storybook/web-components-vite": "^9.1.10",
+        "@parcel/packager-ts": "^2.16.0",
+        "@parcel/transformer-typescript-types": "^2.16.0",
         "@vitest/browser": "^3.2.4",
         "@vitest/ui": "^3.2.4",
-        "autoprefixer": "^10.4.20",
         "axe-core": "^4.10.2",
+        "buffer": "^6.0.3",
         "parcel": "^2.16.0",
         "playwright": "^1.49.1",
         "postcss": "^8.4.49",
         "postcss-custom-media": "^11.0.4",
+        "postcss-fluid": "^1.4.2",
         "postcss-import": "^16.1.1",
         "postcss-nesting": "^13.0.1",
         "prettier": "^3.6.2",
-        "storybook": "^9.1.10",
         "typescript": "^5.9.3",
-        "vite": "^7.1.9",
         "vitest": "^3.2.4"
     }
 }

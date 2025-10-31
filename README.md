@@ -29,28 +29,37 @@ npm install preschool
 
 ## Usage
 
-### Import everything
+Preschool is built as an npm package that you can import into any JavaScript/TypeScript project (React, Vue, vanilla JS, WordPress themes with build tools, etc.).
+
+### Basic Import (Everything)
+
+Import the entire framework - all CSS and web components:
 
 ```js
-import 'preschool'
-import 'preschool/styles'
+import 'preschool';
 ```
 
-### Import AOS only (scroll animations)
+This gives you:
+- ✅ All CSS styles (tokens, utilities, components, animations)
+- ✅ All web components (Dropdown, Accordion, AccordionItem)
+- ✅ Programmatic access to components
 
-If you only need the scroll animations without the full framework:
+### Import Components Selectively
 
-```js
-import 'preschool/aos'
-import 'preschool/aos.css'
-```
-
-### Import selectively
+Import just the components you need:
 
 ```js
-import 'preschool/styles/tokens.css'
-import 'preschool/styles/utilities.css'
-import 'preschool/styles/components/button.css'
+import { AOS, Dropdown, HcAccordion, HcAccordionItem } from 'preschool';
+
+// Initialize AOS with custom options
+AOS.init({
+  rootMargin: '0px 0px -20% 0px',
+  once: true
+});
+
+// Components are automatically registered as custom elements
+// Now you can use them in your HTML:
+// <hc-dropdown>, <hc-accordion>, <hc-accordion-item>
 ```
 
 ### Theming
@@ -191,69 +200,193 @@ console.log(state) // { initialized: true, elementCount: 10, ... }
 const elements = AOS.getElements()
 ```
 
-#### WordPress/Non-Bundled Usage
+### WordPress Theme Usage (with Build Tools)
 
-For WordPress or direct browser usage, include the UMD build:
+If you're using a modern WordPress theme setup with Webpack/Vite/Parcel:
 
-**Full Framework:**
-
-```html
-<!-- Include CSS -->
-<link rel="stylesheet" href="path/to/preschool/dist/style.css">
-
-<!-- Include JS -->
-<script src="path/to/preschool/dist/preschool.umd.cjs"></script>
-
-<!-- AOS is auto-initialized -->
+**Install the package:**
+```bash
+npm install preschool
 ```
 
-**AOS Only (scroll animations):**
+**In your theme's main JS file (e.g., `src/index.js`):**
+```js
+import 'preschool';
 
-If you only need scroll animations without the full framework:
+// Your CSS is now included, and web components are registered
+// Use <hc-dropdown>, <hc-accordion>, etc. in your PHP templates
+```
 
-```html
-<!-- Include AOS CSS -->
-<link rel="stylesheet" href="path/to/preschool/dist/aos.css">
+**In your theme's PHP template:**
+```php
+<div data-aos="fade-up">
+  <h2>Animated Heading</h2>
+</div>
 
-<!-- Include AOS JS -->
-<script src="path/to/preschool/dist/aos.umd.cjs"></script>
+<hc-accordion>
+  <hc-accordion-item label="FAQ Item 1">
+    <p>Answer content here</p>
+  </hc-accordion-item>
+</hc-accordion>
+```
 
-<!-- AOS is auto-initialized and available via window.PreschoolAOS -->
-<script>
-  // Optional: Reconfigure AOS with global options
-  window.PreschoolAOS.init({
-    rootMargin: '0px 0px -20% 0px',
-    once: true
-  })
+### WordPress (without Build Tools)
 
-  // Or refresh manually
-  window.PreschoolAOS.refresh()
+If you're not using a bundler, copy the built files from `node_modules/preschool/dist/` to your theme and enqueue them:
 
-  // Note: duration, delay, easing are set via data-aos-* HTML attributes, not JS options
-</script>
+**In your `functions.php`:**
+```php
+function enqueue_preschool() {
+  // Enqueue CSS
+  wp_enqueue_style(
+    'preschool',
+    get_template_directory_uri() . '/assets/preschool.css'
+  );
+
+  // Enqueue JS (module format for modern browsers)
+  wp_enqueue_script(
+    'preschool',
+    get_template_directory_uri() . '/assets/preschool.js',
+    array(),
+    null,
+    true
+  );
+
+  // Add type="module" attribute
+  add_filter('script_loader_tag', function($tag, $handle) {
+    if ($handle === 'preschool') {
+      return str_replace('<script', '<script type="module"', $tag);
+    }
+    return $tag;
+  }, 10, 2);
+}
+add_action('wp_enqueue_scripts', 'enqueue_preschool');
 ```
 
 ## Development
+
+This project uses **Parcel** for building and bundling. We maintain two separate configurations:
+- **Development** - Uses default Parcel config for serving `index.html`
+- **Library builds** - Uses library bundler for npm package distribution
+
+### Setup
 
 ```bash
 # Install dependencies
 npm install
 
-# Start development server
-npm run dev
+# Clear Parcel cache (recommended after pulling changes)
+rm -rf .parcel-cache
+```
 
-# Run tests
+### Development Workflows
+
+**Quick Component Testing:**
+```bash
+npm run dev
+```
+Serves `index.html` at http://localhost:1234 with hot module reload. Perfect for rapid prototyping and testing components in isolation.
+
+**Documentation Development:**
+```bash
+# Terminal 1: Watch and rebuild on changes
+npm run watch
+
+# Terminal 2: Run Astro docs site
+npm run docs:dev
+```
+This setup watches your source files, rebuilds to `dist/` on changes, and Astro hot-reloads the documentation site. The docs use iframes that import the built package for isolated component demos.
+
+**Building for Distribution:**
+```bash
+npm run build
+```
+Builds the library package to `dist/` using the library bundler. Outputs:
+- `dist/preschool.js` - Main entry (CommonJS)
+- `dist/module.js` - ES Module entry
+- `dist/preschool.*.css` - Bundled styles
+- `dist/types.d.ts` - TypeScript type definitions
+
+### Testing
+
+```bash
+# Run tests once
 npm test
 
 # Run tests in watch mode
 npm run test:watch
 
-# Build for production
-npm run build
-
-# Start documentation site
-npm run docs:dev
+# Run tests with UI
+npm run test:ui
 ```
+
+### Code Formatting
+
+```bash
+# Format all files
+npm run format
+
+# Check formatting without changes
+npm run format:check
+```
+
+## How Framework Distribution Works
+
+If you're new to building frameworks, here's how this package gets from your code to users' projects:
+
+### 1. Source Code (`/src`)
+Your framework's source code lives in `/src`:
+- `src/index.ts` - Main entry point that imports everything
+- `src/styles/` - CSS source files with PostCSS features
+- `src/components/` - Web component TypeScript/Lit code
+- `src/utilities/` - Utilities like AOS
+
+### 2. Build Process (`npm run build`)
+When you run `npm run build`, Parcel:
+1. Reads `src/index.ts` as the entry point (defined in `package.json` → `"source"`)
+2. Bundles all imports (CSS, TypeScript, dependencies)
+3. Processes CSS through PostCSS plugins (nesting, custom media, etc.)
+4. Compiles TypeScript to JavaScript
+5. Generates multiple output formats in `dist/`:
+   - **CommonJS** (`preschool.js`) - For Node.js and older bundlers
+   - **ES Modules** (`module.js`) - For modern bundlers and browsers
+   - **CSS** (`preschool.*.css`) - All styles bundled into one file
+   - **TypeScript types** (`types.d.ts`) - For TypeScript projects
+
+### 3. Package Publishing
+When you publish to npm (`npm publish`):
+- Only the `dist/` folder gets published (defined in `package.json` → `"files"`)
+- Your `package.json` tells bundlers which files to use:
+  - `"main": "dist/preschool.js"` - Default entry for require()
+  - `"module": "dist/module.js"` - Entry for ESM imports
+  - `"types": "dist/types.d.ts"` - TypeScript definitions
+
+### 4. User Installation
+When someone runs `npm install preschool`:
+1. npm downloads your `dist/` folder to their `node_modules/preschool/`
+2. Their bundler reads your `package.json` to find entry points
+3. When they write `import 'preschool'`, their bundler:
+   - Uses `module` entry for modern builds (preferred)
+   - Uses `main` entry for CommonJS builds
+   - Automatically includes the CSS file
+   - Gets TypeScript types from `types` entry
+
+### 5. What Gets Included
+When a user imports your framework:
+- **`import 'preschool'`** → Pulls in everything from `src/index.ts`:
+  - All CSS (automatically bundled)
+  - All web component registrations (Dropdown, Accordion, etc.)
+  - All exports (AOS, Dropdown, HcAccordion, etc.)
+
+This is why in your `src/index.ts`:
+```typescript
+import './styles/index.css';  // ← Ensures CSS is included
+import './components/dropdown/dropdown.ts';  // ← Registers <hc-dropdown>
+
+export { AOS, Dropdown, ... };  // ← Makes them importable
+```
+
+Everything imported at the top level gets bundled into the package, and everything exported becomes available to users via named imports!
 
 ## Documentation
 

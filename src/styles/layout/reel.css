@@ -1,40 +1,97 @@
-@layer base {
-	/**
-     * REEL LAYOUT
-     * 
-     * A horizontal scrolling layout for a series of items. Items maintain
-     * their intrinsic width and scroll horizontally when they overflow.
-     * 
-     * Usage:
-     *   <div class="reel reel-space-m">
-     *     <div>Item 1</div>
-     *     <div>Item 2</div>
-     *     <div>Item 3</div>
-     *   </div>
-     * 
-     * Custom properties:
-     * - --reel-space: Gap between items (default: var(--spacing-sm))
-     * - --reel-height: Fixed height for items (default: auto)
-     */
-	.reel {
-		--reel-space: var(--spacing-sm);
-		--reel-height: auto;
+/* --------------------------------------
+ * Reel
+ * 
+ * A horizontal scrolling container with snapping behavior.
+ * Items are laid out in a row with overflow scrolling.
+ * 
+ * Usage:
+ *   <div class="reel">
+ *     <div>Item 1</div>
+ *     <div>Item 2</div>
+ *     <div>Item 3</div>
+ *   </div>
+ * 
+ * Custom properties:
+ * - --reel-space: Gap between elements (default: var(--spacing-md))
+ * - --reel-item-width: Width of each item (default: auto)
+ * - --reel-height: Height of the reel (default: auto)
+ * - --reel-padding: Padding around the reel (default: 0)
+ *
+ * Modifiers:
+ * - reel--space-*: Sets gap between elements
+ * - reel--padding-*: Sets padding around the reel
+ * - reel--item-*: Sets width of each item
+ * -------------------------------------- */
 
-		display: flex;
-		gap: var(--reel-space);
-		overflow-x: auto;
-		block-size: var(--reel-height);
-	}
+.reel {
+    --_reel-space: var(--reel-space, var(--spacing-md));
+    --_reel-item-width: var(--reel-item-width, auto);
+    --_reel-height: var(--reel-height, auto);
+    --_reel-padding: var(--reel-padding, 0);
 
-	.reel > * {
-		flex: none;
-	}
+    display: flex;
+    gap: var(--_reel-space);
+    overflow-x: auto;
+    overflow-y: hidden;
+    block-size: var(--_reel-height);
+    padding: var(--_reel-padding);
 }
 
-@utility reel-space-* {
-	--reel-space: --value(--spacing-*);
+.reel > * {
+    flex: 0 0 var(--_reel-item-width);
 }
 
-@utility reel-height-* {
-	--reel-height: --value(--size-*);
+/* Hide scrollbar but keep functionality */
+.reel--no-bar {
+    scrollbar-width: none;
+}
+
+.reel--no-bar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Snap to items - start alignment */
+.reel--snap {
+    scroll-snap-type: x mandatory;
+}
+
+.reel--snap > * {
+    scroll-snap-align: start;
+}
+
+/* Snap to items - center alignment */
+.reel--snap-center {
+    scroll-snap-type: x mandatory;
+}
+
+.reel--snap-center > * {
+    scroll-snap-align: center;
+}
+
+@ruler utility({
+    selector: '.reel--space',
+    property: '--reel-space',
+    scale: 'space',
+    generateAllCrossPairs: true,
+});
+
+/* @ruler utility {
+    selector: '.reel--padding',
+    property: '--reel-padding',
+    scale: 'space',
+    generateAllCrossPairs: true,
+} */
+
+/* Item width presets */
+.reel--item-sm {
+    --reel-item-width: 200px;
+}
+.reel--item-md {
+    --reel-item-width: 300px;
+}
+.reel--item-lg {
+    --reel-item-width: 400px;
+}
+.reel--item-auto {
+    --reel-item-width: auto;
 }

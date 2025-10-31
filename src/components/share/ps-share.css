@@ -1,0 +1,92 @@
+/* ============================================================================
+   PS Share Component Styles
+   ============================================================================ */
+
+/* Component wrapper */
+ps-share {
+    display: inline-block;
+    position: relative;
+}
+
+ps-share[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Feedback tooltip */
+ps-share .ps-share-feedback {
+    position: absolute;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--ps-share-feedback-bg, var(--color-foreground, #0a0a0a));
+    color: var(--ps-share-feedback-color, var(--color-bg, #ffffff));
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(0.25rem);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+ps-share .ps-share-feedback.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Feedback placement variants */
+ps-share .ps-share-feedback.placement-top {
+    bottom: calc(100% + var(--ps-share-feedback-offset, 0.5rem));
+    left: 50%;
+    transform: translateX(-50%) translateY(0.25rem);
+}
+
+ps-share .ps-share-feedback.placement-top.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+ps-share .ps-share-feedback.placement-bottom {
+    top: calc(100% + var(--ps-share-feedback-offset, 0.5rem));
+    left: 50%;
+    transform: translateX(-50%) translateY(-0.25rem);
+}
+
+ps-share .ps-share-feedback.placement-bottom.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+ps-share .ps-share-feedback.placement-left {
+    right: calc(100% + var(--ps-share-feedback-offset, 0.5rem));
+    top: 50%;
+    transform: translateY(-50%) translateX(0.25rem);
+}
+
+ps-share .ps-share-feedback.placement-left.show {
+    transform: translateY(-50%) translateX(0);
+}
+
+ps-share .ps-share-feedback.placement-right {
+    left: calc(100% + var(--ps-share-feedback-offset, 0.5rem));
+    top: 50%;
+    transform: translateY(-50%) translateX(-0.25rem);
+}
+
+ps-share .ps-share-feedback.placement-right.show {
+    transform: translateY(-50%) translateX(0);
+}
+
+/* Icon sizing */
+ps-share .icon {
+    width: var(--ps-share-icon-size, 1.25rem);
+    height: var(--ps-share-icon-size, 1.25rem);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    ps-share .ps-share-feedback {
+        transition: none;
+    }
+}

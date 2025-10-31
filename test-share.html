@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PS Share Component Test</title>
+        <link rel="stylesheet" href="dist/styles/index.css" />
+    </head>
+    <body style="padding: 2rem; font-family: system-ui">
+        <h1>PS Share Component Test</h1>
+
+        <h2>Default Button (with external .btn and .is-icon classes)</h2>
+        <ps-share
+            label="Share this page"
+            url="https://example.com"
+            text="Check this out!"
+        ></ps-share>
+
+        <h2 style="margin-top: 2rem">Custom Button</h2>
+        <ps-share
+            label="Share"
+            url="https://example.com"
+            text="Custom share example"
+        >
+            <button class="btn" style="background: #3b82f6; color: white">
+                Custom Share Button
+            </button>
+        </ps-share>
+
+        <h2 style="margin-top: 2rem">Disabled State</h2>
+        <ps-share label="Share" url="https://example.com" disabled></ps-share>
+
+        <div
+            style="
+                margin-top: 2rem;
+                padding: 1rem;
+                background: #f0f0f0;
+                border-radius: 0.5rem;
+            "
+        >
+            <h3>Event Log:</h3>
+            <div
+                id="log"
+                style="font-family: monospace; font-size: 0.875rem"
+            ></div>
+        </div>
+
+        <script type="module" src="dist/preschool.mjs"></script>
+        <script>
+            const log = document.getElementById('log');
+
+            document.querySelectorAll('ps-share').forEach(share => {
+                share.addEventListener('ps-share-success', e => {
+                    log.innerHTML += `<div>✓ Share success: ${JSON.stringify(e.detail)}</div>`;
+                });
+
+                share.addEventListener('ps-share-copy', e => {
+                    log.innerHTML += `<div>📋 Copied to clipboard: ${e.detail.text}</div>`;
+                });
+
+                share.addEventListener('ps-share-error', e => {
+                    log.innerHTML += `<div style="color: red;">❌ Error: ${e.detail.message}</div>`;
+                });
+            });
+        </script>
+    </body>
+</html>

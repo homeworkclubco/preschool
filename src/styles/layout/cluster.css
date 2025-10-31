@@ -22,49 +22,66 @@
  * - --cluster-align: Align content (default: center)
  * 
  * Modifiers:
- * - cluster-space-*: Sets spacing between elements
- * - cluster-justify-start/end/center/between: Sets justify-content
- * - cluster-align-start/end/center: Sets align-items
- * - cluster-recursive: Applies spacing to all nested children
+ * - cluster--space-*: Sets spacing between elements
+ * - cluster--justify-start/end/center/between: Sets justify-content
+ * - cluster--align-start/end/center: Sets align-items
+ * - cluster--recursive: Applies spacing to all nested children
+ * - cluster--no-wrap: Prevents wrapping of children
  * -------------------------------------- */
-@layer base {
-	.cluster {
-		--cluster-space: var(--spacing-sm);
-		--cluster-justify: flex-start;
-		--cluster-align: center;
 
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--cluster-space);
-		justify-content: var(--cluster-justify);
-		align-items: var(--cluster-align);
-	}
-}
+.cluster {
+    --_cluster-space: var(--cluster-space, var(--spacing-sm));
+    --_cluster-justify: var(--cluster-justify, flex-start);
+    --_cluster-align: var(--cluster-align, center);
 
-/* Spacing modifiers */
-@utility cluster-space-* {
-	--cluster-space: --value(--spacing-*);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--_cluster-space);
+    justify-content: var(--_cluster-justify);
+    align-items: var(--_cluster-align);
 }
 
-@utility cluster-justify-start {
-	--cluster-justify: flex-start;
-}
-@utility cluster-justify-center {
-	--cluster-justify: center;
-}
-@utility cluster-justify-end {
-	--cluster-justify: flex-end;
-}
-@utility cluster-justify-between {
-	--cluster-justify: space-between;
+@ruler utility({
+    selector: '.cluster-space',
+    property: '--cluster-space',
+    scale: 'space',
+    generateAllCrossPairs: true,
+});
+
+.cluster--justify-start {
+    --cluster-justify: flex-start;
 }
 
-@utility cluster-align-start {
-	--cluster-align: flex-start;
+.cluster--justify-center {
+    --cluster-justify: center;
 }
-@utility cluster-align-center {
-	--cluster-align: center;
+
+.cluster--justify-end {
+    --cluster-justify: flex-end;
 }
-@utility cluster-align-end {
-	--cluster-align: flex-end;
+
+.cluster--justify-between {
+    --cluster-justify: space-between;
+}
+
+.cluster--align-start {
+    --cluster-align: flex-start;
+}
+
+.cluster--align-center {
+    --cluster-align: center;
+}
+
+.cluster--align-end {
+    --cluster-align: flex-end;
+}
+
+.cluster--recursive * {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--_cluster-space);
+}
+
+.cluster--no-wrap {
+    flex-wrap: nowrap;
 }

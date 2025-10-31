@@ -1,0 +1,326 @@
+---
+title: Container
+description: A centered layout container with customizable max-width and responsive padding
+---
+
+import Iframe from '../../../components/Iframe.astro';
+
+A centered layout container that constrains content width and provides consistent horizontal padding. The container automatically centers itself and adapts to different content types with preset width options.
+
+## Basic Usage
+
+The container centers content with a default max-width of 110rem (~1760px) and responsive horizontal padding.
+
+```html
+<div class="container">
+    <h1>Centered Content</h1>
+    <p>
+        This content is constrained to a maximum width and centered on the page.
+    </p>
+</div>
+```
+
+<Iframe>
+    <div class="container" style="border: 1px solid #ccc; background: #f0f0f0;">
+        <div style="background: #e8e8e8; padding: 1rem;">
+            <h3>Container Content</h3>
+            <p>Centered with max-width of 110rem and auto margins</p>
+        </div>
+    </div>
+</Iframe>
+
+## Default Behavior
+
+- Max-width: 110rem (~1760px)
+- Centered with `margin-inline: auto`
+- Horizontal padding: `var(--spacing-md-lg)` (responsive)
+- Padding adjusts with viewport size
+
+## Width Variants
+
+Control the maximum width using modifier classes:
+
+### Narrow (container--narrow)
+
+Uses `var(--measure-s)` - ideal for short-form content or narrow columns.
+
+```html
+<div class="container container--narrow">
+    <p>Narrow container for compact content</p>
+</div>
+```
+
+<Iframe>
+    <div
+        class="container container--narrow"
+        style="border: 1px solid #ccc; background: #f0f0f0;"
+    >
+        <div style="background: #e8e8e8; padding: 1rem;">
+            <p>Narrow container using --measure-s</p>
+        </div>
+    </div>
+</Iframe>
+
+### Prose (container--prose)
+
+Uses `var(--measure)` - optimal for readable text content (~45-75 characters per line).
+
+```html
+<div class="container container--prose">
+    <article>
+        <h1>Article Title</h1>
+        <p>Long-form content with optimal reading width...</p>
+    </article>
+</div>
+```
+
+<Iframe>
+    <div
+        class="container container--prose"
+        style="border: 1px solid #ccc; background: #f0f0f0;"
+    >
+        <div style="background: #e8e8e8; padding: 1rem;">
+            <h4>Prose Container</h4>
+            <p>
+                Optimal reading width using --measure for comfortable reading
+                experience.
+            </p>
+        </div>
+    </div>
+</Iframe>
+
+### Wide (container--wide)
+
+Uses `var(--measure-l)` - wider content area for dashboards or multi-column layouts.
+
+```html
+<div class="container container--wide">
+    <div class="dashboard-content">...</div>
+</div>
+```
+
+<Iframe>
+    <div
+        class="container container--wide"
+        style="border: 1px solid #ccc; background: #f0f0f0;"
+    >
+        <div style="background: #e8e8e8; padding: 1rem;">
+            <p>Wide container using --measure-l</p>
+        </div>
+    </div>
+</Iframe>
+
+### Full Width (container--full)
+
+Removes max-width constraint while maintaining horizontal padding.
+
+```html
+<div class="container container--full">
+    <p>Full-width content with padding</p>
+</div>
+```
+
+<Iframe>
+    <div
+        class="container container--full"
+        style="border: 1px solid #ccc; background: #f0f0f0;"
+    >
+        <div style="background: #e8e8e8; padding: 1rem;">
+            <p>Full-width container (no max-width, padding maintained)</p>
+        </div>
+    </div>
+</Iframe>
+
+## Full-Bleed Layouts
+
+Full-bleed containers create edge-to-edge layouts with a 12-column grid system, perfect for breaking out of the container while maintaining alignment.
+
+### Full-Bleed 12-Column
+
+```html
+<div class="container container--full-bleed-12">
+    <div style="grid-column: 1 / -1;">Edge to edge</div>
+    <div style="grid-column: 2 / -2;">Content with gutters</div>
+</div>
+```
+
+The full-bleed container:
+
+- Removes padding
+- Creates a 12-column grid with outer gutters
+- Each column is `max-width / 12`
+- Outer columns (`1` and `-1`) provide edge-to-edge capability
+
+### Full-Bleed 6-Column
+
+```html
+<div class="container container--full-bleed-6">
+    <div style="grid-column: 1 / 7;">Left half</div>
+    <div style="grid-column: 7 / -1;">Right half</div>
+</div>
+```
+
+**Note:** The current implementation sets `--container-columns: 12` for both variants. You may want to adjust this based on your needs.
+
+## Common Examples
+
+### Article Layout
+
+```html
+<article>
+    <div class="container container--prose">
+        <h1>Article Title</h1>
+        <p class="lead">Introduction paragraph...</p>
+        <p>Article content optimized for reading...</p>
+    </div>
+</article>
+```
+
+### Dashboard Layout
+
+```html
+<div class="container container--wide">
+    <header>
+        <h1>Dashboard</h1>
+    </header>
+    <div class="dashboard-grid">
+        <div class="card">Metrics</div>
+        <div class="card">Charts</div>
+    </div>
+</div>
+```
+
+### Marketing Page with Full-Bleed
+
+```html
+<div class="container container--full-bleed-12">
+    <!-- Hero section spans full width -->
+    <section style="grid-column: 1 / -1; background: linear-gradient(...);">
+        <div style="grid-column: 2 / -2;">
+            <h1>Hero Title</h1>
+        </div>
+    </section>
+
+    <!-- Content section with gutters -->
+    <section style="grid-column: 2 / -2;">
+        <p>Main content...</p>
+    </section>
+</div>
+```
+
+### Mixed Width Layout
+
+```html
+<main>
+    <!-- Wide header -->
+    <div class="container container--wide">
+        <header>
+            <h1>Site Title</h1>
+            <nav>Navigation</nav>
+        </header>
+    </div>
+
+    <!-- Prose content -->
+    <div class="container container--prose">
+        <article>
+            <h2>Article</h2>
+            <p>Reading-optimized content...</p>
+        </article>
+    </div>
+
+    <!-- Full-width footer -->
+    <div class="container container--full">
+        <footer>Full-width footer</footer>
+    </div>
+</main>
+```
+
+## Customization
+
+Override container behavior with CSS custom properties:
+
+```css
+.container {
+    /* Change default max-width */
+    --container-max-width: 90rem;
+
+    /* Adjust horizontal padding */
+    --container-padding: var(--spacing-xl);
+}
+```
+
+Create custom width variants:
+
+```css
+.container.is-ultrawide {
+    --container-max-width: 140rem;
+}
+
+.container.is-reading {
+    --container-max-width: 68ch; /* Character-based width */
+}
+```
+
+Adjust full-bleed grid columns:
+
+```css
+.container.container--full-bleed-custom {
+    --container-columns: 16; /* 16-column grid */
+}
+```
+
+## Responsive Padding
+
+The default padding (`--spacing-md-lg`) is responsive and adjusts based on viewport size. This ensures appropriate spacing on both mobile and desktop devices.
+
+To override with custom responsive padding:
+
+```css
+.container {
+    --container-padding: clamp(1rem, 4vw, 3rem);
+}
+```
+
+## Accessibility
+
+The container is purely presentational and doesn't affect semantics:
+
+```html
+<div class="container container--prose">
+    <main>
+        <h1>Main Content</h1>
+        <!-- Use semantic HTML as normal -->
+    </main>
+</div>
+```
+
+- Container doesn't affect heading hierarchy
+- Doesn't interfere with screen reader navigation
+- Maintains document outline
+- Use semantic elements (`<main>`, `<article>`, `<section>`) as appropriate
+
+## How It Works
+
+The container uses modern CSS for centering and responsive spacing:
+
+### Standard Container
+
+1. `max-width` constrains content width
+2. `margin-inline: auto` centers horizontally
+3. `padding-inline` adds horizontal padding that adapts responsively
+
+### Full-Bleed Grid
+
+1. Creates a 14-column grid (12 content + 2 gutters)
+2. `minmax(0, 1fr)` for outer gutters allows edge-to-edge content
+3. Inner columns use `minmax(0, calc(max-width / columns))` for proportional sizing
+4. Content can span any columns using `grid-column`
+
+## Comparison with Other Layouts
+
+- **Container**: Constrains width, centers content, adds padding
+- **Stack**: Vertical spacing between children
+- **Sidebar**: Side-by-side layout with flexible sidebar
+- **Cluster**: Horizontal wrapping layout with gaps
+
+Use container as the outer wrapper, then use other layout primitives inside for content organization.

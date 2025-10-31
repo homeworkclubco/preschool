@@ -1,46 +1,65 @@
-@import "../breakpoints.css";
+@import '../breakpoints.css';
 
-@layer base {
-  /**
-     * GRID LAYOUT
-     * 
-     * An auto-fitting grid layout that creates as many columns as will fit, based on 
-     * a minimum column width. Columns grow to fill available space equally.
-     * 
-     * Default behavior:
-     * - Minimum column width of 250px
-     * - Equal-width columns that grow to fill space
-     * - Responsive without media queries
-     * 
-     * Usage:
-     *   <div class="grid grid-min-300 grid-space-l">
-     *     <div>Item 1</div>
-     *     <div>Item 2</div>
-     *     <div>Item 3</div>
-     *   </div>
-     * 
-     * Custom properties:
-     * - --grid-min-width: Minimum width of each column (default: 250px)
-     * - --grid-space: Gap between grid items (default: var(--spacing-sm))
-     * 
-     * Modifiers:
-     * - grid-min-*: Sets minimum column width
-     * - grid-space-*: Controls gap between items
-     */
-  .grid {
-    --grid-min-width: 250px;
-    --grid-space: var(--spacing-sm);
+/**
+  * GRID LAYOUT
+  * 
+  * An auto-fitting grid layout that creates as many columns as will fit, based on 
+  * a minimum column width. Columns grow to fill available space equally.
+  * 
+  * Default behavior:
+  * - Minimum column width of 250px
+  * - Equal-width columns that grow to fill space
+  * - Responsive without media queries
+  * 
+  * Usage:
+  *   <div class="grid grid--min-md grid--space-l">
+  *     <div>Item 1</div>
+  *     <div>Item 2</div>
+  *     <div>Item 3</div>
+  *   </div>
+  * 
+  * Custom properties:
+  * - --grid-min-width: Minimum width of each column (default: 250px)
+  * - --grid-space: Gap between grid items (default: var(--spacing-sm))
+  * 
+  * Modifiers:
+  * - grid--min-*: Sets minimum column width
+  * - grid--space-*: Controls gap between items
+  * - grid--no-stretch: Prevents items from stretching to fill height
+  */
+.grid {
+    --_grid-min-width: var(--grid-min-width, 250px);
+    --_grid-space: var(--grid-space, var(--spacing-lg));
 
     display: grid;
-    gap: var(--grid-space);
-    grid-template-columns: repeat(auto-fit, minmax(var(--grid-min-width), 1fr));
-  }
+    gap: var(--_grid-space);
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(var(--_grid-min-width), 100%), 1fr)
+    );
 }
 
-@utility grid-min-* {
-  --grid-min-width: calc(--value(integer) * 1px);
+@ruler utility({
+    selector: '.grid--space',
+    property: '--grid-space',
+    scale: 'space',
+    generateAllCrossPairs: true,
+});
+
+.grid--min-xs {
+    --grid-min: 200px;
+}
+.grid--min-sm {
+    --grid-min: 250px;
+}
+.grid--min-md {
+    --grid-min: 300px;
+}
+.grid--min-lg {
+    --grid-min: 400px;
 }
 
-@utility grid-space-* {
-  --grid-space: --value(--spacing- *);
+/* No stretch - items don't fill height */
+.grid--no-stretch {
+    align-items: start;
 }

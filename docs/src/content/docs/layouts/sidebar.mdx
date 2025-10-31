@@ -1,0 +1,287 @@
+---
+title: Sidebar
+description: A flexible two-column layout that collapses into a single column when space is constrained
+---
+
+import Iframe from '../../../components/Iframe.astro';
+
+A layout for placing two elements side-by-side. When space permits, the sidebar element has a set width and the content element takes up the remaining space. When space is constrained, elements collapse into a single column.
+
+## Basic Usage
+
+The sidebar layout requires two child elements - the first acts as the sidebar, the second as the main content.
+
+```html
+<div class="sidebar">
+    <aside>Sidebar content</aside>
+    <main>Main content</main>
+</div>
+```
+
+<Iframe>
+    <div class="sidebar" style="border: 1px solid #ccc;">
+        <aside style="background: #f0f0f0; padding: 1rem;">Sidebar</aside>
+        <main style="background: #e8e8e8; padding: 1rem;">
+            Main content that grows to fill available space
+        </main>
+    </div>
+</Iframe>
+
+## Default Behavior
+
+- Left sidebar with content-based width (auto)
+- Content element has 50% minimum width
+- Elements stretch to equal height
+- Collapses to single column when content minimum cannot be maintained
+
+## Sidebar Width
+
+Control the fixed width of the sidebar element using width modifiers:
+
+```html
+<div class="sidebar sidebar--side-xs">...</div>
+<!-- ~240px - narrow nav -->
+<div class="sidebar sidebar-width-sm">...</div>
+<!-- ~320px - typical nav -->
+<div class="sidebar sidebar--side-md">...</div>
+<!-- ~400px - wide nav -->
+<div class="sidebar sidebar--side-lg">...</div>
+<!-- ~480px - dashboard panel -->
+```
+
+<Iframe>
+    <div class="stack space-l">
+        <div class="sidebar sidebar--side-xs" style="border: 1px solid #ccc;">
+            <aside style="background: #f0f0f0; padding: 1rem;">
+                XS Sidebar (15rem)
+            </aside>
+            <main style="background: #e8e8e8; padding: 1rem;">
+                Main content
+            </main>
+        </div>
+        <div class="sidebar sidebar--side-md" style="border: 1px solid #ccc;">
+            <aside style="background: #f0f0f0; padding: 1rem;">
+                MD Sidebar (25rem)
+            </aside>
+            <main style="background: #e8e8e8; padding: 1rem;">
+                Main content
+            </main>
+        </div>
+    </div>
+</Iframe>
+
+## Content Minimum Width
+
+Set the minimum width for the content area to control when the layout collapses:
+
+```html
+<div class="sidebar sidebar--content-min-xs">...</div>
+<!-- 40% - allows narrow content -->
+<div class="sidebar sidebar--content-min-sm">...</div>
+<!-- 50% - default, balanced -->
+<div class="sidebar sidebar--content-min-md">...</div>
+<!-- 60% - content priority -->
+<div class="sidebar sidebar--content-min-lg">...</div>
+<!-- 70% - heavy content focus -->
+<div class="sidebar sidebar--content-min-prose">...</div>
+<!-- var(--measure) - optimal reading width -->
+```
+
+The `prose` variant is particularly useful when the main content is text-heavy, as it maintains optimal line length for readability.
+
+## Sidebar Placement
+
+By default, the sidebar appears on the left. Use `sidebar--right` to place it on the right:
+
+```html
+<div class="sidebar sidebar--right sidebar--side-md">
+    <main>Main content (appears first/left)</main>
+    <aside>Sidebar (appears second/right)</aside>
+</div>
+```
+
+<Iframe>
+    <div
+        class="sidebar sidebar--right sidebar--side-md"
+        style="border: 1px solid #ccc;"
+    >
+        <main style="background: #e8e8e8; padding: 1rem;">Main content</main>
+        <aside style="background: #f0f0f0; padding: 1rem;">Right Sidebar</aside>
+    </div>
+</Iframe>
+
+## Spacing
+
+Control the gap between sidebar and content using the space utility:
+
+```html
+<div class="sidebar sidebar-space-xs">...</div>
+<div class="sidebar sidebar-space-sm">...</div>
+<div class="sidebar sidebar-space-md">...</div>
+<div class="sidebar sidebar-space-lg">...</div>
+<div class="sidebar sidebar-space-xl">...</div>
+```
+
+<Iframe>
+    <div class="stack space-l">
+        <div
+            class="sidebar sidebar-width-sm sidebar-space-xs"
+            style="border: 1px solid #ccc;"
+        >
+            <aside style="background: #f0f0f0; padding: 1rem;">Sidebar</aside>
+            <main style="background: #e8e8e8; padding: 1rem;">
+                Small gap (space-xs)
+            </main>
+        </div>
+        <div
+            class="sidebar sidebar-width-sm sidebar-space-xl"
+            style="border: 1px solid #ccc;"
+        >
+            <aside style="background: #f0f0f0; padding: 1rem;">Sidebar</aside>
+            <main style="background: #e8e8e8; padding: 1rem;">
+                Large gap (space-xl)
+            </main>
+        </div>
+    </div>
+</Iframe>
+
+## Prevent Equal Height
+
+By default, both elements stretch to match the tallest one. Use `sidebar--no-stretch` to prevent this:
+
+```html
+<div class="sidebar sidebar--no-stretch">
+    <aside>Short sidebar</aside>
+    <main>Tall content...</main>
+</div>
+```
+
+<Iframe>
+    <div
+        class="sidebar sidebar-width-sm sidebar--no-stretch"
+        style="border: 1px solid #ccc;"
+    >
+        <aside style="background: #f0f0f0; padding: 1rem;">Short sidebar</aside>
+        <main style="background: #e8e8e8; padding: 1rem;">
+            Tall content
+            <br />
+            Lorem ipsum dolor sit amet
+            <br />
+            consectetur adipiscing elit
+            <br />
+            sed do eiusmod tempor
+        </main>
+    </div>
+</Iframe>
+
+## Common Examples
+
+### Documentation Layout
+
+```html
+<div
+    class="sidebar sidebar-width-sm sidebar--content-min-prose sidebar-space-lg"
+>
+    <nav>
+        <h2>Navigation</h2>
+        <ul>
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#guide">Guide</a></li>
+            <li><a href="#api">API</a></li>
+        </ul>
+    </nav>
+    <article>
+        <h1>Documentation</h1>
+        <p>Main documentation content with optimal reading width...</p>
+    </article>
+</div>
+```
+
+### Dashboard Layout
+
+```html
+<div class="sidebar sidebar--side-lg sidebar--right sidebar-space-xl">
+    <main>
+        <h1>Dashboard</h1>
+        <p>Main dashboard content...</p>
+    </main>
+    <aside>
+        <h2>Analytics</h2>
+        <p>Statistics and metrics...</p>
+    </aside>
+</div>
+```
+
+### App Layout with Navigation
+
+```html
+<div class="sidebar sidebar--side-xs sidebar--content-min-md">
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#profile">Profile</a></li>
+            <li><a href="#settings">Settings</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1>Welcome</h1>
+        <p>Application content...</p>
+    </main>
+</div>
+```
+
+## Customization
+
+Override sidebar behavior with CSS custom properties:
+
+```css
+.sidebar {
+    /* Control sidebar width */
+    --sidebar-side-width: 18rem;
+
+    /* Control content minimum width */
+    --sidebar--content-min: 65%;
+
+    /* Control gap between elements */
+    --sidebar-space: var(--spacing-md);
+}
+```
+
+Or create custom width modifiers:
+
+```css
+.sidebar-width-custom {
+    --sidebar-side-width: 22rem;
+}
+```
+
+## Accessibility
+
+The sidebar layout is purely presentational. Ensure proper semantic HTML:
+
+```html
+<div class="sidebar">
+    <nav aria-label="Main navigation">
+        <!-- Navigation links -->
+    </nav>
+    <main>
+        <!-- Primary content -->
+    </main>
+</div>
+```
+
+- Use semantic elements (`<nav>`, `<aside>`, `<main>`)
+- Provide appropriate ARIA labels when needed
+- Ensure content order makes sense when layout collapses
+- Test with keyboard navigation and screen readers
+
+## How It Works
+
+The sidebar layout uses flexbox with the following technique:
+
+1. The sidebar has a fixed `flex-basis` (or auto for content-based)
+2. The content has `flex-basis: 0` and `flex-grow: 999` to consume available space
+3. The content has a `min-inline-size` that triggers wrapping when space is insufficient
+4. When wrapped, both elements take full width due to `flex-wrap: wrap`
+
+This creates a responsive layout without media queries, adapting to the container width automatically.

@@ -1,0 +1,16 @@
+{
+    "plugins": {
+        "postcss-ruler": {
+            minWidth: 375,
+            maxWidth: 1760,
+            generateAllCrossPairs: true,
+        },
+        "postcss-utopia": {
+            minWidth: 375,
+            maxWidth: 1760,
+        },
+        "postcss-import-ext-glob": {},
+        "postcss-import": {},
+        "postcss-custom-media": {},
+    }
+}

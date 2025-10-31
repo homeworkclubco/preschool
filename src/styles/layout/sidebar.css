@@ -1,94 +1,119 @@
 /* --------------------------------------
  * SIDEBAR LAYOUT
-   * 
-   * A layout for placing two elements side-by-side. When space permits, the sidebar 
-   * element has a set width and the content element takes up the remaining space. 
+   *
+   * A layout for placing two elements side-by-side. When space permits, the sidebar
+   * element has a set width and the content element takes up the remaining space.
    * When space is constrained, elements collapse into a single column.
-   * 
+   *
    * Default behavior:
    * - Left sidebar with content-based width
    * - Content element has 50% minimum width
    * - Elements stretch to equal height
-   * 
+   *
    * Usage:
-   *   <div class="sidebar sidebar-width-64 sidebar-space-l">
+   *   <div class="sidebar sidebar--side-md sidebar-space-l">
    *     <aside>Sidebar content</aside>
    *     <main>Main content</main>
    *   </div>
-   * 
+   *
    * Custom properties:
-   * - --sidebar-side-width: Width of sidebar when adjacent (default: content-based)
-   * - --sidebar-content-min: Minimum width of content element (default: 50%)  
-   * - --sidebar-space: Gap between elements (default: var(--spacing-sm))
-   * - --sidebar-side: Which side the sidebar appears on (default: left)
-   * 
+   * - --sidebar-side-width: Width of sidebar when adjacent (default: auto)
+   * - --sidebar--content-min: Minimum width of content element (default: 50%)
+   * - --_sidebar-space: Gap between elements (default: var(--spacing-lg))
+   *
    * Modifiers:
-   * - sidebar-width-*: Sets fixed width for sidebar element
-   * - sidebar-content-min-*: Sets minimum width for content (use percentages)
-   * - sidebar-space-*: Controls gap between elements
-   * - sidebar-side-left/right: Controls sidebar placement
-   * - sidebar-no-stretch: Prevents equal height stretching
+   * - sidebar--side-xs/sm/md/lg: Sets fixed width for sidebar element
+   * - sidebar--content-min-xs/sm/md/lg/prose: Sets minimum width for content
+   * - sidebar-space-*: Controls gap between elements (uses space scale)
+   * - sidebar--right: Places sidebar on right side (default: left)
+   * - sidebar--no-stretch: Prevents equal height stretching
  * -------------------------------------- */
-@layer base {
-	.sidebar {
-		--sidebar-side-width: null;
-		--sidebar-content-min: 50%;
-		--sidebar-space: var(--spacing-sm);
-		--sidebar-side: left;
 
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--sidebar-space);
-	}
+.sidebar {
+    --_sidebar-side-width: var(--sidebar-side-width, auto);
+    --_sidebar--content-min: var(--sidebar--content-min, 50%);
+    --_sidebar-space: var(--sidebar-space, var(--spacing-lg));
 
-	/* Default: both elements flexible */
-	.sidebar > * {
-		flex-basis: var(--sidebar-side-width, auto);
-	}
-
-	/* Content element (grows and has min-width) */
-	.sidebar > :last-child {
-		flex-basis: 0;
-		flex-grow: 999;
-		min-inline-size: var(--sidebar-content-min);
-	}
-
-	/* When side="right", content is first child */
-	.sidebar[style*="--sidebar-side: right"] > :first-child {
-		flex-basis: 0;
-		flex-grow: 999;
-		min-inline-size: var(--sidebar-content-min);
-	}
-
-	.sidebar[style*="--sidebar-side: right"] > :last-child {
-		flex-basis: var(--sidebar-side-width, auto);
-	}
-
-	/* No stretch option */
-	.sidebar-no-stretch {
-		align-items: flex-start;
-	}
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--_sidebar-space);
 }
 
-@utility sidebar-space-* {
-	--sidebar-space: --value(--spacing-*);
+@ruler utility({
+    selector: '.sidebar-space',
+    property: '--sidebar-space',
+    scale: 'space',
+    generateAllCrossPairs: true,
+});
+
+/* Sidebar element (fixed or flexible width) */
+.sidebar > :first-child {
+    flex-basis: var(--_sidebar-side-width);
 }
 
-@utility sidebar-side-left {
-	--sidebar-side: left;
-}
-@utility sidebar-side-right {
-	--sidebar-side: right;
-}
-
-@utility sidebar-content-min-* {
-	--sidebar-content-min: *;
+/* Content element (grows with min-width) */
+.sidebar > :last-child {
+    flex-basis: 0;
+    flex-grow: 999;
+    min-inline-size: var(--_sidebar--content-min);
 }
 
-@utility sidebar-width-* {
-	--sidebar-side-width: --value(--size-*);
+/* When sidebar is on right, swap the flex rules */
+.sidebar--right > :first-child {
+    flex-basis: 0;
+    flex-grow: 999;
+    min-inline-size: var(--_sidebar--content-min);
 }
 
-@utility sidebar-no-stretch {
-	align-items: flex-start;
+.sidebar--right > :last-child {
+    flex-basis: var(--_sidebar-side-width);
+}
+
+/* No stretch option */
+.sidebar--no-stretch {
+    align-items: flex-start;
+}
+
+/* ~240px - narrow nav */
+.sidebar--side-xs {
+    --sidebar-side-width: 15rem;
+}
+
+/* ~320px - typical nav */
+.sidebar-width-sm {
+    --sidebar-side-width: 20rem;
+}
+
+/* ~400px - wide nav */
+.sidebar--side-md {
+    --sidebar-side-width: 25rem;
+}
+
+/* ~480px - dashboard panel */
+.sidebar--side-lg {
+    --sidebar-side-width: 30rem;
+}
+
+/* Allows narrow content */
+.sidebar--content-min-xs {
+    --sidebar-content-min: 40%;
+}
+
+/* Default, balanced */
+.sidebar--content-min-sm {
+    --sidebar-content-min: 50%;
+}
+
+/* Content priority */
+.sidebar--content-min-md {
+    --sidebar-content-min: 60%;
+}
+
+/* Heavy content focus */
+.sidebar--content-min-lg {
+    --sidebar-content-min: 70%;
+}
+
+.sidebar--content-min-prose {
+    --sidebar-content-min: var(--measure);
 }

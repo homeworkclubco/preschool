@@ -7,10 +7,8 @@ interface Props {
   const slotHtml = await Astro.slots.render('default')
   const html = propHtml || slotHtml
 
-import css from '../../../dist/style.css?inline'
-import js from '../../../dist/preschool.umd.cjs?raw'
-
-
+import css from '../../../dist/styles/index.css?inline';
+import js from '../../../dist/preschool.browser.js?raw';
 
 ---
 

@@ -4,51 +4,43 @@
 
 .container {
     --_container-padding: var(--container-padding, var(--spacing-md-lg));
-    --_container-max-width: var(--container-max-width, 79rem);
+    --_container-max-width: var(--container-max-width, 110rem);
 
     max-width: var(--_container-max-width);
     margin-inline: auto;
     padding-inline: var(--_container-padding);
 
-    &.is-narrow {
+    &.container--narrow {
         --_container-max-width: var(--measure-s);
     }
 
-    &.is-prose {
+    &.container--prose {
         --_container-max-width: var(--measure);
     }
 
-    &.is-wide {
+    &.container--wide {
         --_container-max-width: var(--measure-l);
     }
 
-    &.is-full {
+    &.container--full {
         --_container-max-width: none;
     }
 
-    &[class^='is-full-bleed'] {
-        --_container-columns: va(--container-columns, 2);
+    &[class^='container--full-bleed'] {
+        --_container-columns: var(--container-columns, 2);
         padding-inline: 0;
         max-width: unset;
         display: grid;
         grid-template-columns:
-            minmax(0, 1fr) repeat(
-                12,
-                minmax(
-                    0,
-                    calc(
-                        var(--_container-max-width) / var(--_container-columns)
-                    )
-                )
-            )
+            minmax(0, 1fr) repeat(12, minmax(0, calc(var(--_container-max-width) / var(--_container-columns))))
             minmax(0, 1fr);
     }
 
-    &.is-full-bleed-12 {
+    &.container--full-bleed-12 {
         --container-columns: 12;
     }
 
-    &.is-full-bleed-6 {
-        --container-columns: 12;
+    &.container--full-bleed-6 {
+        --container-columns: 6;
     }
 }

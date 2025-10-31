@@ -8,6 +8,7 @@
  * Default behavior:
  * - Only direct children get spacing
  * - No splitting functionality
+ * - Full height if only child
  * 
  * Usage:
  *   <div class="stack stack-space-l">
@@ -22,38 +23,39 @@
  * 
  * Modifiers:
  * - stack-space-*: Sets spacing between elements
- * - stack-split-*: Sets which child gets extra space
- * - stack-recursive: Applies spacing to all nested children
+ * - stack--recursive: Applies spacing to all nested children
  * -------------------------------------- */
 
-/* Base stack - only direct children get spacing */
 .stack {
-	--stack-space: var(--spacing-sm);
-	--stack-split: null;
+    --_stack-space: var(--stack-space, var(--spacing-lg));
+
+    > * {
+        margin-block: 0;
+    }
+
+    > * + * {
+        margin-block-start: var(--_stack-space);
+    }
 }
 
-.stack > * {
-	margin-block: 0;
-}
+@ruler utility({
+    selector: '.stack--space',
+    property: '--stack-space',
+    scale: 'space',
+    generateAllCrossPairs: true,
+});
 
-.stack > * + * {
-	margin-block-start: var(--stack-space);
-}
 /* Split functionality - nth-child gets extra space */
-.stack[style*="--stack-split"] > :nth-child(var(--stack-split)) {
-	margin-block-end: auto;
+/* .stack[style*='--stack-split'] > :nth-child(var(--stack-split)) {
+    margin-block-end: auto;
+} */
+
+/* Recursive variant - all nested children get spacing */
+.stack--recursive * + * {
+    margin-block-start: var(--_stack-space);
 }
 
-.stack-recursive * {
-	--stack-space: inherit;
-}
-
-/* Spacing modifiers */
-@utility stack-space-* {
-	--stack-space: --value(--spacing-*);
-}
-
-/* Recursive stack */
-@utility stack-recursive {
-	--stack-space: inherit;
+/* Full height if only child */
+.stack:only-child {
+    block-size: 100%;
 }

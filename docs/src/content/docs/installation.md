@@ -40,7 +40,7 @@ import { Dropdown } from 'preschool';
 For quick prototyping, use a CDN:
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/preschool/dist/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/preschool/dist/styles/index.css" />
 <script type="module" src="https://unpkg.com/preschool"></script>
 ```
 
