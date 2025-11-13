@@ -21,6 +21,7 @@
 export { Dropdown } from './components/dropdown/dropdown.ts';
 export { HcAccordion } from './components/accordion/accordion.ts';
 export { HcAccordionItem } from './components/accordion-item/accordion-item.ts';
+export { HcDrawer } from './components/drawer/drawer.ts';
 export { PsShare } from './components/share/ps-share.ts';
 
 // Export utilities

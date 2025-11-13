@@ -3,7 +3,7 @@
  * -------------------------------------- */
 
 .container {
-    --_container-padding: var(--container-padding, var(--spacing-md-lg));
+    --_container-padding: var(--container-padding, var(--space-md-lg));
     --_container-max-width: var(--container-max-width, 110rem);
 
     max-width: var(--_container-max-width);

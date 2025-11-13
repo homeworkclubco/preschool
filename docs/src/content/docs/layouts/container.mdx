@@ -14,9 +14,7 @@ The container centers content with a default max-width of 110rem (~1760px) and r
 ```html
 <div class="container">
     <h1>Centered Content</h1>
-    <p>
-        This content is constrained to a maximum width and centered on the page.
-    </p>
+    <p>This content is constrained to a maximum width and centered on the page.</p>
 </div>
 ```
 
@@ -33,7 +31,7 @@ The container centers content with a default max-width of 110rem (~1760px) and r
 
 - Max-width: 110rem (~1760px)
 - Centered with `margin-inline: auto`
-- Horizontal padding: `var(--spacing-md-lg)` (responsive)
+- Horizontal padding: `var(--space-md-lg)` (responsive)
 - Padding adjusts with viewport size
 
 ## Width Variants
@@ -51,10 +49,7 @@ Uses `var(--measure-s)` - ideal for short-form content or narrow columns.
 ```
 
 <Iframe>
-    <div
-        class="container container--narrow"
-        style="border: 1px solid #ccc; background: #f0f0f0;"
-    >
+    <div class="container container--narrow" style="border: 1px solid #ccc; background: #f0f0f0;">
         <div style="background: #e8e8e8; padding: 1rem;">
             <p>Narrow container using --measure-s</p>
         </div>
@@ -75,16 +70,10 @@ Uses `var(--measure)` - optimal for readable text content (~45-75 characters per
 ```
 
 <Iframe>
-    <div
-        class="container container--prose"
-        style="border: 1px solid #ccc; background: #f0f0f0;"
-    >
+    <div class="container container--prose" style="border: 1px solid #ccc; background: #f0f0f0;">
         <div style="background: #e8e8e8; padding: 1rem;">
             <h4>Prose Container</h4>
-            <p>
-                Optimal reading width using --measure for comfortable reading
-                experience.
-            </p>
+            <p>Optimal reading width using --measure for comfortable reading experience.</p>
         </div>
     </div>
 </Iframe>
@@ -100,10 +89,7 @@ Uses `var(--measure-l)` - wider content area for dashboards or multi-column layo
 ```
 
 <Iframe>
-    <div
-        class="container container--wide"
-        style="border: 1px solid #ccc; background: #f0f0f0;"
-    >
+    <div class="container container--wide" style="border: 1px solid #ccc; background: #f0f0f0;">
         <div style="background: #e8e8e8; padding: 1rem;">
             <p>Wide container using --measure-l</p>
         </div>
@@ -121,10 +107,7 @@ Removes max-width constraint while maintaining horizontal padding.
 ```
 
 <Iframe>
-    <div
-        class="container container--full"
-        style="border: 1px solid #ccc; background: #f0f0f0;"
-    >
+    <div class="container container--full" style="border: 1px solid #ccc; background: #f0f0f0;">
         <div style="background: #e8e8e8; padding: 1rem;">
             <p>Full-width container (no max-width, padding maintained)</p>
         </div>
@@ -245,7 +228,7 @@ Override container behavior with CSS custom properties:
     --container-max-width: 90rem;
 
     /* Adjust horizontal padding */
-    --container-padding: var(--spacing-xl);
+    --container-padding: var(--space-xl);
 }
 ```
 
@@ -271,7 +254,7 @@ Adjust full-bleed grid columns:
 
 ## Responsive Padding
 
-The default padding (`--spacing-md-lg`) is responsive and adjusts based on viewport size. This ensures appropriate spacing on both mobile and desktop devices.
+The default padding (`--space-md-lg`) is responsive and adjusts based on viewport size. This ensures appropriate spacing on both mobile and desktop devices.
 
 To override with custom responsive padding:
 

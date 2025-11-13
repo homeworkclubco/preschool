@@ -34,7 +34,7 @@
 }
 
 .frame--ratio-unset {
-    --frame-ratio: unset;
+    --_frame-ratio: unset;
     position: relative;
     height: 100%;
 

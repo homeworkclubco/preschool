@@ -17,11 +17,20 @@
         margin: 0;
     }
 
+    :not(:defined) {
+        visibility: hidden;
+    }
+
     /* Enable keyword animations */
     @media (prefers-reduced-motion: no-preference) {
         html {
             interpolate-size: allow-keywords;
         }
+    }
+
+    img {
+        /* autoprefixer: ignore next */
+        box-sizing: content-box;
     }
 
     img,
@@ -38,6 +47,11 @@
     textarea,
     select {
         font: inherit;
+    }
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
     }
 
     p,
@@ -81,15 +95,20 @@
         text-wrap: pretty;
     }
 
+    /* @note: Wordpress specific... (not body) */
+    .is-root-container,
+    .acf-block-preview .block,
     body {
         font-family: var(--font-family-body);
         font-size: var(--font-size);
         line-height: var(--line-height);
         -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: geometricPrecision;
         tab-size: 2;
         hanging-punctuation: first allow-end last;
         word-break: break-word;
-        overflow-x: clip;
+        /* overflow-x: clip; */
     }
 
     svg {
@@ -111,5 +130,111 @@
     ::selection {
         color: var(--color-bg);
         background-color: rgb(var(--color-foreground));
+    }
+
+    /**
+   * Remove the list style on navigation lists in all browsers (opinionated).
+   */
+
+    :where(nav) :where(ol, ul) {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    /**
+   * 1. Correct the inheritance and scaling of font size in all browsers.
+   * 2. Correct the odd `em` font sizing in all browsers.
+   * 3. Prevent overflow of the container in all browsers (opinionated).
+   */
+
+    :where(pre) {
+        font-family: monospace, monospace;
+        font-size: 1em;
+        overflow: auto;
+    }
+
+    /**
+   * Change the fill color to match the text color in all browsers (opinionated).
+   */
+
+    :where(svg:not([fill])) {
+        fill: currentColor;
+    }
+
+    /**
+   * 1. Remove the margin in Firefox and Safari.
+   * 3. Change the resize direction in all browsers (opinionated).
+   */
+
+    :where(textarea) {
+        margin: 0; /* 1 */
+        resize: vertical; /* 3 */
+    }
+
+    /**
+   * 1. Correct the odd appearance in Chrome, Edge, and Safari.
+   * 2. Correct the outline style in Safari.
+   */
+
+    :where([type='search' i]) {
+        appearance: textfield; /* 1 */
+        outline-offset: -2px; /* 2 */
+    }
+
+    /**
+   * Correct the cursor style of increment and decrement buttons in Safari.
+   */
+
+    ::-webkit-inner-spin-button,
+    ::-webkit-outer-spin-button {
+        height: auto;
+    }
+
+    /* Accessibility
+   * ========================================================================== */
+
+    /**
+   * Change the cursor on busy elements in all browsers (opinionated).
+   */
+
+    :where([aria-busy='true' i]) {
+        cursor: progress;
+    }
+
+    /*
+   * Change the cursor on disabled, not-editable, or otherwise
+   * inoperable elements in all browsers (opinionated).
+   */
+
+    :where([aria-disabled='true' i], [disabled]) {
+        cursor: not-allowed;
+    }
+
+    /*
+   * Change the display on visually hidden accessible elements
+   * in all browsers (opinionated).
+   */
+
+    :where([aria-hidden='false' i][hidden]) {
+        display: initial;
+    }
+
+    :where([aria-hidden='false' i][hidden]:not(:focus)) {
+        clip: rect(0, 0, 0, 0);
+        position: absolute;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        ::before,
+        ::after {
+            animation-delay: -1ms !important; /* 1 */
+            animation-duration: 1ms !important; /* 1 */
+            animation-iteration-count: 1 !important; /* 1 */
+            background-attachment: initial !important; /* 2 */
+            scroll-behavior: auto !important; /* 3 */
+            transition-delay: 0s !important; /* 4 */
+            transition-duration: 0s !important; /* 4 */
+        }
     }
 }

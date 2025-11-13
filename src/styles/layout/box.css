@@ -17,7 +17,7 @@
 *   </div>
 * 
 * Custom properties:
-* - --box-padding: Padding applied to all sides (default: var(--spacing-sm))
+* - --box-padding: Padding applied to all sides (default: var(--space-sm))
 * - --box-border-width: Border width (default: 1px)
 * - --box-border-color: Border color (default: currentColor)
 * 
@@ -27,7 +27,7 @@
 * - box--borderless: Removes border (useful for overrides)
 */
 .box {
-    --_box-padding: var(--box-padding, var(--spacing-lg));
+    --_box-padding: var(--box-padding, var(--space-lg));
     --_box-border-width: var(--box-border-width, 1px);
     --_box-border-color: var(--box-border-color, var(--color-border));
 

@@ -1,0 +1,627 @@
+---
+title: Drawer
+description: Modal overlay drawer component that slides in from any edge
+---
+
+import Iframe from '../../../components/Iframe.astro';
+import Example from '../../../components/Example.astro';
+
+A framework-agnostic drawer component that slides in from any edge of the viewport or container. Perfect for side panels, navigation menus, and settings panels.
+
+## Basic Usage
+
+```html
+<hc-drawer label="My Drawer" open>
+    <p>Drawer content goes here.</p>
+</hc-drawer>
+
+<button id="open-drawer">Open Drawer</button>
+
+<script>
+    const drawer = document.querySelector('hc-drawer');
+    const button = document.getElementById('open-drawer');
+
+    button.addEventListener('click', () => {
+        drawer.show();
+    });
+</script>
+```
+
+## Placement
+
+Control which side the drawer slides from using the `placement` attribute:
+
+```html
+<!-- Slides from right (default) -->
+<hc-drawer label="Right Drawer" placement="right"> Content here </hc-drawer>
+
+<!-- Slides from left -->
+<hc-drawer label="Left Drawer" placement="left"> Content here </hc-drawer>
+
+<!-- Slides from top -->
+<hc-drawer label="Top Drawer" placement="top"> Content here </hc-drawer>
+
+<!-- Slides from bottom -->
+<hc-drawer label="Bottom Drawer" placement="bottom"> Content here </hc-drawer>
+```
+
+## Custom Size
+
+Use the `--size` CSS custom property to control drawer dimensions:
+
+```html
+<hc-drawer label="Wide Drawer" style="--size: 40rem"> This drawer is wider than the default 25rem </hc-drawer>
+
+<hc-drawer label="Tall Drawer" placement="bottom" style="--size: 60vh">
+    This drawer takes up 60% of viewport height
+</hc-drawer>
+```
+
+## Slots
+
+The drawer provides several slots for customization:
+
+### Default Slot
+
+Main content area:
+
+```html
+<hc-drawer label="Content">
+    <p>Your main content goes here.</p>
+</hc-drawer>
+```
+
+### Header Slot
+
+Completely override the entire header (including title, actions, and close button):
+
+```html
+<hc-drawer>
+    <div slot="header" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <img src="/logo.svg" alt="Logo" width="24" height="24" />
+            <h2 style="margin: 0;">Custom Header</h2>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+            <button class="btn" data-variant="ghost">Help</button>
+            <button class="btn" data-variant="ghost" onclick="this.closest('hc-drawer').hide()">✕</button>
+        </div>
+    </div>
+    <p>
+        When using the header slot, you have complete control over the header layout and must provide your own close
+        button.
+    </p>
+</hc-drawer>
+```
+
+### Label Slot
+
+Custom header content instead of plain text (uses default header layout):
+
+```html
+<hc-drawer>
+    <div slot="label" style="display: flex; align-items: center; gap: 0.5rem;">
+        <svg width="20" height="20"><!-- icon --></svg>
+        <span>Settings</span>
+    </div>
+    <p>Content here</p>
+</hc-drawer>
+```
+
+### Header Actions Slot
+
+Add buttons or icons to the header:
+
+```html
+<hc-drawer label="Document">
+    <button slot="header-actions" class="btn" data-variant="ghost">Save</button>
+    <p>Document content</p>
+</hc-drawer>
+```
+
+### Footer Slot
+
+Action buttons at the bottom:
+
+```html
+<hc-drawer label="Confirm Action">
+    <p>Are you sure you want to proceed?</p>
+
+    <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+        <button class="btn" data-variant="outline" onclick="this.closest('hc-drawer').hide()">Cancel</button>
+        <button class="btn" onclick="this.closest('hc-drawer').hide()">Confirm</button>
+    </div>
+</hc-drawer>
+```
+
+## Modal Behavior
+
+By default, the drawer is modal (with overlay and focus trap). Disable this with `no-modal`:
+
+```html
+<!-- Modal drawer (default) -->
+<hc-drawer label="Modal Drawer"> Has overlay, traps focus, closes on Escape </hc-drawer>
+
+<!-- Non-modal drawer -->
+<hc-drawer label="Non-Modal Drawer" no-modal> No overlay, no focus trap, no Escape key </hc-drawer>
+```
+
+## Contained Drawers
+
+Make the drawer position relative to its parent instead of the viewport:
+
+```html
+<div style="position: relative; height: 400px; border: 1px solid #ccc;">
+    <hc-drawer label="Contained" contained placement="right">
+        This drawer is contained within its parent element
+    </hc-drawer>
+
+    <button onclick="this.previousElementSibling.show()">Open Contained Drawer</button>
+</div>
+```
+
+## Hide Header
+
+Remove the header (including close button) with `no-header`:
+
+```html
+<hc-drawer label="No Header" no-header>
+    <p>This drawer has no header or close button.</p>
+    <button onclick="this.closest('hc-drawer').hide()">Close</button>
+</hc-drawer>
+```
+
+## Events
+
+Listen to drawer lifecycle events:
+
+```js
+const drawer = document.querySelector('hc-drawer');
+
+// Before drawer opens
+drawer.addEventListener('ps-show', () => {
+    console.log('Drawer is opening');
+});
+
+// After drawer opens (animation complete)
+drawer.addEventListener('ps-after-show', () => {
+    console.log('Drawer opened');
+});
+
+// Before drawer closes
+drawer.addEventListener('ps-hide', () => {
+    console.log('Drawer is closing');
+});
+
+// After drawer closes (animation complete)
+drawer.addEventListener('ps-after-hide', () => {
+    console.log('Drawer closed');
+});
+
+// When drawer is about to receive initial focus
+drawer.addEventListener('ps-initial-focus', event => {
+    // Prevent default to set focus yourself
+    event.preventDefault();
+    drawer.querySelector('input').focus();
+});
+
+// When user tries to close (preventable)
+drawer.addEventListener('ps-request-close', event => {
+    console.log('Close source:', event.detail.source); // 'close-button', 'keyboard', or 'overlay'
+
+    // Prevent closing if needed
+    if (hasUnsavedChanges()) {
+        event.preventDefault();
+    }
+});
+```
+
+## Preventing Close
+
+Prevent the drawer from closing to handle unsaved changes:
+
+```html
+<hc-drawer label="Edit Form" id="edit-drawer">
+    <form>
+        <input type="text" name="title" placeholder="Title" />
+        <!-- more fields -->
+    </form>
+
+    <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+        <button type="button" class="btn" data-variant="outline" id="cancel-btn">Cancel</button>
+        <button type="button" class="btn" id="save-btn">Save</button>
+    </div>
+</hc-drawer>
+
+<script>
+    const drawer = document.getElementById('edit-drawer');
+    let hasChanges = false;
+
+    // Track changes
+    drawer.querySelector('input').addEventListener('input', () => {
+        hasChanges = true;
+    });
+
+    // Prevent closing if there are unsaved changes
+    drawer.addEventListener('ps-request-close', event => {
+        if (hasChanges && !confirm('You have unsaved changes. Close anyway?')) {
+            event.preventDefault();
+        }
+    });
+
+    // Save handler
+    document.getElementById('save-btn').addEventListener('click', () => {
+        // Save logic here
+        hasChanges = false;
+        drawer.hide();
+    });
+</script>
+```
+
+## Programmatic Control
+
+Control the drawer with JavaScript methods:
+
+```js
+const drawer = document.querySelector('hc-drawer');
+
+// Open drawer
+await drawer.show();
+
+// Close drawer
+await drawer.hide();
+
+// Check if open
+if (drawer.open) {
+    console.log('Drawer is open');
+}
+
+// Set open state directly
+drawer.open = true; // Opens
+drawer.open = false; // Closes
+```
+
+## Framework Integration
+
+### React
+
+```jsx
+import 'preschool';
+import { useRef } from 'react';
+
+function App() {
+    const drawerRef = useRef(null);
+
+    const handleOpen = () => {
+        drawerRef.current.show();
+    };
+
+    const handleRequestClose = event => {
+        if (hasUnsavedChanges) {
+            event.preventDefault();
+        }
+    };
+
+    return (
+        <>
+            <button onClick={handleOpen}>Open Drawer</button>
+
+            <hc-drawer ref={drawerRef} label="Settings" placement="right" onPsRequestClose={handleRequestClose}>
+                <p>Drawer content</p>
+
+                <div slot="footer">
+                    <button onClick={() => drawerRef.current.hide()}>Close</button>
+                </div>
+            </hc-drawer>
+        </>
+    );
+}
+```
+
+### Vue
+
+```vue
+<template>
+    <button @click="openDrawer">Open Drawer</button>
+
+    <hc-drawer ref="drawer" label="Settings" placement="right" @ps-request-close="handleRequestClose">
+        <p>Drawer content</p>
+
+        <div slot="footer">
+            <button @click="closeDrawer">Close</button>
+        </div>
+    </hc-drawer>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import 'preschool';
+
+const drawer = ref(null);
+const hasUnsavedChanges = ref(false);
+
+const openDrawer = () => {
+    drawer.value.show();
+};
+
+const closeDrawer = () => {
+    drawer.value.hide();
+};
+
+const handleRequestClose = event => {
+    if (hasUnsavedChanges.value) {
+        event.preventDefault();
+    }
+};
+</script>
+```
+
+### Svelte
+
+```svelte
+<script>
+    import 'preschool';
+
+    let drawer;
+    let hasUnsavedChanges = false;
+
+    function openDrawer() {
+        drawer.show();
+    }
+
+    function handleRequestClose(event) {
+        if (hasUnsavedChanges) {
+            event.preventDefault();
+        }
+    }
+</script>
+
+<button on:click={openDrawer}>Open Drawer</button>
+
+<hc-drawer
+    bind:this={drawer}
+    label="Settings"
+    placement="right"
+    on:ps-request-close={handleRequestClose}
+>
+    <p>Drawer content</p>
+
+    <div slot="footer">
+        <button on:click={() => drawer.hide()}>Close</button>
+    </div>
+</hc-drawer>
+```
+
+## CSS Custom Properties
+
+Customize the drawer appearance:
+
+```css
+hc-drawer {
+    /* Drawer size (width for left/right, height for top/bottom) */
+    --size: 25rem; /* default for sides, 100% for top/bottom */
+
+    /* Spacing */
+    --header-spacing: 1.5rem;
+    --body-spacing: 1.5rem;
+    --footer-spacing: 1.5rem;
+
+    /* Animation */
+    --duration: 250ms;
+    --easing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+```
+
+## API Reference
+
+### Properties
+
+| Property    | Type                                     | Default   | Description                                       |
+| ----------- | ---------------------------------------- | --------- | ------------------------------------------------- |
+| `open`      | `boolean`                                | `false`   | Whether the drawer is open                        |
+| `label`     | `string`                                 | `''`      | Accessible label for the drawer (required)        |
+| `placement` | `'top' \| 'right' \| 'bottom' \| 'left'` | `'right'` | Which side the drawer slides from                 |
+| `contained` | `boolean`                                | `false`   | Contain within parent element instead of viewport |
+| `no-header` | `boolean`                                | `false`   | Hide the header (including close button)          |
+| `no-modal`  | `boolean`                                | `false`   | Remove overlay and disable modal behavior         |
+
+### Methods
+
+| Method   | Description       |
+| -------- | ----------------- |
+| `show()` | Opens the drawer  |
+| `hide()` | Closes the drawer |
+
+### Events
+
+| Event              | Description                                        | Detail                                                  |
+| ------------------ | -------------------------------------------------- | ------------------------------------------------------- |
+| `ps-show`          | Emitted when drawer opens                          | -                                                       |
+| `ps-after-show`    | Emitted after open animation completes             | -                                                       |
+| `ps-hide`          | Emitted when drawer closes                         | -                                                       |
+| `ps-after-hide`    | Emitted after close animation completes            | -                                                       |
+| `ps-initial-focus` | Emitted before setting initial focus (preventable) | -                                                       |
+| `ps-request-close` | Emitted when user attempts to close (preventable)  | `{ source: 'close-button' \| 'keyboard' \| 'overlay' }` |
+
+### Slots
+
+| Slot             | Description                                                                                                                               |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| (default)        | Main drawer content                                                                                                                       |
+| `header`         | Completely overrides the entire header (title, actions, and close button). When used, `label` and `header-actions` slots are not rendered |
+| `label`          | Custom header content (alternative to label attribute). Uses default header layout                                                        |
+| `header-actions` | Action buttons in the header. Uses default header layout                                                                                  |
+| `footer`         | Footer content, typically action buttons                                                                                                  |
+
+### Styling with Classes
+
+The drawer uses short, semantic class names that can be styled from external CSS:
+
+```css
+/* Customize the overlay */
+:where(hc-drawer) .overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Customize the panel */
+:where(hc-drawer) .panel {
+    background-color: #f5f5f5;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Customize the header */
+:where(hc-drawer) .header {
+    background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-bottom: none;
+}
+
+/* Customize the title */
+:where(hc-drawer) .title {
+    font-size: 1.5rem;
+}
+
+/* Customize the close button */
+:where(hc-drawer) .close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Customize the body */
+:where(hc-drawer) .body {
+    padding: 2rem;
+}
+
+/* Customize the footer */
+:where(hc-drawer) .footer {
+    background-color: #f9fafb;
+}
+```
+
+**Why `:where()`?** It has zero specificity, making it easy to override with simple class selectors.
+
+### CSS Parts
+
+You can also style internal elements using `::part()`:
+
+```css
+hc-drawer::part(overlay) {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+hc-drawer::part(panel) {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+hc-drawer::part(header) {
+    border-bottom: 2px solid #e5e7eb;
+}
+
+hc-drawer::part(title) {
+    color: #1f2937;
+}
+
+hc-drawer::part(close-button) {
+    color: #6b7280;
+}
+
+hc-drawer::part(body) {
+    padding: 2rem;
+}
+
+hc-drawer::part(footer) {
+    background-color: #f9fafb;
+}
+```
+
+## Accessibility
+
+The drawer component includes:
+
+- **ARIA attributes**: `role="dialog"`, `aria-modal`, `aria-label`
+- **Focus trapping**: When modal, focus stays within drawer
+- **Focus restoration**: Returns focus to trigger element on close
+- **Keyboard support**: Escape key to close (when modal)
+- **Screen reader support**: Proper labeling and structure
+
+### Best Practices
+
+1. **Always provide a label**: Use the `label` attribute or label slot
+2. **Logical focus order**: Place important actions in a logical tab order
+3. **Visible focus indicators**: Ensure keyboard users can see focus
+4. **Don't trap users**: Always provide a clear way to close
+5. **Use semantic HTML**: Use proper elements inside the drawer
+
+### Keyboard Navigation
+
+| Key           | Action                                                                  |
+| ------------- | ----------------------------------------------------------------------- |
+| `Escape`      | Closes the drawer (when modal and not contained)                        |
+| `Tab`         | Moves focus to next focusable element (trapped within modal drawer)     |
+| `Shift + Tab` | Moves focus to previous focusable element (trapped within modal drawer) |
+
+## Examples
+
+### Navigation Menu
+
+```html
+<hc-drawer label="Main Menu" placement="left" id="nav-drawer">
+    <nav style="display: flex; flex-direction: column; gap: 1rem;">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/services">Services</a>
+        <a href="/contact">Contact</a>
+    </nav>
+</hc-drawer>
+
+<button onclick="document.getElementById('nav-drawer').show()">Menu</button>
+```
+
+### Settings Panel
+
+```html
+<hc-drawer label="Settings" placement="right" style="--size: 30rem;">
+    <form style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" />
+        </div>
+
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" />
+        </div>
+
+        <div>
+            <label for="theme">Theme</label>
+            <select id="theme" name="theme">
+                <option>Light</option>
+                <option>Dark</option>
+                <option>Auto</option>
+            </select>
+        </div>
+    </form>
+
+    <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+        <button class="btn" data-variant="outline">Cancel</button>
+        <button class="btn">Save Changes</button>
+    </div>
+</hc-drawer>
+```
+
+### Shopping Cart
+
+```html
+<hc-drawer label="Shopping Cart" placement="right">
+    <div id="cart-items">
+        <!-- Cart items here -->
+    </div>
+
+    <div slot="footer" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: bold;">
+            <span>Total:</span>
+            <span>$99.99</span>
+        </div>
+        <button class="btn" style="width: 100%;">Proceed to Checkout</button>
+    </div>
+</hc-drawer>
+```

@@ -55,7 +55,7 @@ Build new CSS components following the same pattern:
     border: 1px solid var(--color-border);
 }
 
-.badge[data-variant='primary'] {
+.badge.badge--primary {
     background-color: var(--color-primary);
     color: var(--color-primary-text);
     border-color: transparent;

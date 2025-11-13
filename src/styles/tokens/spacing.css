@@ -5,9 +5,9 @@
         ["3xs", 4, 6],
         ["2xs", 6, 8],
         ["xs", 8, 12],
-        ["s", 12, 16],
-        ["m", 16, 24],
-        ["l", 24, 32],
+        ["sm", 12, 16],
+        ["md", 16, 24],
+        ["lg", 24, 32],
         ["xl", 32, 48],
         ["2xl", 48, 64],
         ["3xl", 64, 96],
@@ -17,12 +17,4 @@
     ],
     prefix: 'space', 
     });
-}
-.kurt {
-    @ruler utility({
-    selector: '&.space',
-    property: 'margin-block',
-    scale: 'space',
-    generateAllCrossPairs: true,
-});
 }

@@ -1,8 +1,13 @@
 {
-    "name": "preschool",
+    "name": "@hc/preschool",
     "version": "0.0.1",
     "description": "A minimal, extensible CSS framework and web component library",
     "source": "src/index.ts",
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
     "targets": {
         "main": {
             "source": "src/index.ts",
@@ -47,6 +52,7 @@
         "dev": "parcel serve src/**/*.html",
         "watch": "parcel watch",
         "build": "parcel build",
+        "prepublishOnly": "npm run build",
         "preview": "parcel serve dist/preschool.js",
         "test": "vitest run",
         "test:watch": "vitest",

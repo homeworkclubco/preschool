@@ -21,9 +21,7 @@ The sidebar layout requires two child elements - the first acts as the sidebar, 
 <Iframe>
     <div class="sidebar" style="border: 1px solid #ccc;">
         <aside style="background: #f0f0f0; padding: 1rem;">Sidebar</aside>
-        <main style="background: #e8e8e8; padding: 1rem;">
-            Main content that grows to fill available space
-        </main>
+        <main style="background: #e8e8e8; padding: 1rem;">Main content that grows to fill available space</main>
     </div>
 </Iframe>
 
@@ -52,20 +50,12 @@ Control the fixed width of the sidebar element using width modifiers:
 <Iframe>
     <div class="stack space-l">
         <div class="sidebar sidebar--side-xs" style="border: 1px solid #ccc;">
-            <aside style="background: #f0f0f0; padding: 1rem;">
-                XS Sidebar (15rem)
-            </aside>
-            <main style="background: #e8e8e8; padding: 1rem;">
-                Main content
-            </main>
+            <aside style="background: #f0f0f0; padding: 1rem;">XS Sidebar (15rem)</aside>
+            <main style="background: #e8e8e8; padding: 1rem;">Main content</main>
         </div>
         <div class="sidebar sidebar--side-md" style="border: 1px solid #ccc;">
-            <aside style="background: #f0f0f0; padding: 1rem;">
-                MD Sidebar (25rem)
-            </aside>
-            <main style="background: #e8e8e8; padding: 1rem;">
-                Main content
-            </main>
+            <aside style="background: #f0f0f0; padding: 1rem;">MD Sidebar (25rem)</aside>
+            <main style="background: #e8e8e8; padding: 1rem;">Main content</main>
         </div>
     </div>
 </Iframe>
@@ -101,10 +91,7 @@ By default, the sidebar appears on the left. Use `sidebar--right` to place it on
 ```
 
 <Iframe>
-    <div
-        class="sidebar sidebar--right sidebar--side-md"
-        style="border: 1px solid #ccc;"
-    >
+    <div class="sidebar sidebar--right sidebar--side-md" style="border: 1px solid #ccc;">
         <main style="background: #e8e8e8; padding: 1rem;">Main content</main>
         <aside style="background: #f0f0f0; padding: 1rem;">Right Sidebar</aside>
     </div>
@@ -124,23 +111,13 @@ Control the gap between sidebar and content using the space utility:
 
 <Iframe>
     <div class="stack space-l">
-        <div
-            class="sidebar sidebar-width-sm sidebar-space-xs"
-            style="border: 1px solid #ccc;"
-        >
+        <div class="sidebar sidebar-width-sm sidebar-space-xs" style="border: 1px solid #ccc;">
             <aside style="background: #f0f0f0; padding: 1rem;">Sidebar</aside>
-            <main style="background: #e8e8e8; padding: 1rem;">
-                Small gap (space-xs)
-            </main>
+            <main style="background: #e8e8e8; padding: 1rem;">Small gap (space-xs)</main>
         </div>
-        <div
-            class="sidebar sidebar-width-sm sidebar-space-xl"
-            style="border: 1px solid #ccc;"
-        >
+        <div class="sidebar sidebar-width-sm sidebar-space-xl" style="border: 1px solid #ccc;">
             <aside style="background: #f0f0f0; padding: 1rem;">Sidebar</aside>
-            <main style="background: #e8e8e8; padding: 1rem;">
-                Large gap (space-xl)
-            </main>
+            <main style="background: #e8e8e8; padding: 1rem;">Large gap (space-xl)</main>
         </div>
     </div>
 </Iframe>
@@ -157,10 +134,7 @@ By default, both elements stretch to match the tallest one. Use `sidebar--no-str
 ```
 
 <Iframe>
-    <div
-        class="sidebar sidebar-width-sm sidebar--no-stretch"
-        style="border: 1px solid #ccc;"
-    >
+    <div class="sidebar sidebar-width-sm sidebar--no-stretch" style="border: 1px solid #ccc;">
         <aside style="background: #f0f0f0; padding: 1rem;">Short sidebar</aside>
         <main style="background: #e8e8e8; padding: 1rem;">
             Tall content
@@ -179,9 +153,7 @@ By default, both elements stretch to match the tallest one. Use `sidebar--no-str
 ### Documentation Layout
 
 ```html
-<div
-    class="sidebar sidebar-width-sm sidebar--content-min-prose sidebar-space-lg"
->
+<div class="sidebar sidebar-width-sm sidebar--content-min-prose sidebar-space-lg">
     <nav>
         <h2>Navigation</h2>
         <ul>
@@ -243,7 +215,7 @@ Override sidebar behavior with CSS custom properties:
     --sidebar--content-min: 65%;
 
     /* Control gap between elements */
-    --sidebar-space: var(--spacing-md);
+    --sidebar-space: var(--space-md);
 }
 ```
 

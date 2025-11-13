@@ -12,15 +12,15 @@
  *   </div>
  * 
  * Custom properties:
- * - --cover-space: Gap between elements (default: var(--spacing-md))
+ * - --cover-space: Gap between elements (default: var(--space-md))
  * - --cover-min-height: Minimum height (default: 100vh)
- * - --cover-padding: Internal padding (default: var(--spacing-md))
+ * - --cover-padding: Internal padding (default: var(--space-md))
  * -------------------------------------- */
 
 .cover {
-    --_cover-space: var(--cover-space, var(--spacing-md));
+    --_cover-space: var(--cover-space, var(--space-md));
     --_cover-min-height: var(--cover-min-height, 100vh);
-    --_cover-padding: var(--cover-padding, var(--spacing-md));
+    --_cover-padding: var(--cover-padding, var(--space-md));
 
     display: flex;
     flex-direction: column;

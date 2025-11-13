@@ -19,7 +19,7 @@
    * Custom properties:
    * - --sidebar-side-width: Width of sidebar when adjacent (default: auto)
    * - --sidebar--content-min: Minimum width of content element (default: 50%)
-   * - --_sidebar-space: Gap between elements (default: var(--spacing-lg))
+   * - --_sidebar-space: Gap between elements (default: var(--space-lg))
    *
    * Modifiers:
    * - sidebar--side-xs/sm/md/lg: Sets fixed width for sidebar element
@@ -32,7 +32,7 @@
 .sidebar {
     --_sidebar-side-width: var(--sidebar-side-width, auto);
     --_sidebar--content-min: var(--sidebar--content-min, 50%);
-    --_sidebar-space: var(--sidebar-space, var(--spacing-lg));
+    --_sidebar-space: var(--sidebar-space, var(--space-lg));
 
     display: flex;
     flex-wrap: wrap;

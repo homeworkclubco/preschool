@@ -6,14 +6,21 @@
         <title>PS Share Component - Demo</title>
         <link rel="stylesheet" href="../../styles/index.css" />
         <style>
+            stack-l {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+            }
+
+            stack-l > * + * {
+                margin-block-start: var(--space-lg);
+            }
             * {
                 box-sizing: border-box;
             }
 
             body {
-                font-family:
-                    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-                    'Helvetica Neue', Arial, sans-serif;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
                 line-height: 1.6;
                 max-width: 1200px;
                 margin: 0 auto;
@@ -233,19 +240,16 @@
         </style>
     </head>
     <body>
-        <div class="space-md">hello</div>
-        <h1>PS Share Component</h1>
-        <p class="subtitle">
-            An accessible share button with Web Share API support and clipboard
-            fallback
-        </p>
+        <stack-l space="var(--space-2xl)">
+            <h1>PS Share Component</h1>
+            <p class="subtitle">An accessible share button with Web Share API support and clipboard fallback</p>
+        </stack-l>
 
         <div class="info-box">
             <p>
-                <strong>Note:</strong> The Web Share API only works in secure
-                contexts (HTTPS) and may not be available on all
-                browsers/devices. This component automatically falls back to
-                clipboard copy when the API is unavailable.
+                <strong>Note:</strong> The Web Share API only works in secure contexts (HTTPS) and may not be available
+                on all browsers/devices. This component automatically falls back to clipboard copy when the API is
+                unavailable.
             </p>
         </div>
 
@@ -265,27 +269,17 @@
 
                 <div class="demo-item">
                     <h4>Text Only</h4>
-                    <ps-share
-                        label="Share text"
-                        text="Hello, World! This is some shareable text."
-                    ></ps-share>
+                    <ps-share label="Share text" text="Hello, World! This is some shareable text."></ps-share>
                 </div>
 
                 <div class="demo-item">
                     <h4>URL Only</h4>
-                    <ps-share
-                        label="Share link"
-                        url="https://example.com"
-                    ></ps-share>
+                    <ps-share label="Share link" url="https://example.com"></ps-share>
                 </div>
 
                 <div class="demo-item">
                     <h4>Disabled State</h4>
-                    <ps-share
-                        label="Share"
-                        text="This button is disabled"
-                        disabled
-                    ></ps-share>
+                    <ps-share label="Share" text="This button is disabled" disabled></ps-share>
                 </div>
             </div>
 
@@ -305,38 +299,22 @@
             <div class="demo-grid">
                 <div class="demo-item">
                     <h4>Top (Default)</h4>
-                    <ps-share
-                        label="Share"
-                        text="Feedback on top"
-                        feedback-placement="top"
-                    ></ps-share>
+                    <ps-share label="Share" text="Feedback on top" feedback-placement="top"></ps-share>
                 </div>
 
                 <div class="demo-item">
                     <h4>Bottom</h4>
-                    <ps-share
-                        label="Share"
-                        text="Feedback on bottom"
-                        feedback-placement="bottom"
-                    ></ps-share>
+                    <ps-share label="Share" text="Feedback on bottom" feedback-placement="bottom"></ps-share>
                 </div>
 
                 <div class="demo-item">
                     <h4>Left</h4>
-                    <ps-share
-                        label="Share"
-                        text="Feedback on left"
-                        feedback-placement="left"
-                    ></ps-share>
+                    <ps-share label="Share" text="Feedback on left" feedback-placement="left"></ps-share>
                 </div>
 
                 <div class="demo-item">
                     <h4>Right</h4>
-                    <ps-share
-                        label="Share"
-                        text="Feedback on right"
-                        feedback-placement="right"
-                    ></ps-share>
+                    <ps-share label="Share" text="Feedback on right" feedback-placement="right"></ps-share>
                 </div>
             </div>
 
@@ -355,56 +333,32 @@
             <div class="demo-grid">
                 <div class="demo-item">
                     <h4>Primary Style</h4>
-                    <ps-share
-                        class="primary"
-                        label="Share"
-                        text="Primary styled button"
-                    ></ps-share>
+                    <ps-share class="primary" label="Share" text="Primary styled button"></ps-share>
                 </div>
 
                 <div class="demo-item">
                     <h4>Success Style</h4>
-                    <ps-share
-                        class="success"
-                        label="Share"
-                        text="Success styled button"
-                    ></ps-share>
+                    <ps-share class="success" label="Share" text="Success styled button"></ps-share>
                 </div>
 
                 <div class="demo-item">
                     <h4>Outline Style</h4>
-                    <ps-share
-                        class="outline"
-                        label="Share"
-                        text="Outline styled button"
-                    ></ps-share>
+                    <ps-share class="outline" label="Share" text="Outline styled button"></ps-share>
                 </div>
 
                 <div class="demo-item">
                     <h4>Large Size</h4>
-                    <ps-share
-                        class="large"
-                        label="Share"
-                        text="Large button"
-                    ></ps-share>
+                    <ps-share class="large" label="Share" text="Large button"></ps-share>
                 </div>
 
                 <div class="demo-item">
                     <h4>Small Size</h4>
-                    <ps-share
-                        class="small"
-                        label="Share"
-                        text="Small button"
-                    ></ps-share>
+                    <ps-share class="small" label="Share" text="Small button"></ps-share>
                 </div>
 
                 <div class="demo-item">
                     <h4>Rounded</h4>
-                    <ps-share
-                        class="rounded primary"
-                        label="Share"
-                        text="Rounded button"
-                    ></ps-share>
+                    <ps-share class="rounded primary" label="Share" text="Rounded button"></ps-share>
                 </div>
             </div>
 
@@ -425,14 +379,8 @@
             <p>Use the default slot to provide your own button element</p>
 
             <div class="demo-actions">
-                <ps-share
-                    label="Share with custom button"
-                    text="This uses a custom button!"
-                    url="https://example.com"
-                >
-                    <button class="custom-button">
-                        🚀 Share This Awesome Content!
-                    </button>
+                <ps-share label="Share with custom button" text="This uses a custom button!" url="https://example.com">
+                    <button class="custom-button">🚀 Share This Awesome Content!</button>
                 </ps-share>
             </div>
 
@@ -451,20 +399,12 @@
             <div class="demo-grid">
                 <div class="demo-item">
                     <h4>Custom Message</h4>
-                    <ps-share
-                        label="Share"
-                        text="Custom feedback example"
-                        feedback-text="Link copied! ✓"
-                    ></ps-share>
+                    <ps-share label="Share" text="Custom feedback example" feedback-text="Link copied! ✓"></ps-share>
                 </div>
 
                 <div class="demo-item">
                     <h4>Emoji Feedback</h4>
-                    <ps-share
-                        label="Share"
-                        text="Emoji feedback example"
-                        feedback-text="Copied! 🎉"
-                    ></ps-share>
+                    <ps-share label="Share" text="Emoji feedback example" feedback-text="Copied! 🎉"></ps-share>
                 </div>
             </div>
 
@@ -479,10 +419,7 @@
         <!-- Event Handling -->
         <div class="demo-section">
             <h2>Event Handling</h2>
-            <p>
-                The component fires events for successful shares, clipboard
-                copies, and errors
-            </p>
+            <p>The component fires events for successful shares, clipboard copies, and errors</p>
 
             <div class="demo-actions">
                 <ps-share
@@ -494,9 +431,7 @@
             </div>
 
             <h3>Event Log</h3>
-            <button class="clear-log" onclick="clearEventLog()">
-                Clear Log
-            </button>
+            <button class="clear-log" onclick="clearEventLog()">Clear Log</button>
             <div id="event-log" class="event-log">
                 <p style="color: #6b7280">Events will appear here...</p>
             </div>
@@ -528,11 +463,7 @@ shareButton.addEventListener('ps-share-error', (e) => {
             <p>Trigger sharing programmatically via JavaScript</p>
 
             <div class="demo-actions">
-                <ps-share
-                    id="programmatic-share"
-                    label="Share"
-                    text="Triggered programmatically"
-                ></ps-share>
+                <ps-share id="programmatic-share" label="Share" text="Triggered programmatically"></ps-share>
                 <button
                     onclick="triggerShare()"
                     style="
@@ -557,165 +488,62 @@ shareButton.share(); // Programmatically trigger share</code></pre>
         <div class="demo-section">
             <h2>Accessibility Features</h2>
             <ul>
-                <li>
-                    <strong>Keyboard Navigation:</strong> Fully accessible via
-                    keyboard (Tab, Enter, Space)
-                </li>
-                <li>
-                    <strong>ARIA Labels:</strong> Proper labeling for screen
-                    readers
-                </li>
-                <li>
-                    <strong>Live Regions:</strong> Screen reader announcements
-                    for share/copy actions
-                </li>
-                <li>
-                    <strong>Focus Indicators:</strong> Clear focus ring with 3:1
-                    contrast minimum
-                </li>
-                <li>
-                    <strong>Touch Targets:</strong> Minimum 44x44px touch target
-                    size
-                </li>
-                <li>
-                    <strong>Reduced Motion:</strong> Respects
-                    prefers-reduced-motion preference
-                </li>
-                <li>
-                    <strong>Disabled State:</strong> Properly communicated to
-                    assistive technologies
-                </li>
+                <li><strong>Keyboard Navigation:</strong> Fully accessible via keyboard (Tab, Enter, Space)</li>
+                <li><strong>ARIA Labels:</strong> Proper labeling for screen readers</li>
+                <li><strong>Live Regions:</strong> Screen reader announcements for share/copy actions</li>
+                <li><strong>Focus Indicators:</strong> Clear focus ring with 3:1 contrast minimum</li>
+                <li><strong>Touch Targets:</strong> Minimum 44x44px touch target size</li>
+                <li><strong>Reduced Motion:</strong> Respects prefers-reduced-motion preference</li>
+                <li><strong>Disabled State:</strong> Properly communicated to assistive technologies</li>
             </ul>
         </div>
 
         <!-- CSS Custom Properties Reference -->
         <div class="demo-section">
             <h2>CSS Custom Properties Reference</h2>
-            <table
-                style="
-                    width: 100%;
-                    border-collapse: collapse;
-                    font-size: 0.875rem;
-                "
-            >
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem">
                 <thead>
                     <tr style="background: #f3f4f6; text-align: left">
-                        <th style="padding: 0.75rem; border: 1px solid #e5e7eb">
-                            Property
-                        </th>
-                        <th style="padding: 0.75rem; border: 1px solid #e5e7eb">
-                            Description
-                        </th>
+                        <th style="padding: 0.75rem; border: 1px solid #e5e7eb">Property</th>
+                        <th style="padding: 0.75rem; border: 1px solid #e5e7eb">Description</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td
-                            style="
-                                padding: 0.5rem 0.75rem;
-                                border: 1px solid #e5e7eb;
-                            "
-                        >
+                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">
                             <code>--ps-share-bg</code>
                         </td>
-                        <td
-                            style="
-                                padding: 0.5rem 0.75rem;
-                                border: 1px solid #e5e7eb;
-                            "
-                        >
-                            Background color
-                        </td>
+                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">Background color</td>
                     </tr>
                     <tr>
-                        <td
-                            style="
-                                padding: 0.5rem 0.75rem;
-                                border: 1px solid #e5e7eb;
-                            "
-                        >
+                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">
                             <code>--ps-share-color</code>
                         </td>
-                        <td
-                            style="
-                                padding: 0.5rem 0.75rem;
-                                border: 1px solid #e5e7eb;
-                            "
-                        >
-                            Text color
-                        </td>
+                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">Text color</td>
                     </tr>
                     <tr>
-                        <td
-                            style="
-                                padding: 0.5rem 0.75rem;
-                                border: 1px solid #e5e7eb;
-                            "
-                        >
+                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">
                             <code>--ps-share-border-radius</code>
                         </td>
-                        <td
-                            style="
-                                padding: 0.5rem 0.75rem;
-                                border: 1px solid #e5e7eb;
-                            "
-                        >
-                            Border radius
-                        </td>
+                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">Border radius</td>
                     </tr>
                     <tr>
-                        <td
-                            style="
-                                padding: 0.5rem 0.75rem;
-                                border: 1px solid #e5e7eb;
-                            "
-                        >
+                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">
                             <code>--ps-share-font-size</code>
                         </td>
-                        <td
-                            style="
-                                padding: 0.5rem 0.75rem;
-                                border: 1px solid #e5e7eb;
-                            "
-                        >
-                            Font size
-                        </td>
+                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">Font size</td>
                     </tr>
                     <tr>
-                        <td
-                            style="
-                                padding: 0.5rem 0.75rem;
-                                border: 1px solid #e5e7eb;
-                            "
-                        >
+                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">
                             <code>--ps-share-icon-size</code>
                         </td>
-                        <td
-                            style="
-                                padding: 0.5rem 0.75rem;
-                                border: 1px solid #e5e7eb;
-                            "
-                        >
-                            Icon size
-                        </td>
+                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">Icon size</td>
                     </tr>
                     <tr>
-                        <td
-                            style="
-                                padding: 0.5rem 0.75rem;
-                                border: 1px solid #e5e7eb;
-                            "
-                        >
+                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">
                             <code>--ps-share-feedback-placement</code>
                         </td>
-                        <td
-                            style="
-                                padding: 0.5rem 0.75rem;
-                                border: 1px solid #e5e7eb;
-                            "
-                        >
-                            Feedback position offset
-                        </td>
+                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">Feedback position offset</td>
                     </tr>
                 </tbody>
             </table>
@@ -765,15 +593,99 @@ shareButton.share(); // Programmatically trigger share</code></pre>
 
             // Programmatic share
             window.triggerShare = () => {
-                const shareButton =
-                    document.getElementById('programmatic-share');
+                const shareButton = document.getElementById('programmatic-share');
                 shareButton.share();
             };
 
             window.clearEventLog = () => {
-                eventLog.innerHTML =
-                    '<p style="color: #6b7280">Events will appear here...</p>';
+                eventLog.innerHTML = '<p style="color: #6b7280">Events will appear here...</p>';
             };
+        </script>
+
+        <script type="module">
+            /**
+             * @module stack-l
+             * @description
+             * A custom element for injecting white space (margin) between flow
+             * (block) elements along a vertical axis.
+             * @property {string} space=var(--s1) A CSS `margin` value
+             * @property {boolean} recursive=false Whether the spaces apply recursively (i.e. regardless of nesting level)
+             * @property {number} splitAfter=null The element after which to _split_ the stack with an auto margin
+             */
+            export default class Stack extends HTMLElement {
+                constructor() {
+                    super();
+                    this.render = () => {
+                        this.i = `Stack-${[this.space, this.recursive, this.splitAfter].join('')}`;
+                        this.dataset.i = this.i;
+                        if (!document.getElementById(this.i)) {
+                            let styleEl = document.createElement('style');
+                            styleEl.id = this.i;
+                            styleEl.innerHTML = `
+          [data-i="${this.i}"]${this.recursive ? '' : ' >'} * + * {
+            margin-block-start: ${this.space};
+          }
+      
+          ${
+              this.splitAfter
+                  ? `
+            [data-i="${this.i}"]:only-child {
+              block-size: 100%;
+            }
+      
+            [data-i="${this.i}"] > :nth-child(${this.splitAfter}) {
+              margin-block-end: auto;
+            }`
+                  : ''
+          }
+        `
+                                .replace(/\s\s+/g, ' ')
+                                .trim();
+                            document.head.appendChild(styleEl);
+                        }
+                    };
+                }
+
+                get space() {
+                    return this.getAttribute('space') || 'var(--s1)';
+                }
+
+                set space(val) {
+                    return this.setAttribute('space', val);
+                }
+
+                get recursive() {
+                    return this.hasAttribute('recursive');
+                }
+
+                set recursive(val) {
+                    return this.setAttribute(val ? 'recursive' : '');
+                }
+
+                get splitAfter() {
+                    return this.getAttribute('splitAfter') || null;
+                }
+
+                set splitAfter(val) {
+                    return this.setAttribute('splitAfter', val);
+                }
+
+                static get observedAttributes() {
+                    return ['space', 'recursive', 'splitAfter'];
+                }
+
+                connectedCallback() {
+                    this.render();
+                }
+
+                attributeChangedCallback() {
+                    this.render();
+                }
+            }
+
+            if ('customElements' in window) {
+                customElements.define('stack-l', Stack);
+            }
         </script>
     </body>
 </html>

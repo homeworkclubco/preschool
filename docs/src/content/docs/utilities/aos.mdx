@@ -2,6 +2,442 @@
 title: AOS
 ---
 
-## AOS
+AOS (Animate on Scroll) is a modern intersection observer that animates elements when they scroll into view. Built with the Intersection Observer API, it provides smooth, performant animations that work in both scroll directions.
 
-AOS (Animate on scroll) is a modern intersection observer that animates elements on scroll in both directions.
+## Installation
+
+```bash
+npm install preschool
+```
+
+## Basic Usage
+
+### Import the standalone module
+
+```js
+import 'preschool/aos';
+```
+
+The AOS module automatically initializes on DOM ready and begins observing all elements with the `data-aos` attribute.
+
+### Add animations to HTML
+
+```html
+<div data-aos="fade-up">
+  This element fades up when scrolled into view
+</div>
+
+<div data-aos="zoom-in" data-aos-duration="1000">
+  This element zooms in over 1 second
+</div>
+
+<div data-aos="fade-left" data-aos-delay="200">
+  This element fades from the left with a 200ms delay
+</div>
+```
+
+## Available Animations
+
+### Fade Animations
+
+- `fade` - Simple fade in
+- `fade-up` - Fade in from below
+- `fade-down` - Fade in from above
+- `fade-left` - Fade in from the right
+- `fade-right` - Fade in from the left
+- `fade-up-right` - Fade in diagonally from bottom-right
+- `fade-up-left` - Fade in diagonally from bottom-left
+- `fade-down-right` - Fade in diagonally from top-right
+- `fade-down-left` - Fade in diagonally from top-left
+
+### Zoom Animations
+
+#### Zoom In
+- `zoom-in` - Scale up from small
+- `zoom-in-up` - Scale up from small while moving up
+- `zoom-in-down` - Scale up from small while moving down
+- `zoom-in-left` - Scale up from small while moving left
+- `zoom-in-right` - Scale up from small while moving right
+
+#### Zoom Out
+- `zoom-out` - Scale down from large
+- `zoom-out-up` - Scale down from large while moving up
+- `zoom-out-down` - Scale down from large while moving down
+- `zoom-out-left` - Scale down from large while moving left
+- `zoom-out-right` - Scale down from large while moving right
+
+### Flip Animations
+
+- `flip-up` - 3D flip from bottom
+- `flip-down` - 3D flip from top
+- `flip-left` - 3D flip from right
+- `flip-right` - 3D flip from left
+
+## Data Attributes
+
+### Animation Control
+
+#### `data-aos`
+**Required**. The animation type to apply.
+
+```html
+<div data-aos="fade-up">Content</div>
+```
+
+#### `data-aos-duration`
+Animation duration in milliseconds. Available values: `50` to `2000` in 50ms increments, plus larger values at 1250, 1500, 1750, and 2000.
+
+Default: `600`
+
+```html
+<div data-aos="fade-up" data-aos-duration="1000">
+  Slower animation (1 second)
+</div>
+```
+
+#### `data-aos-delay`
+Delay before animation starts in milliseconds. Available values: `50` to `2000` in 50/100ms increments.
+
+Default: `0`
+
+```html
+<div data-aos="fade-up" data-aos-delay="200">
+  Starts after 200ms
+</div>
+```
+
+#### `data-aos-easing`
+Animation timing function. Available values:
+
+- `linear`
+- `ease`, `ease-in`, `ease-out`, `ease-in-out`
+- `ease-in-back`, `ease-out-back`, `ease-in-out-back`
+- `ease-in-sine`, `ease-out-sine`, `ease-in-out-sine`
+- `ease-in-quad`, `ease-out-quad`, `ease-in-out-quad`
+- `ease-in-cubic`, `ease-out-cubic`, `ease-in-out-cubic`
+- `ease-in-quart`, `ease-out-quart`, `ease-in-out-quart`
+- `ease-in-expo`, `ease-out-expo`, `ease-in-out-expo`
+
+Default: `var(--easing)` (from design tokens)
+
+```html
+<div data-aos="fade-up" data-aos-easing="ease-out-back">
+  Bouncy easing
+</div>
+```
+
+### Observer Configuration
+
+#### `data-aos-root-margin`
+Controls when the animation triggers using the [Intersection Observer rootMargin syntax](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#rootmargin). This accepts CSS-style margin values that extend or shrink the viewport boundaries.
+
+Default: `0px 0px -10% 0px` (triggers when element is 10% from bottom of viewport)
+
+```html
+<!-- Trigger 200px before element enters viewport -->
+<div data-aos="fade-up" data-aos-root-margin="0px 0px -200px 0px">
+  Early trigger
+</div>
+
+<!-- Trigger when element is halfway into viewport -->
+<div data-aos="fade-up" data-aos-root-margin="0px 0px -50% 0px">
+  Centered trigger
+</div>
+
+<!-- Trigger 100px after element enters viewport -->
+<div data-aos="fade-up" data-aos-root-margin="0px 0px 100px 0px">
+  Late trigger
+</div>
+```
+
+The `rootMargin` format is: `top right bottom left` (like CSS margin). Use negative values to trigger earlier (before element enters viewport) or positive values to trigger later (after element enters viewport).
+
+#### `data-aos-threshold`
+Percentage of element visibility required to trigger animation (0 to 1).
+
+Default: `0` (triggers immediately when element starts entering viewport)
+
+```html
+<!-- Trigger when 50% of element is visible -->
+<div data-aos="fade-up" data-aos-threshold="0.5">
+  Half visible
+</div>
+
+<!-- Trigger only when fully visible -->
+<div data-aos="fade-up" data-aos-threshold="1">
+  Fully visible
+</div>
+```
+
+#### `data-aos-once`
+Whether animation should happen only once.
+
+Default: `false` (animates both on scroll down and up)
+
+```html
+<div data-aos="fade-up" data-aos-once="true">
+  Animates only once
+</div>
+```
+
+#### `data-aos-id`
+Custom identifier for the element (useful for debugging or tracking).
+
+```html
+<div data-aos="fade-up" data-aos-id="hero-section">
+  Named element
+</div>
+```
+
+## JavaScript API
+
+### Initialization
+
+```js
+import AOS from 'preschool/aos';
+
+// Initialize with custom options
+AOS.init({
+  rootMargin: '0px 0px -20% 0px',
+  threshold: 0,
+  once: false,
+  startEvent: 'DOMContentLoaded',
+  animatedClassName: 'aos-animate',
+  initClassName: 'aos-init',
+  useClassNames: false,
+  disableMutationObserver: false
+});
+```
+
+### Global Options
+
+#### `rootMargin`
+Default root margin for all elements.
+
+Type: `string`
+Default: `'0px 0px -10% 0px'`
+
+#### `threshold`
+Default threshold for all elements.
+
+Type: `number` (0-1)
+Default: `0`
+
+#### `once`
+Default once behavior for all elements.
+
+Type: `boolean`
+Default: `false`
+
+#### `startEvent`
+Event that triggers AOS initialization.
+
+Type: `string`
+Default: `'DOMContentLoaded'`
+Options: `'DOMContentLoaded'`, `'load'`, or any custom event name
+
+#### `animatedClassName`
+Class added when element is animated.
+
+Type: `string`
+Default: `'aos-animate'`
+
+#### `initClassName`
+Class added when element is initialized.
+
+Type: `string`
+Default: `'aos-init'`
+
+#### `useClassNames`
+Use animation name from `data-aos` as class names.
+
+Type: `boolean`
+Default: `false`
+
+When enabled, `data-aos="my-animation"` will add the `my-animation` class alongside `aos-animate`.
+
+#### `disableMutationObserver`
+Disable automatic detection of new elements.
+
+Type: `boolean`
+Default: `false`
+
+When disabled, you must manually call `refresh()` after adding new AOS elements.
+
+### Methods
+
+#### `refresh()`
+Manually refresh AOS to detect new elements and recalculate positions.
+
+```js
+AOS.refresh();
+
+// Add new elements dynamically
+document.body.innerHTML += '<div data-aos="fade-up">New element</div>';
+AOS.refresh(); // Detect and observe new element
+```
+
+#### `disable()`
+Disable all animations and remove observers.
+
+```js
+AOS.disable();
+```
+
+#### `getState()`
+Get current AOS state and configuration.
+
+```js
+const state = AOS.getState();
+console.log(state);
+// {
+//   initialized: true,
+//   elementCount: 24,
+//   observerCount: 3,
+//   options: { rootMargin: '...', ... }
+// }
+```
+
+#### `getElements()`
+Get all elements being observed.
+
+```js
+const elements = AOS.getElements();
+console.log(elements); // Array of DOM elements
+```
+
+#### `getObservers()`
+Get all IntersectionObserver instances.
+
+```js
+const observers = AOS.getObservers();
+console.log(observers); // Array of IntersectionObserver instances
+```
+
+## CSS Customization
+
+Override default animation behavior using CSS custom properties:
+
+```css
+:root {
+  /* Default easing function */
+  --aos-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Default animation duration */
+  --aos-duration: 600ms;
+
+  /* Movement distance for fade/slide animations */
+  --aos-distance: 100px;
+
+  /* Initial scale for zoom-in animations */
+  --aos-zoom-in-scale: 0.6;
+
+  /* Initial scale for zoom-out animations */
+  --aos-zoom-out-scale: 1.2;
+}
+
+/* Custom distance for specific elements */
+.hero {
+  --aos-distance: 200px; /* Bigger movement */
+}
+
+/* Faster animations for mobile */
+@media (max-width: 768px) {
+  :root {
+    --aos-duration: 400ms;
+    --aos-distance: 50px;
+  }
+}
+```
+
+## Advanced Examples
+
+### Staggered Animations
+
+```html
+<div data-aos="fade-up" data-aos-delay="0">First</div>
+<div data-aos="fade-up" data-aos-delay="100">Second</div>
+<div data-aos="fade-up" data-aos-delay="200">Third</div>
+<div data-aos="fade-up" data-aos-delay="300">Fourth</div>
+```
+
+### Different Triggers for Different Sections
+
+```html
+<!-- Trigger early (200px before entering) -->
+<section data-aos="fade-up" data-aos-root-margin="0px 0px -200px 0px">
+  <h2>Early Animation</h2>
+</section>
+
+<!-- Trigger when centered -->
+<section data-aos="zoom-in" data-aos-root-margin="0px 0px -50% 0px">
+  <h2>Centered Animation</h2>
+</section>
+
+<!-- Trigger when mostly visible -->
+<section data-aos="flip-up" data-aos-threshold="0.8">
+  <h2>Late Animation</h2>
+</section>
+```
+
+### Custom Animation Classes
+
+```html
+<!-- Enable custom class names -->
+<script>
+  AOS.init({
+    useClassNames: true
+  });
+</script>
+
+<style>
+  .my-custom-animation {
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+    transition: all 0.6s ease;
+  }
+
+  .my-custom-animation.aos-animate {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+</style>
+
+<div data-aos="my-custom-animation">
+  Custom spin-and-scale animation
+</div>
+```
+
+### Conditional Initialization
+
+```js
+// Only enable AOS on larger screens
+if (window.innerWidth > 768) {
+  AOS.init({
+    once: true,
+    duration: 800
+  });
+}
+
+// Or disable on mobile
+if ('ontouchstart' in window) {
+  AOS.disable();
+}
+```
+
+## Performance Tips
+
+1. **Use `once: true`** for better performance if you don't need animations on scroll up
+2. **Limit animated elements** - Don't animate every element on the page
+3. **Use appropriate root margins** - Trigger animations just before they're needed
+4. **Disable on low-end devices** - Check device capabilities and disable if needed
+5. **Use CSS custom properties** - Change animation behavior without JavaScript
+
+## Browser Support
+
+AOS requires:
+- Intersection Observer API
+- CSS Transitions
+- CSS Custom Properties
+
+All modern browsers are supported. For legacy browser support, consider using polyfills or graceful degradation.

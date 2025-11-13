@@ -18,7 +18,7 @@
  *   </div>
  * 
  * Custom properties:
- * - --stack-space: Gap between elements (default: var(--spacing-sm))
+ * - --stack-space: Gap between elements (default: var(--space-sm))
  * - --stack-split: Which child gets extra space (default: null)
  * 
  * Modifiers:
@@ -27,7 +27,7 @@
  * -------------------------------------- */
 
 .stack {
-    --_stack-space: var(--stack-space, var(--spacing-lg));
+    --_stack-space: var(--stack-space, var(--space-lg));
 
     > * {
         margin-block: 0;

@@ -17,7 +17,7 @@
  *   </div>
  * 
  * Custom properties:
- * - --cluster-space: Gap between elements (default: var(--spacing-sm))
+ * - --cluster-space: Gap between elements (default: var(--space-sm))
  * - --cluster-justify: Justify content (default: flex-start)
  * - --cluster-align: Align content (default: center)
  * 
@@ -30,7 +30,7 @@
  * -------------------------------------- */
 
 .cluster {
-    --_cluster-space: var(--cluster-space, var(--spacing-sm));
+    --_cluster-space: var(--cluster-space, var(--space-sm));
     --_cluster-justify: var(--cluster-justify, flex-start);
     --_cluster-align: var(--cluster-align, center);
 

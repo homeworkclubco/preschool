@@ -12,7 +12,7 @@
  *   </div>
  * 
  * Custom properties:
- * - --reel-space: Gap between elements (default: var(--spacing-md))
+ * - --reel-space: Gap between elements (default: var(--space-md))
  * - --reel-item-width: Width of each item (default: auto)
  * - --reel-height: Height of the reel (default: auto)
  * - --reel-padding: Padding around the reel (default: 0)
@@ -24,7 +24,7 @@
  * -------------------------------------- */
 
 .reel {
-    --_reel-space: var(--reel-space, var(--spacing-md));
+    --_reel-space: var(--reel-space, var(--space-md));
     --_reel-item-width: var(--reel-item-width, auto);
     --_reel-height: var(--reel-height, auto);
     --_reel-padding: var(--reel-padding, 0);

@@ -17,7 +17,7 @@
 * 
 * Custom properties:
 * - --center-max-width: Maximum width of centered content (default: var(--measure))
-* - --center-padding: Horizontal padding when at small widths (default: var(--spacing-md))
+* - --center-padding: Horizontal padding when at small widths (default: var(--space-md))
 * 
 * Modifiers:
 * - center-measure-*: Sets maximum width
@@ -28,7 +28,7 @@
 */
 .center {
     --_center-max-width: var(--center-max-width, var(--measure));
-    --_center-padding: var(--center-padding, var(--spacing-md));
+    --_center-padding: var(--center-padding, var(--space-md));
 
     box-sizing: content-box;
     margin-left: auto;

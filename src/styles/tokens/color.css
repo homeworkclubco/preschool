@@ -103,3 +103,9 @@
     /* --color-positive: oklch(79.2% 0.209 151.711);
     --color-negative: oklch(70.4% 0.191 22.216); */
 }
+
+[data-color-scheme] {
+    background-color: var(--color-bg);
+    color: var(--color-foreground);
+    border-color: var(--color-border);
+}

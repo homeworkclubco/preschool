@@ -12,7 +12,7 @@
  *   </div>
  * 
  * Custom properties:
- * - --switcher-space: Gap between elements (default: var(--spacing-md))
+ * - --switcher-space: Gap between elements (default: var(--space-md))
  * - --switcher-threshold: Container width to switch layout (default: 600px)
  * - --switcher-limit: Max number of items per row (default: 4)
  * - --switcher-align: Align items (default: stretch)
@@ -25,7 +25,7 @@
  * -------------------------------------- */
 
 .switcher {
-    --_switcher-space: var(--switcher-space, var(--spacing-md));
+    --_switcher-space: var(--switcher-space, var(--space-md));
     --_switcher-threshold: var(--switcher-threshold, 600px);
     --_switcher-limit: var(--switcher-limit, 4);
     --_switcher-align: var(--switcher-align, stretch);
@@ -47,7 +47,7 @@
     flex-grow: 0;
 }
 
-@ruler utility ({
+@ruler utility({
     selector: '.switcher--space',
     property: '--switcher-space',
     scale: 'space',

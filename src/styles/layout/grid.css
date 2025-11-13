@@ -20,7 +20,7 @@
   * 
   * Custom properties:
   * - --grid-min-width: Minimum width of each column (default: 250px)
-  * - --grid-space: Gap between grid items (default: var(--spacing-sm))
+  * - --grid-space: Gap between grid items (default: var(--space-sm))
   * 
   * Modifiers:
   * - grid--min-*: Sets minimum column width
@@ -29,14 +29,11 @@
   */
 .grid {
     --_grid-min-width: var(--grid-min-width, 250px);
-    --_grid-space: var(--grid-space, var(--spacing-lg));
+    --_grid-space: var(--grid-space, var(--space-lg));
 
     display: grid;
     gap: var(--_grid-space);
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(min(var(--_grid-min-width), 100%), 1fr)
-    );
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--_grid-min-width), 100%), 1fr));
 }
 
 @ruler utility({
