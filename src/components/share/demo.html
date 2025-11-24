@@ -3,688 +3,560 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PS Share Component - Demo</title>
-        <link rel="stylesheet" href="../../styles/index.css" />
+        <title>Video Background Demo - Preschool</title>
         <style>
-            stack-l {
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-            }
-
-            stack-l > * + * {
-                margin-block-start: var(--space-lg);
-            }
             * {
+                margin: 0;
+                padding: 0;
                 box-sizing: border-box;
             }
 
             body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-                line-height: 1.6;
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    sans-serif;
+                line-height: 1.5;
+                color: #333;
+            }
+
+            .container {
                 max-width: 1200px;
                 margin: 0 auto;
                 padding: 2rem;
-                background: #f9fafb;
-                color: #0a0a0a;
             }
 
             h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+                margin-top: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 2rem;
                 margin-bottom: 0.5rem;
             }
 
-            .subtitle {
-                color: #6b7280;
-                margin-bottom: 3rem;
+            .example {
+                margin: 2rem 0;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
             }
 
-            .demo-section {
-                background: white;
-                border-radius: 0.5rem;
-                padding: 2rem;
-                margin-bottom: 2rem;
-                box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            .video-demo {
+                position: relative;
+                width: 100%;
+                height: 500px;
+                background: #000;
             }
 
-            .demo-section h2 {
-                margin-top: 0;
-                border-bottom: 2px solid #e5e7eb;
-                padding-bottom: 0.5rem;
-                margin-bottom: 1.5rem;
+            .video-demo.small {
+                height: 300px;
             }
 
-            .demo-section h3 {
-                margin-top: 2rem;
-                margin-bottom: 1rem;
-                color: #374151;
-            }
-
-            .demo-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 1.5rem;
-                margin-bottom: 2rem;
-            }
-
-            .demo-item {
-                padding: 1.5rem;
-                border: 1px solid #e5e7eb;
-                border-radius: 0.375rem;
-                background: #fafafa;
-            }
-
-            .demo-item h4 {
-                margin-top: 0;
-                margin-bottom: 1rem;
-                font-size: 0.875rem;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-                color: #6b7280;
-            }
-
-            .demo-actions {
+            .overlay-content {
+                position: relative;
+                z-index: 1;
                 display: flex;
-                flex-wrap: wrap;
-                gap: 1rem;
+                flex-direction: column;
                 align-items: center;
+                justify-content: center;
+                height: 100%;
+                color: white;
+                text-align: center;
+                padding: 2rem;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            }
+
+            .overlay-content h3 {
+                font-size: 3rem;
+                margin: 0 0 1rem 0;
+                font-weight: bold;
+            }
+
+            .overlay-content p {
+                font-size: 1.25rem;
+                max-width: 600px;
+            }
+
+            .controls {
+                padding: 1rem;
+                background: #f5f5f5;
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            button {
+                padding: 0.5rem 1rem;
+                background: #007bff;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 0.9rem;
+            }
+
+            button:hover {
+                background: #0056b3;
+            }
+
+            button:active {
+                transform: scale(0.98);
+            }
+
+            .info {
+                padding: 1rem;
+                background: #f9f9f9;
+                font-size: 0.9rem;
+                color: #666;
+            }
+
+            .status {
+                padding: 1rem;
+                background: #e3f2fd;
+                font-family: monospace;
+                font-size: 0.85rem;
+            }
+
+            .status div {
+                margin: 0.25rem 0;
             }
 
             code {
-                background: #f3f4f6;
-                padding: 0.125rem 0.375rem;
-                border-radius: 0.25rem;
-                font-family: 'Courier New', monospace;
-                font-size: 0.875em;
+                background: #f5f5f5;
+                padding: 0.2rem 0.4rem;
+                border-radius: 3px;
+                font-size: 0.9em;
             }
 
             pre {
-                background: #1f2937;
-                color: #f9fafb;
+                background: #f5f5f5;
                 padding: 1rem;
-                border-radius: 0.375rem;
+                border-radius: 4px;
                 overflow-x: auto;
-                font-size: 0.875rem;
+                margin: 1rem 0;
             }
 
-            pre code {
-                background: transparent;
-                padding: 0;
-                color: inherit;
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 1rem;
+                margin: 2rem 0;
             }
 
-            .info-box {
-                background: #eff6ff;
-                border-left: 4px solid #3b82f6;
+            .card {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .card-video {
+                height: 200px;
+                background: #000;
+            }
+
+            .card-content {
                 padding: 1rem;
-                border-radius: 0.25rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .info-box p {
-                margin: 0;
-            }
-
-            .custom-button {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                border: none;
-                padding: 0.75rem 1.5rem;
-                border-radius: 0.5rem;
-                font-weight: 600;
-                cursor: pointer;
-                transition: transform 0.2s ease;
-                min-height: 44px;
-            }
-
-            .custom-button:hover {
-                transform: translateY(-2px);
-            }
-
-            .custom-button:active {
-                transform: translateY(0);
-            }
-
-            /* Custom styling examples */
-            ps-share.primary {
-                --ps-share-bg: #3b82f6;
-                --ps-share-bg-hover: #2563eb;
-                --ps-share-bg-active: #1d4ed8;
-                --ps-share-color: white;
-                --ps-share-color-hover: white;
-                --ps-share-border-color: #3b82f6;
-                --ps-share-icon-color: white;
-            }
-
-            ps-share.success {
-                --ps-share-bg: #10b981;
-                --ps-share-bg-hover: #059669;
-                --ps-share-bg-active: #047857;
-                --ps-share-color: white;
-                --ps-share-color-hover: white;
-                --ps-share-border-color: #10b981;
-                --ps-share-icon-color: white;
-            }
-
-            ps-share.outline {
-                --ps-share-bg: transparent;
-                --ps-share-bg-hover: #f3f4f6;
-                --ps-share-bg-active: #e5e7eb;
-                --ps-share-color: #374151;
-                --ps-share-color-hover: #1f2937;
-                --ps-share-border-color: #d1d5db;
-            }
-
-            ps-share.large {
-                --ps-share-padding-block: 1rem;
-                --ps-share-padding-inline: 1.5rem;
-                --ps-share-font-size: 1.125rem;
-                --ps-share-icon-size: 1.5rem;
-            }
-
-            ps-share.small {
-                --ps-share-padding-block: 0.5rem;
-                --ps-share-padding-inline: 0.75rem;
-                --ps-share-font-size: 0.875rem;
-                --ps-share-icon-size: 1rem;
-            }
-
-            ps-share.rounded {
-                --ps-share-border-radius: 9999px;
-            }
-
-            .event-log {
-                background: #f9fafb;
-                border: 1px solid #e5e7eb;
-                border-radius: 0.375rem;
-                padding: 1rem;
-                max-height: 300px;
-                overflow-y: auto;
-                font-family: 'Courier New', monospace;
-                font-size: 0.875rem;
-            }
-
-            .event-log-entry {
-                padding: 0.5rem;
-                margin-bottom: 0.5rem;
-                background: white;
-                border-radius: 0.25rem;
-                border-left: 3px solid #3b82f6;
-            }
-
-            .event-log-entry.success {
-                border-left-color: #10b981;
-            }
-
-            .event-log-entry.error {
-                border-left-color: #ef4444;
-            }
-
-            .event-log-time {
-                color: #6b7280;
-                font-size: 0.75rem;
-            }
-
-            .clear-log {
-                background: #6b7280;
-                color: white;
-                border: none;
-                padding: 0.5rem 1rem;
-                border-radius: 0.25rem;
-                cursor: pointer;
-                margin-bottom: 1rem;
-            }
-
-            .clear-log:hover {
-                background: #4b5563;
             }
         </style>
     </head>
     <body>
-        <stack-l space="var(--space-2xl)">
-            <h1>PS Share Component</h1>
-            <p class="subtitle">An accessible share button with Web Share API support and clipboard fallback</p>
-        </stack-l>
+        <div class="container">
+            <h1>🎬 Video Background Component Demo</h1>
+            <p>Interactive examples of the <code>&lt;hc-video-background&gt;</code> web component.</p>
 
-        <div class="info-box">
-            <p>
-                <strong>Note:</strong> The Web Share API only works in secure contexts (HTTPS) and may not be available
-                on all browsers/devices. This component automatically falls back to clipboard copy when the API is
-                unavailable.
-            </p>
-        </div>
-
-        <!-- Basic Usage -->
-        <div class="demo-section">
-            <h2>Basic Usage</h2>
-
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h4>Default Button</h4>
-                    <ps-share
-                        label="Share this page"
-                        url="https://example.com"
-                        text="Check out this awesome page!"
-                    ></ps-share>
-                </div>
-
-                <div class="demo-item">
-                    <h4>Text Only</h4>
-                    <ps-share label="Share text" text="Hello, World! This is some shareable text."></ps-share>
-                </div>
-
-                <div class="demo-item">
-                    <h4>URL Only</h4>
-                    <ps-share label="Share link" url="https://example.com"></ps-share>
-                </div>
-
-                <div class="demo-item">
-                    <h4>Disabled State</h4>
-                    <ps-share label="Share" text="This button is disabled" disabled></ps-share>
-                </div>
-            </div>
-
-            <h3>Code Example</h3>
-            <pre><code>&lt;ps-share
-  label="Share this page"
-  url="https://example.com"
-  text="Check out this awesome page!"
-&gt;&lt;/ps-share&gt;</code></pre>
-        </div>
-
-        <!-- Feedback Placement -->
-        <div class="demo-section">
-            <h2>Feedback Placement</h2>
-            <p>Control where the "Copied!" feedback appears</p>
-
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h4>Top (Default)</h4>
-                    <ps-share label="Share" text="Feedback on top" feedback-placement="top"></ps-share>
-                </div>
-
-                <div class="demo-item">
-                    <h4>Bottom</h4>
-                    <ps-share label="Share" text="Feedback on bottom" feedback-placement="bottom"></ps-share>
-                </div>
-
-                <div class="demo-item">
-                    <h4>Left</h4>
-                    <ps-share label="Share" text="Feedback on left" feedback-placement="left"></ps-share>
-                </div>
-
-                <div class="demo-item">
-                    <h4>Right</h4>
-                    <ps-share label="Share" text="Feedback on right" feedback-placement="right"></ps-share>
-                </div>
-            </div>
-
-            <h3>Code Example</h3>
-            <pre><code>&lt;ps-share
-  label="Share"
-  text="Content to share"
-  feedback-placement="bottom"
-&gt;&lt;/ps-share&gt;</code></pre>
-        </div>
-
-        <!-- Custom Styling -->
-        <div class="demo-section">
-            <h2>Custom Styling with CSS Variables</h2>
-
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h4>Primary Style</h4>
-                    <ps-share class="primary" label="Share" text="Primary styled button"></ps-share>
-                </div>
-
-                <div class="demo-item">
-                    <h4>Success Style</h4>
-                    <ps-share class="success" label="Share" text="Success styled button"></ps-share>
-                </div>
-
-                <div class="demo-item">
-                    <h4>Outline Style</h4>
-                    <ps-share class="outline" label="Share" text="Outline styled button"></ps-share>
-                </div>
-
-                <div class="demo-item">
-                    <h4>Large Size</h4>
-                    <ps-share class="large" label="Share" text="Large button"></ps-share>
-                </div>
-
-                <div class="demo-item">
-                    <h4>Small Size</h4>
-                    <ps-share class="small" label="Share" text="Small button"></ps-share>
-                </div>
-
-                <div class="demo-item">
-                    <h4>Rounded</h4>
-                    <ps-share class="rounded primary" label="Share" text="Rounded button"></ps-share>
-                </div>
-            </div>
-
-            <h3>Code Example</h3>
-            <pre><code>ps-share.primary {
-  --ps-share-bg: #3b82f6;
-  --ps-share-bg-hover: #2563eb;
-  --ps-share-color: white;
-  --ps-share-border-color: #3b82f6;
-}
-
-&lt;ps-share class="primary" label="Share"&gt;&lt;/ps-share&gt;</code></pre>
-        </div>
-
-        <!-- Custom Button Content -->
-        <div class="demo-section">
-            <h2>Custom Button Content</h2>
-            <p>Use the default slot to provide your own button element</p>
-
-            <div class="demo-actions">
-                <ps-share label="Share with custom button" text="This uses a custom button!" url="https://example.com">
-                    <button class="custom-button">🚀 Share This Awesome Content!</button>
-                </ps-share>
-            </div>
-
-            <h3>Code Example</h3>
-            <pre><code>&lt;ps-share label="Share" text="Content" url="https://example.com"&gt;
-  &lt;button class="custom-button"&gt;
-    🚀 Share This Awesome Content!
-  &lt;/button&gt;
-&lt;/ps-share&gt;</code></pre>
-        </div>
-
-        <!-- Custom Feedback Text -->
-        <div class="demo-section">
-            <h2>Custom Feedback Text</h2>
-
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h4>Custom Message</h4>
-                    <ps-share label="Share" text="Custom feedback example" feedback-text="Link copied! ✓"></ps-share>
-                </div>
-
-                <div class="demo-item">
-                    <h4>Emoji Feedback</h4>
-                    <ps-share label="Share" text="Emoji feedback example" feedback-text="Copied! 🎉"></ps-share>
-                </div>
-            </div>
-
-            <h3>Code Example</h3>
-            <pre><code>&lt;ps-share
-  label="Share"
-  text="Content"
-  feedback-text="Link copied! ✓"
-&gt;&lt;/ps-share&gt;</code></pre>
-        </div>
-
-        <!-- Event Handling -->
-        <div class="demo-section">
-            <h2>Event Handling</h2>
-            <p>The component fires events for successful shares, clipboard copies, and errors</p>
-
-            <div class="demo-actions">
-                <ps-share
-                    id="event-share"
-                    label="Share"
-                    text="Try sharing this to see events"
-                    url="https://example.com"
-                ></ps-share>
-            </div>
-
-            <h3>Event Log</h3>
-            <button class="clear-log" onclick="clearEventLog()">Clear Log</button>
-            <div id="event-log" class="event-log">
-                <p style="color: #6b7280">Events will appear here...</p>
-            </div>
-
-            <h3>Code Example</h3>
-            <pre><code>const shareButton = document.querySelector('ps-share');
-
-// Listen for successful Web Share API usage
-shareButton.addEventListener('ps-share-success', (e) => {
-  console.log('Shared via:', e.detail.method);
-  console.log('Data:', e.detail.data);
-});
-
-// Listen for clipboard copy fallback
-shareButton.addEventListener('ps-share-copy', (e) => {
-  console.log('Copied via:', e.detail.method);
-  console.log('Text:', e.detail.text);
-});
-
-// Listen for errors
-shareButton.addEventListener('ps-share-error', (e) => {
-  console.error('Error:', e.detail.message);
-});</code></pre>
-        </div>
-
-        <!-- Programmatic Usage -->
-        <div class="demo-section">
-            <h2>Programmatic Usage</h2>
-            <p>Trigger sharing programmatically via JavaScript</p>
-
-            <div class="demo-actions">
-                <ps-share id="programmatic-share" label="Share" text="Triggered programmatically"></ps-share>
-                <button
-                    onclick="triggerShare()"
-                    style="
-                        padding: 0.75rem 1.5rem;
-                        background: #6b7280;
-                        color: white;
-                        border: none;
-                        border-radius: 0.375rem;
-                        cursor: pointer;
-                    "
+            <!-- Example 1: YouTube Video -->
+            <h2>1. YouTube Video Background</h2>
+            <div class="example">
+                <hc-video-background
+                    id="youtube-demo"
+                    src="https://www.youtube.com/watch?v=ScMzIvxBSi4"
+                    autoplay
+                    muted
+                    loop
+                    class="video-demo"
                 >
-                    Trigger Share via JavaScript
-                </button>
+                    <div class="overlay-content">
+                        <h3>Beautiful Nature</h3>
+                        <p>YouTube video playing in the background with overlay content</p>
+                    </div>
+                </hc-video-background>
+
+                <div class="controls">
+                    <button onclick="document.getElementById('youtube-demo').play()">Play</button>
+                    <button onclick="document.getElementById('youtube-demo').pause()">Pause</button>
+                    <button onclick="document.getElementById('youtube-demo').mute()">Mute</button>
+                    <button onclick="document.getElementById('youtube-demo').unmute()">Unmute</button>
+                    <button onclick="document.getElementById('youtube-demo').seekTo(30)">Seek to 30s</button>
+                    <button onclick="document.getElementById('youtube-demo').seek(50)">Seek to 50%</button>
+                </div>
+
+                <div class="status" id="youtube-status">
+                    <div><strong>Status:</strong> Loading...</div>
+                </div>
+
+                <div class="info">
+                    <strong>Code:</strong>
+                    <pre><code>&lt;hc-video-background
+  src="https://www.youtube.com/watch?v=ScMzIvxBSi4"
+  autoplay
+  muted
+  loop
+&gt;
+  &lt;div class="overlay-content"&gt;
+    &lt;h3&gt;Beautiful Nature&lt;/h3&gt;
+    &lt;p&gt;Your content here&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/hc-video-background&gt;</code></pre>
+                </div>
             </div>
 
-            <h3>Code Example</h3>
-            <pre><code>const shareButton = document.querySelector('#programmatic-share');
-shareButton.share(); // Programmatically trigger share</code></pre>
-        </div>
+            <!-- Example 2: Vimeo Video -->
+            <h2>2. Vimeo Video Background</h2>
+            <div class="example">
+                <hc-video-background
+                    id="vimeo-demo"
+                    src="https://vimeo.com/76979871"
+                    autoplay
+                    muted
+                    loop
+                    class="video-demo"
+                >
+                    <div class="overlay-content">
+                        <h3>Ocean Waves</h3>
+                        <p>Vimeo video with privacy-friendly DNT mode enabled</p>
+                    </div>
+                </hc-video-background>
 
-        <!-- Accessibility -->
-        <div class="demo-section">
-            <h2>Accessibility Features</h2>
-            <ul>
-                <li><strong>Keyboard Navigation:</strong> Fully accessible via keyboard (Tab, Enter, Space)</li>
-                <li><strong>ARIA Labels:</strong> Proper labeling for screen readers</li>
-                <li><strong>Live Regions:</strong> Screen reader announcements for share/copy actions</li>
-                <li><strong>Focus Indicators:</strong> Clear focus ring with 3:1 contrast minimum</li>
-                <li><strong>Touch Targets:</strong> Minimum 44x44px touch target size</li>
-                <li><strong>Reduced Motion:</strong> Respects prefers-reduced-motion preference</li>
-                <li><strong>Disabled State:</strong> Properly communicated to assistive technologies</li>
-            </ul>
-        </div>
+                <div class="controls">
+                    <button onclick="document.getElementById('vimeo-demo').play()">Play</button>
+                    <button onclick="document.getElementById('vimeo-demo').pause()">Pause</button>
+                    <button onclick="document.getElementById('vimeo-demo').mute()">Mute</button>
+                    <button onclick="document.getElementById('vimeo-demo').unmute()">Unmute</button>
+                    <button onclick="document.getElementById('vimeo-demo').setVolume(0.5)">50% Volume</button>
+                </div>
 
-        <!-- CSS Custom Properties Reference -->
-        <div class="demo-section">
-            <h2>CSS Custom Properties Reference</h2>
-            <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem">
-                <thead>
-                    <tr style="background: #f3f4f6; text-align: left">
-                        <th style="padding: 0.75rem; border: 1px solid #e5e7eb">Property</th>
-                        <th style="padding: 0.75rem; border: 1px solid #e5e7eb">Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">
-                            <code>--ps-share-bg</code>
-                        </td>
-                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">Background color</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">
-                            <code>--ps-share-color</code>
-                        </td>
-                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">Text color</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">
-                            <code>--ps-share-border-radius</code>
-                        </td>
-                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">Border radius</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">
-                            <code>--ps-share-font-size</code>
-                        </td>
-                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">Font size</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">
-                            <code>--ps-share-icon-size</code>
-                        </td>
-                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">Icon size</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">
-                            <code>--ps-share-feedback-placement</code>
-                        </td>
-                        <td style="padding: 0.5rem 0.75rem; border: 1px solid #e5e7eb">Feedback position offset</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p style="margin-top: 1rem; font-size: 0.875rem; color: #6b7280">
-                See the README for a complete list of all CSS custom properties
-            </p>
+                <div class="status" id="vimeo-status">
+                    <div><strong>Status:</strong> Loading...</div>
+                </div>
+
+                <div class="info">
+                    <strong>Code:</strong>
+                    <pre><code>&lt;hc-video-background
+  src="https://vimeo.com/76979871"
+  autoplay
+  muted
+  loop
+  no-cookie
+&gt;&lt;/hc-video-background&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- Example 3: HTML5 Video -->
+            <h2>3. HTML5 Video (Direct File)</h2>
+            <div class="example">
+                <hc-video-background
+                    id="html5-demo"
+                    src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                    autoplay
+                    muted
+                    loop
+                    class="video-demo small"
+                >
+                    <div class="overlay-content">
+                        <h3>Direct Video File</h3>
+                        <p>Using native HTML5 video element</p>
+                    </div>
+                </hc-video-background>
+
+                <div class="controls">
+                    <button onclick="document.getElementById('html5-demo').play()">Play</button>
+                    <button onclick="document.getElementById('html5-demo').pause()">Pause</button>
+                    <button onclick="document.getElementById('html5-demo').seek(25)">Seek to 25%</button>
+                </div>
+
+                <div class="info">
+                    <strong>Code:</strong>
+                    <pre><code>&lt;hc-video-background
+  src="https://example.com/video.mp4"
+  autoplay
+  muted
+  loop
+&gt;&lt;/hc-video-background&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- Example 4: With Poster Image -->
+            <h2>4. With Poster Image</h2>
+            <div class="example">
+                <hc-video-background
+                    id="poster-demo"
+                    src="https://www.youtube.com/watch?v=aqz-KE-bpKQ"
+                    poster="https://via.placeholder.com/1920x1080/4158D0/ffffff?text=Loading+Video"
+                    autoplay
+                    muted
+                    loop
+                    class="video-demo small"
+                >
+                    <div class="overlay-content">
+                        <h3>With Poster</h3>
+                        <p>Poster image shown while video loads</p>
+                    </div>
+                </hc-video-background>
+
+                <div class="info">
+                    <strong>Code:</strong>
+                    <pre><code>&lt;hc-video-background
+  src="https://www.youtube.com/watch?v=..."
+  poster="https://example.com/poster.jpg"
+  autoplay
+  muted
+  loop
+&gt;&lt;/hc-video-background&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- Example 5: Lazy Loading -->
+            <h2>5. Lazy Loading</h2>
+            <p>Scroll down to see lazy loading in action. The video won't load until it enters the viewport.</p>
+            <div
+                style="
+                    height: 400px;
+                    background: #f5f5f5;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 2rem 0;
+                "
+            >
+                <p>👇 Scroll down to load the video</p>
+            </div>
+
+            <div class="example">
+                <hc-video-background
+                    id="lazy-demo"
+                    src="https://www.youtube.com/watch?v=YE7VzlLtp-4"
+                    lazy
+                    autoplay
+                    muted
+                    loop
+                    class="video-demo small"
+                >
+                    <div class="overlay-content">
+                        <h3>Lazy Loaded</h3>
+                        <p>Video loaded when entering viewport</p>
+                    </div>
+                </hc-video-background>
+
+                <div class="info">
+                    <strong>Code:</strong>
+                    <pre><code>&lt;hc-video-background
+  src="https://www.youtube.com/watch?v=..."
+  lazy
+  autoplay
+  muted
+  loop
+&gt;&lt;/hc-video-background&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- Example 6: Custom Time Range -->
+            <h2>6. Custom Time Range (10s - 30s)</h2>
+            <div class="example">
+                <hc-video-background
+                    id="time-demo"
+                    src="https://www.youtube.com/watch?v=ScMzIvxBSi4"
+                    start-at="10"
+                    end-at="30"
+                    autoplay
+                    muted
+                    loop
+                    class="video-demo small"
+                >
+                    <div class="overlay-content">
+                        <h3>Custom Time Range</h3>
+                        <p>Playing from 10s to 30s, then looping</p>
+                    </div>
+                </hc-video-background>
+
+                <div class="info">
+                    <strong>Code:</strong>
+                    <pre><code>&lt;hc-video-background
+  src="https://www.youtube.com/watch?v=..."
+  start-at="10"
+  end-at="30"
+  autoplay
+  muted
+  loop
+&gt;&lt;/hc-video-background&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- Example 7: Grid of Videos -->
+            <h2>7. Multiple Videos</h2>
+            <div class="grid">
+                <div class="card">
+                    <hc-video-background
+                        src="https://www.youtube.com/watch?v=ScMzIvxBSi4"
+                        autoplay
+                        muted
+                        loop
+                        class="card-video"
+                    ></hc-video-background>
+                    <div class="card-content">
+                        <h3>YouTube Video 1</h3>
+                        <p>Multiple instances work independently</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <hc-video-background
+                        src="https://vimeo.com/76979871"
+                        autoplay
+                        muted
+                        loop
+                        class="card-video"
+                    ></hc-video-background>
+                    <div class="card-content">
+                        <h3>Vimeo Video</h3>
+                        <p>Mix different video sources</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <hc-video-background
+                        src="https://www.youtube.com/watch?v=YE7VzlLtp-4"
+                        autoplay
+                        muted
+                        loop
+                        class="card-video"
+                    ></hc-video-background>
+                    <div class="card-content">
+                        <h3>YouTube Video 2</h3>
+                        <p>Each with its own controls</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Example -->
+            <h2>8. JavaScript API</h2>
+            <div class="example">
+                <hc-video-background
+                    id="api-demo"
+                    src="https://www.youtube.com/watch?v=ScMzIvxBSi4"
+                    autoplay
+                    muted
+                    loop
+                    class="video-demo small"
+                >
+                    <div class="overlay-content">
+                        <h3>JavaScript API</h3>
+                        <p id="api-time">Current Time: 0s</p>
+                        <p id="api-state">State: notstarted</p>
+                    </div>
+                </hc-video-background>
+
+                <div class="info">
+                    <strong>Code:</strong>
+                    <pre><code>const video = document.getElementById('api-demo');
+
+// Methods
+video.play();
+video.pause();
+video.mute();
+video.unmute();
+video.setVolume(0.5);
+video.seekTo(30);
+video.seek(50); // 50%
+
+// Properties
+console.log(video.playing);
+console.log(video.currentTime);
+console.log(video.duration);
+console.log(video.percentComplete);
+
+// Events
+video.addEventListener('hc-video-play', (e) => {
+  console.log('Video playing!');
+});
+
+video.addEventListener('hc-video-time-update', (e) => {
+  console.log('Current time:', e.detail.currentTime);
+});</code></pre>
+                </div>
+            </div>
         </div>
 
         <!-- Import the component -->
         <script type="module">
-            import { PsShare } from './ps-share.ts';
+            import '../../index.ts';
 
-            // Event logging
-            const eventShare = document.getElementById('event-share');
-            const eventLog = document.getElementById('event-log');
+            // Setup event listeners for YouTube demo
+            const youtubeDemo = document.getElementById('youtube-demo');
+            const youtubeStatus = document.getElementById('youtube-status');
 
-            function logEvent(type, detail, className = '') {
-                const entry = document.createElement('div');
-                entry.className = `event-log-entry ${className}`;
-
-                const time = new Date().toLocaleTimeString();
-                entry.innerHTML = `
-                    <div class="event-log-time">${time}</div>
-                    <strong>${type}</strong>
-                    <pre style="margin: 0.5rem 0 0; font-size: 0.75rem; white-space: pre-wrap;">${JSON.stringify(detail, null, 2)}</pre>
-                `;
-
-                // Clear placeholder
-                if (eventLog.children[0]?.tagName === 'P') {
-                    eventLog.innerHTML = '';
-                }
-
-                eventLog.insertBefore(entry, eventLog.firstChild);
-            }
-
-            eventShare.addEventListener('ps-share-success', e => {
-                logEvent('ps-share-success', e.detail, 'success');
+            youtubeDemo.addEventListener('hc-video-ready', () => {
+                updateStatus(youtubeStatus, 'Ready', '✅');
             });
 
-            eventShare.addEventListener('ps-share-copy', e => {
-                logEvent('ps-share-copy', e.detail, 'success');
+            youtubeDemo.addEventListener('hc-video-play', () => {
+                updateStatus(youtubeStatus, 'Playing', '▶️');
             });
 
-            eventShare.addEventListener('ps-share-error', e => {
-                logEvent('ps-share-error', e.detail, 'error');
+            youtubeDemo.addEventListener('hc-video-pause', () => {
+                updateStatus(youtubeStatus, 'Paused', '⏸️');
             });
 
-            // Programmatic share
-            window.triggerShare = () => {
-                const shareButton = document.getElementById('programmatic-share');
-                shareButton.share();
-            };
+            youtubeDemo.addEventListener('hc-video-time-update', e => {
+                const time = e.detail.currentTime.toFixed(1);
+                const percent = youtubeDemo.percentComplete.toFixed(0);
+                updateStatus(youtubeStatus, `Playing (${time}s / ${percent}%)`, '▶️');
+            });
 
-            window.clearEventLog = () => {
-                eventLog.innerHTML = '<p style="color: #6b7280">Events will appear here...</p>';
-            };
-        </script>
+            // Setup event listeners for Vimeo demo
+            const vimeoDemo = document.getElementById('vimeo-demo');
+            const vimeoStatus = document.getElementById('vimeo-status');
 
-        <script type="module">
-            /**
-             * @module stack-l
-             * @description
-             * A custom element for injecting white space (margin) between flow
-             * (block) elements along a vertical axis.
-             * @property {string} space=var(--s1) A CSS `margin` value
-             * @property {boolean} recursive=false Whether the spaces apply recursively (i.e. regardless of nesting level)
-             * @property {number} splitAfter=null The element after which to _split_ the stack with an auto margin
-             */
-            export default class Stack extends HTMLElement {
-                constructor() {
-                    super();
-                    this.render = () => {
-                        this.i = `Stack-${[this.space, this.recursive, this.splitAfter].join('')}`;
-                        this.dataset.i = this.i;
-                        if (!document.getElementById(this.i)) {
-                            let styleEl = document.createElement('style');
-                            styleEl.id = this.i;
-                            styleEl.innerHTML = `
-          [data-i="${this.i}"]${this.recursive ? '' : ' >'} * + * {
-            margin-block-start: ${this.space};
-          }
-      
-          ${
-              this.splitAfter
-                  ? `
-            [data-i="${this.i}"]:only-child {
-              block-size: 100%;
-            }
-      
-            [data-i="${this.i}"] > :nth-child(${this.splitAfter}) {
-              margin-block-end: auto;
-            }`
-                  : ''
-          }
-        `
-                                .replace(/\s\s+/g, ' ')
-                                .trim();
-                            document.head.appendChild(styleEl);
-                        }
-                    };
-                }
+            vimeoDemo.addEventListener('hc-video-ready', () => {
+                updateStatus(vimeoStatus, 'Ready', '✅');
+            });
 
-                get space() {
-                    return this.getAttribute('space') || 'var(--s1)';
-                }
+            vimeoDemo.addEventListener('hc-video-play', () => {
+                updateStatus(vimeoStatus, 'Playing', '▶️');
+            });
 
-                set space(val) {
-                    return this.setAttribute('space', val);
-                }
+            vimeoDemo.addEventListener('hc-video-pause', () => {
+                updateStatus(vimeoStatus, 'Paused', '⏸️');
+            });
 
-                get recursive() {
-                    return this.hasAttribute('recursive');
-                }
+            // Setup API demo
+            const apiDemo = document.getElementById('api-demo');
+            const apiTime = document.getElementById('api-time');
+            const apiState = document.getElementById('api-state');
 
-                set recursive(val) {
-                    return this.setAttribute(val ? 'recursive' : '');
-                }
+            apiDemo.addEventListener('hc-video-time-update', e => {
+                apiTime.textContent = `Current Time: ${e.detail.currentTime.toFixed(1)}s`;
+            });
 
-                get splitAfter() {
-                    return this.getAttribute('splitAfter') || null;
-                }
+            apiDemo.addEventListener('hc-video-state-change', e => {
+                apiState.textContent = `State: ${e.detail.state}`;
+            });
 
-                set splitAfter(val) {
-                    return this.setAttribute('splitAfter', val);
-                }
-
-                static get observedAttributes() {
-                    return ['space', 'recursive', 'splitAfter'];
-                }
-
-                connectedCallback() {
-                    this.render();
-                }
-
-                attributeChangedCallback() {
-                    this.render();
-                }
-            }
-
-            if ('customElements' in window) {
-                customElements.define('stack-l', Stack);
+            function updateStatus(element, status, icon) {
+                element.innerHTML = `
+        <div><strong>Status:</strong> ${icon} ${status}</div>
+        <div><strong>Current Time:</strong> ${youtubeDemo.currentTime.toFixed(1)}s</div>
+        <div><strong>Duration:</strong> ${youtubeDemo.duration.toFixed(1)}s</div>
+        <div><strong>Progress:</strong> ${youtubeDemo.percentComplete.toFixed(0)}%</div>
+      `;
             }
         </script>
     </body>

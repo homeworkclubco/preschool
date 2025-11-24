@@ -42,7 +42,7 @@
 }
 
 @ruler utility({
-    selector: '.cluster-space',
+    selector: '.cluster--space',
     property: '--cluster-space',
     scale: 'space',
     generateAllCrossPairs: true,

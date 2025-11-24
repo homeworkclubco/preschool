@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test YouTube Video Background</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, sans-serif;
+    }
+
+    .container {
+      width: 100%;
+      height: 100vh;
+      background: #000;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      text-align: center;
+      padding: 4rem 2rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .content h1 {
+      font-size: 4rem;
+      margin: 0 0 1rem 0;
+    }
+
+    .content p {
+      font-size: 1.5rem;
+    }
+
+    .info {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      z-index: 10;
+    }
+
+    .info div {
+      margin: 0.25rem 0;
+    }
+  </style>
+</head>
+<body>
+  <hc-video-background
+    id="test-video"
+    src="https://www.youtube.com/watch?v=ScMzIvxBSi4"
+    autoplay
+    muted
+    loop
+    class="container"
+  >
+    <div class="content">
+      <h1>Video Background Test</h1>
+      <p>If you see this text over a video, it's working!</p>
+    </div>
+  </hc-video-background>
+
+  <div class="info" id="status">
+    <div><strong>Status:</strong> Loading...</div>
+    <div id="debug"></div>
+  </div>
+
+  <script type="module">
+    import { HcVideoBackground } from './dist/preschool.mjs';
+
+    const video = document.getElementById('test-video');
+    const statusDiv = document.getElementById('status');
+    const debugDiv = document.getElementById('debug');
+
+    function updateStatus(message, data = {}) {
+      console.log(message, data);
+      statusDiv.innerHTML = `
+        <div><strong>Status:</strong> ${message}</div>
+        <div><strong>Current Time:</strong> ${video.currentTime.toFixed(1)}s</div>
+        <div><strong>Duration:</strong> ${video.duration.toFixed(1)}s</div>
+        <div><strong>State:</strong> ${data.state || 'unknown'}</div>
+        <div><strong>Playing:</strong> ${video.playing ? 'Yes' : 'No'}</div>
+      `;
+    }
+
+    video.addEventListener('hc-video-ready', (e) => {
+      updateStatus('✅ Video Ready!');
+      debugDiv.textContent = 'Video initialized successfully';
+    });
+
+    video.addEventListener('hc-video-play', () => {
+      updateStatus('▶️ Playing');
+    });
+
+    video.addEventListener('hc-video-pause', () => {
+      updateStatus('⏸️ Paused');
+    });
+
+    video.addEventListener('hc-video-state-change', (e) => {
+      updateStatus(`State: ${e.detail.state}`, { state: e.detail.state });
+    });
+
+    video.addEventListener('hc-video-error', (e) => {
+      updateStatus('❌ Error', { error: e.detail.error.message });
+      debugDiv.textContent = 'Error: ' + e.detail.error.message;
+      console.error('Video Error:', e.detail.error);
+    });
+
+    video.addEventListener('hc-video-time-update', (e) => {
+      if (video.playing) {
+        updateStatus('▶️ Playing');
+      }
+    });
+
+    // Log when component is connected
+    console.log('Video element:', video);
+    console.log('Shadow Root:', video.shadowRoot);
+
+    setTimeout(() => {
+      console.log('After 2s - State:', {
+        playing: video.playing,
+        currentTime: video.currentTime,
+        duration: video.duration
+      });
+    }, 2000);
+  </script>
+</body>
+</html>

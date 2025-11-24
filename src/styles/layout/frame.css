@@ -18,7 +18,7 @@
 
 .frame {
     --_frame-ratio: var(--frame-ratio, 4/3);
-
+    --_frame-position: var(--frame-position, center);
     aspect-ratio: var(--_frame-ratio);
     overflow: hidden;
     display: flex;
@@ -30,6 +30,7 @@
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
+    object-position: var(--_frame-position);
     display: block;
 }
 
@@ -49,9 +50,11 @@
 .frame--ratio-16-9 {
     --frame-ratio: 16/9;
 }
+
 .frame--ratio-4-3 {
     --frame-ratio: 4/3;
 }
+
 .frame--ratio-square,
 .frame--ratio-1-1 {
     --frame-ratio: 1/1;
@@ -67,6 +70,46 @@
     --frame-ratio: 2/1;
 }
 
+.frame--ratio-3-4 {
+    --frame-ratio: 3/4;
+}
+
 .frame--ratio-9-16 {
     --frame-ratio: 9/16;
+}
+
+.frame--position-top {
+    --frame-position: top;
+}
+
+.frame--position-bottom {
+    --frame-position: bottom;
+}
+
+.frame--position-left {
+    --frame-position: left;
+}
+
+.frame--position-right {
+    --frame-position: right;
+}
+
+.frame--position-center {
+    --frame-position: center;
+}
+
+.frame--position-top-left {
+    --frame-position: top left;
+}
+
+.frame--position-top-right {
+    --frame-position: top right;
+}
+
+.frame--position-bottom-left {
+    --frame-position: bottom left;
+}
+
+.frame--position-bottom-right {
+    --frame-position: bottom right;
 }

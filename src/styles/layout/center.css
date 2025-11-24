@@ -25,6 +25,7 @@
 * - center--intrinsic: Centers child elements that don't fill width
 * - center--narrow: Sets maximum width to var(--measure-s)
 * - center--wide: Sets maximum width to var(--measure-l)
+* - center--vertical: Centers child elements vertically
 */
 .center {
     --_center-max-width: var(--center-max-width, var(--measure));
@@ -48,6 +49,13 @@
     align-items: center;
 }
 
+.center--vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .center--narrow {
     --center-max-width: var(--measure-s);
 }
@@ -55,3 +63,14 @@
 .center--wide {
     --center-max-width: var(--measure-l);
 }
+
+.center--padding-0 {
+    --center-padding: 0;
+}
+
+@ruler utility({
+    selector: '.center--padding',
+    property: '--center-padding',
+    scale: 'space',
+    generateAllCrossPairs: true,
+});

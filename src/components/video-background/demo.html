@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Background Demo - Preschool</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .example {
+      margin: 2rem 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .video-demo {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      background: #000;
+    }
+
+    .video-demo.small {
+      height: 300px;
+    }
+
+    .overlay-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .overlay-content h3 {
+      font-size: 3rem;
+      margin: 0 0 1rem 0;
+      font-weight: bold;
+    }
+
+    .overlay-content p {
+      font-size: 1.25rem;
+      max-width: 600px;
+    }
+
+    .controls {
+      padding: 1rem;
+      background: #f5f5f5;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .info {
+      padding: 1rem;
+      background: #f9f9f9;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .status {
+      padding: 1rem;
+      background: #e3f2fd;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+
+    .status div {
+      margin: 0.25rem 0;
+    }
+
+    code {
+      background: #f5f5f5;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #f5f5f5;
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .card-video {
+      height: 200px;
+      background: #000;
+    }
+
+    .card-content {
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎬 Video Background Component Demo</h1>
+    <p>Interactive examples of the <code>&lt;hc-video-background&gt;</code> web component.</p>
+
+    <!-- Example 1: YouTube Video -->
+    <h2>1. YouTube Video Background</h2>
+    <div class="example">
+      <hc-video-background
+        id="youtube-demo"
+        src="https://www.youtube.com/watch?v=ScMzIvxBSi4"
+        autoplay
+        muted
+        loop
+        class="video-demo"
+      >
+        <div class="overlay-content">
+          <h3>Beautiful Nature</h3>
+          <p>YouTube video playing in the background with overlay content</p>
+        </div>
+      </hc-video-background>
+
+      <div class="controls">
+        <button onclick="document.getElementById('youtube-demo').play()">Play</button>
+        <button onclick="document.getElementById('youtube-demo').pause()">Pause</button>
+        <button onclick="document.getElementById('youtube-demo').mute()">Mute</button>
+        <button onclick="document.getElementById('youtube-demo').unmute()">Unmute</button>
+        <button onclick="document.getElementById('youtube-demo').seekTo(30)">Seek to 30s</button>
+        <button onclick="document.getElementById('youtube-demo').seek(50)">Seek to 50%</button>
+      </div>
+
+      <div class="status" id="youtube-status">
+        <div><strong>Status:</strong> Loading...</div>
+      </div>
+
+      <div class="info">
+        <strong>Code:</strong>
+        <pre><code>&lt;hc-video-background
+  src="https://www.youtube.com/watch?v=ScMzIvxBSi4"
+  autoplay
+  muted
+  loop
+&gt;
+  &lt;div class="overlay-content"&gt;
+    &lt;h3&gt;Beautiful Nature&lt;/h3&gt;
+    &lt;p&gt;Your content here&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/hc-video-background&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 2: Vimeo Video -->
+    <h2>2. Vimeo Video Background</h2>
+    <div class="example">
+      <hc-video-background
+        id="vimeo-demo"
+        src="https://vimeo.com/76979871"
+        autoplay
+        muted
+        loop
+        class="video-demo"
+      >
+        <div class="overlay-content">
+          <h3>Ocean Waves</h3>
+          <p>Vimeo video with privacy-friendly DNT mode enabled</p>
+        </div>
+      </hc-video-background>
+
+      <div class="controls">
+        <button onclick="document.getElementById('vimeo-demo').play()">Play</button>
+        <button onclick="document.getElementById('vimeo-demo').pause()">Pause</button>
+        <button onclick="document.getElementById('vimeo-demo').mute()">Mute</button>
+        <button onclick="document.getElementById('vimeo-demo').unmute()">Unmute</button>
+        <button onclick="document.getElementById('vimeo-demo').setVolume(0.5)">50% Volume</button>
+      </div>
+
+      <div class="status" id="vimeo-status">
+        <div><strong>Status:</strong> Loading...</div>
+      </div>
+
+      <div class="info">
+        <strong>Code:</strong>
+        <pre><code>&lt;hc-video-background
+  src="https://vimeo.com/76979871"
+  autoplay
+  muted
+  loop
+  no-cookie
+&gt;&lt;/hc-video-background&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 3: HTML5 Video -->
+    <h2>3. HTML5 Video (Direct File)</h2>
+    <div class="example">
+      <hc-video-background
+        id="html5-demo"
+        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+        autoplay
+        muted
+        loop
+        class="video-demo small"
+      >
+        <div class="overlay-content">
+          <h3>Direct Video File</h3>
+          <p>Using native HTML5 video element</p>
+        </div>
+      </hc-video-background>
+
+      <div class="controls">
+        <button onclick="document.getElementById('html5-demo').play()">Play</button>
+        <button onclick="document.getElementById('html5-demo').pause()">Pause</button>
+        <button onclick="document.getElementById('html5-demo').seek(25)">Seek to 25%</button>
+      </div>
+
+      <div class="info">
+        <strong>Code:</strong>
+        <pre><code>&lt;hc-video-background
+  src="https://example.com/video.mp4"
+  autoplay
+  muted
+  loop
+&gt;&lt;/hc-video-background&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 4: With Poster Image -->
+    <h2>4. With Poster Image</h2>
+    <div class="example">
+      <hc-video-background
+        id="poster-demo"
+        src="https://www.youtube.com/watch?v=aqz-KE-bpKQ"
+        poster="https://via.placeholder.com/1920x1080/4158D0/ffffff?text=Loading+Video"
+        autoplay
+        muted
+        loop
+        class="video-demo small"
+      >
+        <div class="overlay-content">
+          <h3>With Poster</h3>
+          <p>Poster image shown while video loads</p>
+        </div>
+      </hc-video-background>
+
+      <div class="info">
+        <strong>Code:</strong>
+        <pre><code>&lt;hc-video-background
+  src="https://www.youtube.com/watch?v=..."
+  poster="https://example.com/poster.jpg"
+  autoplay
+  muted
+  loop
+&gt;&lt;/hc-video-background&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 5: Lazy Loading -->
+    <h2>5. Lazy Loading</h2>
+    <p>Scroll down to see lazy loading in action. The video won't load until it enters the viewport.</p>
+    <div style="height: 400px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; margin: 2rem 0;">
+      <p>👇 Scroll down to load the video</p>
+    </div>
+
+    <div class="example">
+      <hc-video-background
+        id="lazy-demo"
+        src="https://www.youtube.com/watch?v=YE7VzlLtp-4"
+        lazy
+        autoplay
+        muted
+        loop
+        class="video-demo small"
+      >
+        <div class="overlay-content">
+          <h3>Lazy Loaded</h3>
+          <p>Video loaded when entering viewport</p>
+        </div>
+      </hc-video-background>
+
+      <div class="info">
+        <strong>Code:</strong>
+        <pre><code>&lt;hc-video-background
+  src="https://www.youtube.com/watch?v=..."
+  lazy
+  autoplay
+  muted
+  loop
+&gt;&lt;/hc-video-background&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 6: Custom Time Range -->
+    <h2>6. Custom Time Range (10s - 30s)</h2>
+    <div class="example">
+      <hc-video-background
+        id="time-demo"
+        src="https://www.youtube.com/watch?v=ScMzIvxBSi4"
+        start-at="10"
+        end-at="30"
+        autoplay
+        muted
+        loop
+        class="video-demo small"
+      >
+        <div class="overlay-content">
+          <h3>Custom Time Range</h3>
+          <p>Playing from 10s to 30s, then looping</p>
+        </div>
+      </hc-video-background>
+
+      <div class="info">
+        <strong>Code:</strong>
+        <pre><code>&lt;hc-video-background
+  src="https://www.youtube.com/watch?v=..."
+  start-at="10"
+  end-at="30"
+  autoplay
+  muted
+  loop
+&gt;&lt;/hc-video-background&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 7: Grid of Videos -->
+    <h2>7. Multiple Videos</h2>
+    <div class="grid">
+      <div class="card">
+        <hc-video-background
+          src="https://www.youtube.com/watch?v=ScMzIvxBSi4"
+          autoplay
+          muted
+          loop
+          class="card-video"
+        ></hc-video-background>
+        <div class="card-content">
+          <h3>YouTube Video 1</h3>
+          <p>Multiple instances work independently</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <hc-video-background
+          src="https://vimeo.com/76979871"
+          autoplay
+          muted
+          loop
+          class="card-video"
+        ></hc-video-background>
+        <div class="card-content">
+          <h3>Vimeo Video</h3>
+          <p>Mix different video sources</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <hc-video-background
+          src="https://www.youtube.com/watch?v=YE7VzlLtp-4"
+          autoplay
+          muted
+          loop
+          class="card-video"
+        ></hc-video-background>
+        <div class="card-content">
+          <h3>YouTube Video 2</h3>
+          <p>Each with its own controls</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- API Example -->
+    <h2>8. JavaScript API</h2>
+    <div class="example">
+      <hc-video-background
+        id="api-demo"
+        src="https://www.youtube.com/watch?v=ScMzIvxBSi4"
+        autoplay
+        muted
+        loop
+        class="video-demo small"
+      >
+        <div class="overlay-content">
+          <h3>JavaScript API</h3>
+          <p id="api-time">Current Time: 0s</p>
+          <p id="api-state">State: notstarted</p>
+        </div>
+      </hc-video-background>
+
+      <div class="info">
+        <strong>Code:</strong>
+        <pre><code>const video = document.getElementById('api-demo');
+
+// Methods
+video.play();
+video.pause();
+video.mute();
+video.unmute();
+video.setVolume(0.5);
+video.seekTo(30);
+video.seek(50); // 50%
+
+// Properties
+console.log(video.playing);
+console.log(video.currentTime);
+console.log(video.duration);
+console.log(video.percentComplete);
+
+// Events
+video.addEventListener('hc-video-play', (e) => {
+  console.log('Video playing!');
+});
+
+video.addEventListener('hc-video-time-update', (e) => {
+  console.log('Current time:', e.detail.currentTime);
+});</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import the component -->
+  <script type="module">
+    import '../../index.ts';
+
+    // Setup event listeners for YouTube demo
+    const youtubeDemo = document.getElementById('youtube-demo');
+    const youtubeStatus = document.getElementById('youtube-status');
+
+    youtubeDemo.addEventListener('hc-video-ready', () => {
+      updateStatus(youtubeStatus, 'Ready', '✅');
+    });
+
+    youtubeDemo.addEventListener('hc-video-play', () => {
+      updateStatus(youtubeStatus, 'Playing', '▶️');
+    });
+
+    youtubeDemo.addEventListener('hc-video-pause', () => {
+      updateStatus(youtubeStatus, 'Paused', '⏸️');
+    });
+
+    youtubeDemo.addEventListener('hc-video-time-update', (e) => {
+      const time = e.detail.currentTime.toFixed(1);
+      const percent = youtubeDemo.percentComplete.toFixed(0);
+      updateStatus(youtubeStatus, `Playing (${time}s / ${percent}%)`, '▶️');
+    });
+
+    // Setup event listeners for Vimeo demo
+    const vimeoDemo = document.getElementById('vimeo-demo');
+    const vimeoStatus = document.getElementById('vimeo-status');
+
+    vimeoDemo.addEventListener('hc-video-ready', () => {
+      updateStatus(vimeoStatus, 'Ready', '✅');
+    });
+
+    vimeoDemo.addEventListener('hc-video-play', () => {
+      updateStatus(vimeoStatus, 'Playing', '▶️');
+    });
+
+    vimeoDemo.addEventListener('hc-video-pause', () => {
+      updateStatus(vimeoStatus, 'Paused', '⏸️');
+    });
+
+    // Setup API demo
+    const apiDemo = document.getElementById('api-demo');
+    const apiTime = document.getElementById('api-time');
+    const apiState = document.getElementById('api-state');
+
+    apiDemo.addEventListener('hc-video-time-update', (e) => {
+      apiTime.textContent = `Current Time: ${e.detail.currentTime.toFixed(1)}s`;
+    });
+
+    apiDemo.addEventListener('hc-video-state-change', (e) => {
+      apiState.textContent = `State: ${e.detail.state}`;
+    });
+
+    function updateStatus(element, status, icon) {
+      element.innerHTML = `
+        <div><strong>Status:</strong> ${icon} ${status}</div>
+        <div><strong>Current Time:</strong> ${youtubeDemo.currentTime.toFixed(1)}s</div>
+        <div><strong>Duration:</strong> ${youtubeDemo.duration.toFixed(1)}s</div>
+        <div><strong>Progress:</strong> ${youtubeDemo.percentComplete.toFixed(0)}%</div>
+      `;
+    }
+  </script>
+</body>
+</html>

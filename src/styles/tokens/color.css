@@ -108,4 +108,8 @@
     background-color: var(--color-bg);
     color: var(--color-foreground);
     border-color: var(--color-border);
+
+    &[data-bg-alt] {
+        background-color: var(--color-bg-alt);
+    }
 }

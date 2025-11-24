@@ -16,6 +16,7 @@ import { property, query, state } from 'lit/decorators.js';
  * @slot close-button - Custom close button. Should have @click handler that calls drawer.hide()
  * @slot footer - The drawer's footer, typically used for buttons
  *
+ * @fires ps-ready - Emitted when the drawer is initialized and ready for interaction
  * @fires ps-show - Emitted when the drawer opens
  * @fires ps-after-show - Emitted after the drawer opens and all animations complete
  * @fires ps-hide - Emitted when the drawer closes
@@ -48,18 +49,22 @@ export class HcDrawer extends LitElement {
         /* Component variables */
         :host {
             --size: 25rem;
-            --header-spacing: 1.5rem;
-            --body-spacing: 1.5rem;
-            --footer-spacing: 1.5rem;
+            --header-spacing: var(--space-md);
+            --body-spacing: var(--space-md);
+            --footer-spacing: var(--space-md);
             --duration: 250ms;
             --easing: cubic-bezier(0.4, 0, 0.2, 1);
+            --overlay-color: rgba(0, 0, 0, 0.5);
+            --color-bg: var(--color-bg);
+            --color-foreground: var(--color-foreground);
+            --color-border: var(--color-border);
         }
 
         /* Adjust default size for top/bottom placement */
-        :host([placement='top']),
-        :host([placement='bottom']) {
-            --size: 100%;
-        }
+        // :host([placement='top']),
+        // :host([placement='bottom']) {
+        //     --size: 100%;
+        // }
 
         /* Drawer container */
         .drawer {
@@ -89,7 +94,7 @@ export class HcDrawer extends LitElement {
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: var(--overlay-color);
             opacity: 0;
             transition: opacity var(--duration) var(--easing);
         }
@@ -108,17 +113,20 @@ export class HcDrawer extends LitElement {
             position: absolute;
             display: flex;
             flex-direction: column;
-            background-color: white;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
             transition: transform var(--duration) var(--easing);
             overflow: hidden;
+            background-color: var(--color-bg);
+            color: var(--color-foreground);
+            border-color: var(--color-border);
         }
 
         /* Placement: Right (default) */
         .drawer[data-position='right'] .drawer-panel {
             top: 0;
             right: 0;
-            width: var(--size);
+            max-width: var(--size);
+            width: 100%;
             height: 100%;
             transform: translateX(100%);
         }
@@ -131,7 +139,8 @@ export class HcDrawer extends LitElement {
         .drawer[data-position='left'] .drawer-panel {
             top: 0;
             left: 0;
-            width: var(--size);
+            max-width: var(--size);
+            width: 100%;
             height: 100%;
             transform: translateX(-100%);
         }
@@ -144,7 +153,8 @@ export class HcDrawer extends LitElement {
         .drawer[data-position='top'] .drawer-panel {
             top: 0;
             left: 0;
-            width: 100%;
+            max-width: 100%;
+            width: 100%
             height: var(--size);
             transform: translateY(-100%);
         }
@@ -157,6 +167,7 @@ export class HcDrawer extends LitElement {
         .drawer[data-position='bottom'] .drawer-panel {
             bottom: 0;
             left: 0;
+            max-width: 100%;
             width: 100%;
             height: var(--size);
             transform: translateY(100%);
@@ -172,7 +183,6 @@ export class HcDrawer extends LitElement {
             align-items: center;
             gap: 0.5rem;
             padding: var(--header-spacing);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         /* Hide header when no-header attribute is present */
@@ -184,9 +194,6 @@ export class HcDrawer extends LitElement {
         .drawer-title {
             flex: 1;
             margin: 0;
-            font-size: 1.25rem;
-            font-weight: 600;
-            line-height: 1.4;
         }
 
         /* Header actions */
@@ -206,7 +213,6 @@ export class HcDrawer extends LitElement {
         /* Footer */
         .drawer-footer {
             padding: var(--footer-spacing);
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         /* Hide footer if empty */
@@ -281,6 +287,14 @@ export class HcDrawer extends LitElement {
         if (this.open) {
             this.isVisible = true;
         }
+
+        // Emit ready event
+        const readyEvent = new CustomEvent('ps-ready', {
+            bubbles: true,
+            composed: true,
+            cancelable: false,
+        });
+        this.dispatchEvent(readyEvent);
     }
 
     disconnectedCallback() {

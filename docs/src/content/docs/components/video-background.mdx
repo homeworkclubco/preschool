@@ -1,0 +1,625 @@
+---
+title: Video Background
+description: A versatile web component for adding video backgrounds from YouTube, Vimeo, or direct video files
+---
+
+The `<hc-video-background>` component provides a powerful and flexible way to add video backgrounds to your web pages. It supports YouTube, Vimeo, and HTML5 video sources with full control over playback, responsive sizing, and mobile optimization.
+
+## Features
+
+- 🎥 **Multi-source support**: YouTube, Vimeo, and HTML5 video files
+- 🔒 **Privacy-friendly**: Cookie-free embeds with DNT (Do Not Track) mode
+- 📱 **Mobile optimized**: Battery-aware autoplay and inline playback
+- 👁️ **Lazy loading**: Defer video loading until entering viewport
+- 📐 **Responsive**: Automatic sizing with IntersectionObserver and ResizeObserver
+- ⏯️ **Full API control**: Play, pause, seek, volume, and more
+- 🎯 **Time ranges**: Start and end at specific timestamps
+- 🖼️ **Poster images**: Show fallback images while loading
+- ♿ **Accessible**: Semantic HTML with proper event handling
+
+## Basic Usage
+
+### YouTube Video
+
+```html
+<hc-video-background
+  src="https://www.youtube.com/watch?v=VIDEO_ID"
+  autoplay
+  muted
+  loop
+>
+  <div class="content">
+    <h1>Your Content Here</h1>
+    <p>This appears over the video</p>
+  </div>
+</hc-video-background>
+```
+
+### Vimeo Video
+
+```html
+<hc-video-background
+  src="https://vimeo.com/VIDEO_ID"
+  autoplay
+  muted
+  loop
+>
+  <div class="content">
+    <h1>Beautiful Background</h1>
+  </div>
+</hc-video-background>
+```
+
+### HTML5 Video File
+
+```html
+<hc-video-background
+  src="https://example.com/video.mp4"
+  autoplay
+  muted
+  loop
+  poster="https://example.com/poster.jpg"
+>
+  <div class="content">
+    <h1>Direct Video File</h1>
+  </div>
+</hc-video-background>
+```
+
+## Installation
+
+```bash
+npm install preschool
+```
+
+```javascript
+import { HcVideoBackground } from 'preschool';
+```
+
+The component will auto-register as `<hc-video-background>` when imported.
+
+## Properties
+
+All properties can be set as HTML attributes or via JavaScript.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `src` | string | `''` | Video URL (YouTube, Vimeo, or direct file) |
+| `poster` | string | `''` | Poster image URL shown while loading |
+| `autoplay` | boolean | `true` | Auto-start video on load |
+| `muted` | boolean | `true` | Load video muted (required for autoplay) |
+| `loop` | boolean | `true` | Restart video after completion |
+| `mobile` | boolean | `true` | Play on mobile devices |
+| `lazy` | boolean | `false` | Defer loading until entering viewport |
+| `volume` | number | `1` | Initial volume level (0-1) |
+| `start-at` | number | `0` | Begin playback at X seconds |
+| `end-at` | number | `0` | Stop playback at X seconds (0 = disabled) |
+| `always-play` | boolean | `false` | Ignore IntersectionObserver pause |
+| `no-cookie` | boolean | `true` | Use privacy-friendly embeds |
+| `resolution` | string | `'16:9'` | Aspect ratio for sizing calculations |
+| `fit-box` | boolean | `false` | Stretch to exact container size |
+| `force-on-low-battery` | boolean | `false` | Override battery saver restrictions |
+
+### Read-Only Properties
+
+Access these via JavaScript:
+
+```javascript
+const video = document.querySelector('hc-video-background');
+
+console.log(video.playing);         // boolean
+console.log(video.paused);          // boolean
+console.log(video.currentTime);     // number (seconds)
+console.log(video.duration);        // number (seconds)
+console.log(video.percentComplete); // number (0-100)
+```
+
+## Methods
+
+### Playback Control
+
+```javascript
+const video = document.querySelector('hc-video-background');
+
+// Play/pause
+await video.play();
+video.pause();
+
+// Soft play/pause (only if state changes)
+await video.softPlay();   // Only plays if not already playing
+video.softPause();        // Only pauses if currently playing
+```
+
+### Audio Control
+
+```javascript
+// Mute/unmute
+video.mute();
+video.unmute();
+
+// Volume control (0-1)
+video.setVolume(0.5);
+const currentVolume = video.getVolume();
+```
+
+### Seeking
+
+```javascript
+// Seek to percentage (0-100)
+video.seek(50); // Jump to 50% of video
+
+// Seek to specific time in seconds
+video.seekTo(30); // Jump to 30 seconds
+```
+
+### Time Range
+
+```javascript
+// Update start/end times
+video.setStartAt(10);  // Start at 10 seconds
+video.setEndAt(60);    // End at 60 seconds
+```
+
+### Source Management
+
+```javascript
+// Change video source
+await video.setSource('https://www.youtube.com/watch?v=NEW_VIDEO');
+```
+
+## Events
+
+All events are dispatched as CustomEvents with a `detail` property.
+
+### Event List
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `hc-video-ready` | `{ instance }` | Player initialized and ready |
+| `hc-video-play` | `{ instance }` | Playback started |
+| `hc-video-pause` | `{ instance }` | Playback paused |
+| `hc-video-ended` | `{ instance }` | Video finished playing |
+| `hc-video-mute` | `{ instance }` | Audio muted |
+| `hc-video-unmute` | `{ instance }` | Audio unmuted |
+| `hc-video-volume-change` | `{ volume }` | Volume level changed (0-1) |
+| `hc-video-time-update` | `{ currentTime }` | Playback position updated (seconds) |
+| `hc-video-state-change` | `{ state }` | State changed |
+| `hc-video-resize` | `{ instance }` | Player resized |
+| `hc-video-error` | `{ error }` | Error occurred |
+
+### Event Example
+
+```javascript
+const video = document.querySelector('hc-video-background');
+
+video.addEventListener('hc-video-ready', () => {
+  console.log('Video is ready to play!');
+});
+
+video.addEventListener('hc-video-play', () => {
+  console.log('Video started playing');
+});
+
+video.addEventListener('hc-video-time-update', (e) => {
+  console.log('Current time:', e.detail.currentTime);
+});
+
+video.addEventListener('hc-video-state-change', (e) => {
+  console.log('State:', e.detail.state);
+  // States: 'notstarted' | 'playing' | 'paused' | 'ended' | 'buffering'
+});
+
+video.addEventListener('hc-video-error', (e) => {
+  console.error('Video error:', e.detail.error);
+});
+```
+
+## Examples
+
+### With Poster Image
+
+```html
+<hc-video-background
+  src="https://www.youtube.com/watch?v=VIDEO_ID"
+  poster="https://example.com/poster.jpg"
+  autoplay
+  muted
+  loop
+>
+  <div class="hero">
+    <h1>Welcome</h1>
+    <p>Poster shows while video loads</p>
+  </div>
+</hc-video-background>
+```
+
+### Lazy Loading
+
+Perfect for videos below the fold:
+
+```html
+<hc-video-background
+  src="https://vimeo.com/VIDEO_ID"
+  lazy
+  autoplay
+  muted
+  loop
+>
+  <div class="section">
+    <h2>Video loads when scrolled into view</h2>
+  </div>
+</hc-video-background>
+```
+
+### Custom Time Range
+
+Play only a specific portion of the video:
+
+```html
+<hc-video-background
+  src="https://www.youtube.com/watch?v=VIDEO_ID"
+  start-at="30"
+  end-at="60"
+  autoplay
+  muted
+  loop
+>
+  <div class="clip">
+    <h2>Plays 30s to 60s, then loops</h2>
+  </div>
+</hc-video-background>
+```
+
+### Different Aspect Ratios
+
+```html
+<!-- Ultrawide -->
+<hc-video-background
+  src="https://example.com/video.mp4"
+  resolution="21:9"
+  autoplay
+  muted
+  loop
+></hc-video-background>
+
+<!-- Square -->
+<hc-video-background
+  src="https://example.com/video.mp4"
+  resolution="1:1"
+  autoplay
+  muted
+  loop
+></hc-video-background>
+
+<!-- Portrait -->
+<hc-video-background
+  src="https://example.com/video.mp4"
+  resolution="9:16"
+  autoplay
+  muted
+  loop
+></hc-video-background>
+```
+
+### Always Play (Ignore Viewport)
+
+By default, videos pause when scrolled out of view. Use `always-play` to prevent this:
+
+```html
+<hc-video-background
+  src="https://www.youtube.com/watch?v=VIDEO_ID"
+  always-play
+  autoplay
+  muted
+  loop
+>
+  <div class="content">
+    <h2>Keeps playing even when scrolled away</h2>
+  </div>
+</hc-video-background>
+```
+
+### Fit to Container (No Aspect Ratio)
+
+Stretch the video to exactly fit the container:
+
+```html
+<hc-video-background
+  src="https://example.com/video.mp4"
+  fit-box
+  autoplay
+  muted
+  loop
+>
+  <div class="content">
+    <h2>Video stretched to container size</h2>
+  </div>
+</hc-video-background>
+```
+
+## Styling
+
+The component uses Shadow DOM for style encapsulation. Style your overlay content as usual:
+
+```css
+hc-video-background {
+  width: 100%;
+  height: 500px;
+}
+
+.hero {
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  padding: 4rem 2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+```
+
+### CSS Custom Properties
+
+Customize the component's internal styles:
+
+```css
+hc-video-background {
+  --video-object-fit: cover; /* or contain */
+  --video-opacity: 1;
+  --poster-opacity: 1;
+}
+```
+
+## Framework Integration
+
+### React
+
+```jsx
+import { HcVideoBackground } from 'preschool';
+
+function Hero() {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+
+    const handleReady = () => {
+      console.log('Video ready!');
+    };
+
+    video.addEventListener('hc-video-ready', handleReady);
+
+    return () => {
+      video.removeEventListener('hc-video-ready', handleReady);
+    };
+  }, []);
+
+  return (
+    <hc-video-background
+      ref={videoRef}
+      src="https://www.youtube.com/watch?v=VIDEO_ID"
+      autoplay
+      muted
+      loop
+    >
+      <div className="hero-content">
+        <h1>Welcome</h1>
+      </div>
+    </hc-video-background>
+  );
+}
+```
+
+### Vue
+
+```vue
+<template>
+  <hc-video-background
+    ref="video"
+    src="https://www.youtube.com/watch?v=VIDEO_ID"
+    autoplay
+    muted
+    loop
+    @hc-video-ready="onReady"
+    @hc-video-play="onPlay"
+  >
+    <div class="hero-content">
+      <h1>Welcome</h1>
+    </div>
+  </hc-video-background>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+import { HcVideoBackground } from 'preschool';
+
+const video = ref(null);
+
+const onReady = () => {
+  console.log('Video ready!');
+};
+
+const onPlay = () => {
+  console.log('Video playing!');
+};
+
+onMounted(() => {
+  // Access methods
+  video.value.play();
+});
+</script>
+```
+
+### Svelte
+
+```svelte
+<script>
+  import { onMount } from 'svelte';
+  import { HcVideoBackground } from 'preschool';
+
+  let videoElement;
+
+  onMount(() => {
+    videoElement.addEventListener('hc-video-ready', () => {
+      console.log('Video ready!');
+    });
+  });
+
+  function handlePlay() {
+    videoElement.play();
+  }
+</script>
+
+<hc-video-background
+  bind:this={videoElement}
+  src="https://www.youtube.com/watch?v=VIDEO_ID"
+  autoplay
+  muted
+  loop
+>
+  <div class="hero-content">
+    <h1>Welcome</h1>
+    <button on:click={handlePlay}>Play</button>
+  </div>
+</hc-video-background>
+```
+
+## Accessibility
+
+The component follows web accessibility best practices:
+
+- Uses semantic HTML structure
+- Provides proper event handling for keyboard navigation
+- Respects user's motion preferences (can be enhanced further)
+- Ensures content over video is properly layered and readable
+
+### Enhancing Accessibility
+
+Consider adding these for better accessibility:
+
+```css
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  hc-video-background {
+    display: none;
+  }
+}
+```
+
+```html
+<!-- Provide alternative for screen readers -->
+<hc-video-background src="..." autoplay muted loop>
+  <div class="sr-only" aria-label="Background video showing...">
+    <!-- Description of video content -->
+  </div>
+  <div class="hero-content">
+    <h1>Your Content</h1>
+  </div>
+</hc-video-background>
+```
+
+## Browser Support
+
+- ✅ Chrome/Edge (latest)
+- ✅ Firefox (latest)
+- ✅ Safari (latest)
+- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
+
+Requires modern browser features:
+- Custom Elements (Web Components)
+- Shadow DOM
+- IntersectionObserver
+- ResizeObserver (with fallback to window resize)
+
+## Performance Tips
+
+1. **Use lazy loading** for videos below the fold:
+   ```html
+   <hc-video-background lazy src="..." />
+   ```
+
+2. **Optimize video files**:
+   - Use appropriate resolution (1080p is usually sufficient)
+   - Compress videos to reduce file size
+   - Use modern codecs (H.265/HEVC, VP9, AV1)
+
+3. **Consider poster images** for faster perceived loading:
+   ```html
+   <hc-video-background poster="low-res-image.jpg" src="..." />
+   ```
+
+4. **Disable on slow connections**:
+   ```javascript
+   if (navigator.connection && navigator.connection.effectiveType === '2g') {
+     // Show poster only, don't load video
+   }
+   ```
+
+5. **Respect battery saver mode** on mobile:
+   ```html
+   <hc-video-background force-on-low-battery src="..." />
+   ```
+
+## Privacy & Cookies
+
+By default, the component uses privacy-friendly embeds:
+
+- **YouTube**: Uses `youtube-nocookie.com` domain
+- **Vimeo**: Enables DNT (Do Not Track) mode
+
+To disable privacy mode:
+
+```html
+<hc-video-background
+  src="https://www.youtube.com/watch?v=VIDEO_ID"
+  no-cookie="false"
+></hc-video-background>
+```
+
+## Troubleshooting
+
+### Video not autoplaying
+
+Browsers require videos to be muted for autoplay:
+
+```html
+<hc-video-background autoplay muted src="..." />
+```
+
+### Video pausing when scrolling
+
+By default, videos pause when out of viewport. Use `always-play`:
+
+```html
+<hc-video-background always-play src="..." />
+```
+
+### Video not loading on mobile
+
+Ensure `mobile` attribute is set to `true` (default):
+
+```html
+<hc-video-background mobile src="..." />
+```
+
+### Aspect ratio issues
+
+Adjust the `resolution` property to match your video:
+
+```html
+<hc-video-background resolution="21:9" src="..." />
+```
+
+Or use `fit-box` to stretch:
+
+```html
+<hc-video-background fit-box src="..." />
+```
+
+## API Reference
+
+See the complete [API documentation](#methods) above for all available methods, properties, and events.

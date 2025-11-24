@@ -178,6 +178,11 @@ Listen to drawer lifecycle events:
 ```js
 const drawer = document.querySelector('hc-drawer');
 
+// When drawer is initialized and ready
+drawer.addEventListener('ps-ready', () => {
+    console.log('Drawer is ready for interaction');
+});
+
 // Before drawer opens
 drawer.addEventListener('ps-show', () => {
     console.log('Drawer is opening');
@@ -436,6 +441,7 @@ hc-drawer {
 
 | Event              | Description                                        | Detail                                                  |
 | ------------------ | -------------------------------------------------- | ------------------------------------------------------- |
+| `ps-ready`         | Emitted when drawer is initialized and ready       | -                                                       |
 | `ps-show`          | Emitted when drawer opens                          | -                                                       |
 | `ps-after-show`    | Emitted after open animation completes             | -                                                       |
 | `ps-hide`          | Emitted when drawer closes                         | -                                                       |

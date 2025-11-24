@@ -11,7 +11,7 @@
     --letter-spacing-looser: 0.17em;
     --line-height-tighter: 0.75;
     --line-height-tight: 1;
-    --line-height-snug: 1.25;
+    --line-height-snug: 1.33;
     --line-height: 1.5;
     --line-height-loose: 1.75;
     --font-weight-thin: 100;
@@ -29,6 +29,7 @@
     --measure-heading-4: var(--measure-s);
     --measure-heading-5: var(--measure-s);
     --measure-heading-6: var(--measure-s);
+    --measure-xl: 100ch;
     --measure-l: 75ch;
     --measure-m: 50ch;
     --measure-s: 45ch;
@@ -46,9 +47,6 @@
             ["3", 24, 36],
             ["4", 28, 48],
             ["5", 32, 64],
-            /* ["6", 48, 96],
-            ["7", 64, 128],
-            ["8", 96, 192], */
         ],
         prefix: 'font-size',
     });

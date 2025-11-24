@@ -44,16 +44,16 @@
 });
 
 .grid--min-xs {
-    --grid-min: 200px;
+    --grid-min-width: 200px;
 }
 .grid--min-sm {
-    --grid-min: 250px;
+    --grid-min-width: 250px;
 }
 .grid--min-md {
-    --grid-min: 300px;
+    --grid-min-width: 300px;
 }
 .grid--min-lg {
-    --grid-min: 400px;
+    --grid-min-width: 400px;
 }
 
 /* No stretch - items don't fill height */

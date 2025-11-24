@@ -40,7 +40,7 @@
 }
 
 @ruler utility({
-    selector: '.sidebar-space',
+    selector: '.sidebar--space',
     property: '--sidebar-space',
     scale: 'space',
     generateAllCrossPairs: true,

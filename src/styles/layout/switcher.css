@@ -39,7 +39,8 @@
 .switcher > * {
     flex-grow: 1;
     flex-basis: calc((var(--_switcher-threshold) - 100%) * 999);
-    max-inline-size: calc(100% / var(--_switcher-limit) - var(--_switcher-space));
+    min-inline-size: calc((100% - (var(--_switcher-limit) - 1) * var(--_switcher-space)) / var(--_switcher-limit));
+    max-inline-size: 100%;
 }
 
 /* No grow - items stay at their natural width */
@@ -65,7 +66,7 @@
     --switcher-threshold: 800px;
 }
 .switcher--threshold-xl {
-    --switcher-threshold: 1000px;
+    --switcher-threshold: 1023px;
 }
 
 /* Item limit presets */

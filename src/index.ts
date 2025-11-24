@@ -23,6 +23,7 @@ export { HcAccordion } from './components/accordion/accordion.ts';
 export { HcAccordionItem } from './components/accordion-item/accordion-item.ts';
 export { HcDrawer } from './components/drawer/drawer.ts';
 export { PsShare } from './components/share/ps-share.ts';
+export { HcVideoBackground } from './components/video-background/video-background.ts';
 
 // Export utilities
 export { default as AOS } from './utilities/aos/aos.ts';
