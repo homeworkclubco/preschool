@@ -11,7 +11,7 @@
     padding-inline: var(--_container-padding);
 
     &.container--narrow {
-        --_container-max-width: var(--measure-s);
+        --_container-max-width: var(--measure-sm);
     }
 
     &.container--prose {
@@ -19,7 +19,7 @@
     }
 
     &.container--wide {
-        --_container-max-width: var(--measure-l);
+        --_container-max-width: var(--measure-lg);
     }
 
     &.container--full {

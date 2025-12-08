@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel Test</title>
+    <style>
+        body {
+            font-family: system-ui;
+            padding: 2rem;
+        }
+
+        ps-carousel {
+            --carousel-gap: 1rem;
+            display: block;
+            margin: 2rem 0;
+        }
+
+        ps-carousel-item {
+            background: #ddd;
+        }
+
+        .slide {
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            margin: 0.5rem;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Carousel Test</h1>
+
+    <div>
+        <button data-carousel-prev="test">← Previous</button>
+        <button data-carousel-next="test">Next →</button>
+    </div>
+
+    <ps-carousel id="test">
+        <ps-carousel-item>
+            <div class="slide">1</div>
+        </ps-carousel-item>
+        <ps-carousel-item>
+            <div class="slide">2</div>
+        </ps-carousel-item>
+        <ps-carousel-item>
+            <div class="slide">3</div>
+        </ps-carousel-item>
+    </ps-carousel>
+
+    <script type="module">
+        import './carousel.ts';
+        import './carousel-item.ts';
+
+        const carousel = document.getElementById('test');
+
+        carousel.addEventListener('ps-slide-change', (e) => {
+            console.log('Slide changed:', e.detail);
+        });
+
+        // Log carousel state every second
+        setInterval(() => {
+            console.log('Current state:', {
+                activeIndex: carousel.shadowRoot?.querySelector('.carousel')?.activeIndex,
+                totalSlides: carousel.querySelectorAll('ps-carousel-item').length
+            });
+        }, 2000);
+    </script>
+</body>
+</html>

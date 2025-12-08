@@ -46,9 +46,9 @@
     border: 0;
 }
 
-@ruler utility({
+/* @ruler utility({
     selector: '.box-padding',
     property: '--box-padding',
     scale: 'space',
     generateAllCrossPairs: true,
-});
+}); */

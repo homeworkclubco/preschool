@@ -1,0 +1,19 @@
+/*
+ * Preschool Framework Styles (WordPress/Gutenberg)
+ *
+ * Non-layered version for WordPress compatibility.
+ * WordPress/Gutenberg styles are unlayered, so using @layer would cause
+ * all framework styles to be overridden by WordPress defaults.
+ */
+
+@import './reset.css';
+@import './prose.css';
+
+@import-glob './utilities/*.css';
+@import-glob "./tokens/*.css";
+@import-glob "./layout/*.css";
+@import-glob "./components/*.css";
+@import-glob "./animations/*.css";
+
+/* Web Components */
+@import-glob "../components/**/*.css";

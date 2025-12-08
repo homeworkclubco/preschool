@@ -24,15 +24,15 @@
 
     --measure: 65ch;
     --measure-heading-1: 30ch;
-    --measure-heading-2: var(--measure-s);
-    --measure-heading-3: var(--measure-s);
-    --measure-heading-4: var(--measure-s);
-    --measure-heading-5: var(--measure-s);
-    --measure-heading-6: var(--measure-s);
+    --measure-heading-2: var(--measure-sm);
+    --measure-heading-3: var(--measure-sm);
+    --measure-heading-4: var(--measure-sm);
+    --measure-heading-5: var(--measure-sm);
+    --measure-heading-6: var(--measure-sm);
     --measure-xl: 100ch;
-    --measure-l: 75ch;
-    --measure-m: 50ch;
-    --measure-s: 45ch;
+    --measure-lg: 75ch;
+    --measure-md: 50ch;
+    --measure-sm: 45ch;
     --measure-xs: 20ch;
 
     --font-size: var(--font-size-0);

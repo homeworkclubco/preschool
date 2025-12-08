@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preschool Framework - Component Demos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #2563eb;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .card .tag {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .section {
+            margin-top: 3rem;
+        }
+
+        .section h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        code {
+            background: #f5f5f5;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.9em;
+            font-family: 'Courier New', monospace;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Preschool Framework</h1>
+        <p class="subtitle">Component demos and examples</p>
+
+        <div class="section">
+            <h3>Component Demos</h3>
+            <div class="grid">
+                <a href="./components/carousel/demo.html" class="card">
+                    <h2>Carousel Component</h2>
+                    <p>CSS scroll-snap based carousel with flexible layouts and full accessibility.</p>
+                    <span class="tag">New</span>
+                    <span class="tag">v1.0</span>
+                </a>
+
+                <a href="./components/modal/modal-test.html" class="card">
+                    <h2>Modal Component</h2>
+                    <p>Accessible, customizable modal dialogs with declarative triggers.</p>
+                    <span class="tag">Interactive</span>
+                </a>
+
+                <a href="./components/video-background/demo.html" class="card">
+                    <h2>Video Background</h2>
+                    <p>YouTube, Vimeo, and HTML5 video backgrounds with full API control.</p>
+                    <span class="tag">Media</span>
+                </a>
+
+                <a href="./components/share/demo.html" class="card">
+                    <h2>Share Component</h2>
+                    <p>Social sharing buttons with native Web Share API support.</p>
+                    <span class="tag">Social</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Quick Start</h3>
+            <p>Import components directly in your HTML:</p>
+            <pre><code>&lt;script type="module"&gt;
+  import { HcModal } from '@hc/preschool';
+&lt;/script&gt;
+
+&lt;button data-modal="my-modal"&gt;Open Modal&lt;/button&gt;
+
+&lt;hc-modal id="my-modal" label="Example"&gt;
+  &lt;p&gt;Modal content here&lt;/p&gt;
+  &lt;button data-close slot="footer"&gt;Close&lt;/button&gt;
+&lt;/hc-modal&gt;</code></pre>
+        </div>
+
+        <footer>
+            <p>Preschool Framework - A minimal, extensible CSS framework and web component library</p>
+        </footer>
+    </div>
+</body>
+</html>

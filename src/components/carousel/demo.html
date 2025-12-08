@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Carousel Component - Preschool</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+                    Cantarell, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background: #f8f9fa;
+            }
+
+            .page-header {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+
+            .container {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                margin-bottom: 0.5rem;
+                color: #1a1a1a;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+                margin: 3rem 0 1rem;
+                color: #1a1a1a;
+            }
+
+            .subtitle {
+                font-size: 1.25rem;
+                color: #666;
+                margin-bottom: 3rem;
+            }
+
+            .demo-section {
+                background: white;
+                padding: 3rem 0;
+                margin-bottom: 2rem;
+            }
+
+            .demo-section.contained {
+                padding: 3rem 2rem;
+            }
+
+            .demo-section:nth-child(even) {
+                background: #f8f9fa;
+            }
+
+            .demo-title {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                color: #2563eb;
+            }
+
+            .demo-description {
+                color: #666;
+                margin-bottom: 1.5rem;
+            }
+
+            /* Carousel custom styles */
+            ps-carousel {
+                --carousel-gap: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            /* Carousel item styling based on state */
+            ps-carousel-item {
+                transition: all 0.3s ease;
+            }
+
+            ps-carousel-item[active] .slide {
+                transform: scale(1.02);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            ps-carousel-item:not([in-view]) .slide {
+                opacity: 0.6;
+            }
+
+            /* Slide content */
+            .slide {
+                min-width: 300px;
+                height: 200px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 2rem;
+                font-weight: 700;
+                transition: all 0.3s ease;
+            }
+
+            .slide:nth-child(2n) {
+                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            }
+
+            .slide:nth-child(3n) {
+                background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            }
+
+            .slide:nth-child(4n) {
+                background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            }
+
+            .slide:nth-child(5n) {
+                background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            }
+
+            /* Image slides */
+            .image-slide {
+                min-width: 400px;
+                height: 300px;
+                background: #ddd;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.25rem;
+                color: #666;
+            }
+
+            /* Card slides */
+            .card-slide {
+                min-width: 280px;
+                background: white;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                padding: 1.5rem;
+            }
+
+            .card-slide h3 {
+                font-size: 1.25rem;
+                margin-bottom: 0.5rem;
+                color: #1a1a1a;
+            }
+
+            .card-slide p {
+                color: #666;
+                font-size: 0.95rem;
+            }
+
+            /* Navigation buttons */
+            .nav-buttons {
+                display: flex;
+                gap: 0.5rem;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+
+            .nav-button {
+                background: #2563eb;
+                color: white;
+                border: none;
+                padding: 0.75rem 1.5rem;
+                border-radius: 6px;
+                font-size: 1rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .nav-button:hover:not(:disabled) {
+                background: #1d4ed8;
+                transform: translateY(-1px);
+            }
+
+            .nav-button:disabled {
+                background: #cbd5e1;
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
+
+            /* Header with buttons */
+            .carousel-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1rem;
+            }
+
+            .carousel-header h3 {
+                font-size: 1.5rem;
+                color: #1a1a1a;
+            }
+
+            .carousel-header .nav-buttons {
+                margin: 0;
+            }
+
+            /* Overlay buttons */
+            .carousel-wrapper {
+                position: relative;
+            }
+
+            .overlay-button {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(255, 255, 255, 0.9);
+                color: #1a1a1a;
+                border: none;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                font-size: 1.5rem;
+                cursor: pointer;
+                transition: all 0.2s;
+                z-index: 10;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            }
+
+            .overlay-button:hover:not(:disabled) {
+                background: white;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .overlay-button:disabled {
+                opacity: 0.3;
+                cursor: not-allowed;
+            }
+
+            .overlay-button.prev {
+                left: 1rem;
+            }
+
+            .overlay-button.next {
+                right: 1rem;
+            }
+
+            /* Code block */
+            .code-block {
+                background: #1e293b;
+                color: #e2e8f0;
+                padding: 1.5rem;
+                border-radius: 8px;
+                overflow-x: auto;
+                margin-top: 1rem;
+            }
+
+            .code-block code {
+                font-family: 'Monaco', 'Courier New', monospace;
+                font-size: 0.9rem;
+                line-height: 1.5;
+                white-space: pre-wrap;
+            }
+
+            /* Events log */
+            .events-log {
+                background: #f8f9fa;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                padding: 1rem;
+                max-height: 200px;
+                overflow-y: auto;
+                font-family: 'Monaco', 'Courier New', monospace;
+                font-size: 0.85rem;
+            }
+
+            .event-entry {
+                padding: 0.25rem 0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .event-entry:last-child {
+                border-bottom: none;
+            }
+
+            .event-name {
+                color: #2563eb;
+                font-weight: 600;
+            }
+
+            .event-time {
+                color: #666;
+                font-size: 0.75rem;
+            }
+
+            /* Wide slides for center alignment demo */
+            .wide-slide {
+                min-width: 80%;
+                height: 250px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 2rem;
+                font-weight: 700;
+            }
+
+            .wide-slide:nth-child(2n) {
+                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            }
+
+            .wide-slide:nth-child(3n) {
+                background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="page-header">
+            <h1>Carousel Component</h1>
+            <p class="subtitle">
+                CSS scroll-snap based carousel with flexible layouts and ID-based navigation
+            </p>
+        </div>
+
+        <!-- Demo 1: Buttons Below Carousel - CONTAINED -->
+        <div class="demo-section contained">
+            <div class="container">
+                <div class="demo-title">Buttons Below Carousel (Contained)</div>
+                <p class="demo-description">
+                    Navigation buttons placed below the carousel using ID-based linking.
+                </p>
+
+                <ps-carousel id="carousel-1" align="start">
+                    <ps-carousel-item>
+                        <div class="slide">Slide 1</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="slide">Slide 2</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="slide">Slide 3</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="slide">Slide 4</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="slide">Slide 5</div>
+                    </ps-carousel-item>
+                </ps-carousel>
+
+                <div class="nav-buttons">
+                    <button class="nav-button" data-carousel-prev="carousel-1">← Previous</button>
+                    <button class="nav-button" data-carousel-next="carousel-1">Next →</button>
+                </div>
+
+                <div class="code-block">
+                    <code>&lt;ps-carousel id="carousel-1"&gt;
+  &lt;ps-carousel-item&gt;
+    &lt;div class="slide"&gt;Slide 1&lt;/div&gt;
+  &lt;/ps-carousel-item&gt;
+  &lt;!-- More items... --&gt;
+&lt;/ps-carousel&gt;
+
+&lt;!-- Buttons anywhere in DOM --&gt;
+&lt;button data-carousel-prev="carousel-1"&gt;Previous&lt;/button&gt;
+&lt;button data-carousel-next="carousel-1"&gt;Next&lt;/button&gt;</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo 2: Buttons in Header - CONTAINED -->
+        <div class="demo-section contained">
+            <div class="container">
+                <div class="demo-title">Buttons in Header (Contained)</div>
+                <p class="demo-description">
+                    Navigation buttons positioned in a header above the carousel.
+                </p>
+
+                <div class="carousel-header">
+                    <h3>Featured Products</h3>
+                    <div class="nav-buttons">
+                        <button class="nav-button" data-carousel-prev="carousel-2">←</button>
+                        <button class="nav-button" data-carousel-next="carousel-2">→</button>
+                    </div>
+                </div>
+
+                <ps-carousel id="carousel-2" align="start">
+                    <ps-carousel-item>
+                        <div class="card-slide">
+                            <h3>Feature One</h3>
+                            <p>
+                                This is a card showcasing a feature with some descriptive text.
+                            </p>
+                        </div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="card-slide">
+                            <h3>Feature Two</h3>
+                            <p>
+                                Another card with different content. Cards size themselves with CSS.
+                            </p>
+                        </div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="card-slide">
+                            <h3>Feature Three</h3>
+                            <p>
+                                Fully customizable styling via CSS custom properties and parts.
+                            </p>
+                        </div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="card-slide">
+                            <h3>Feature Four</h3>
+                            <p>
+                                Accessible keyboard navigation with arrow keys, home, and end.
+                            </p>
+                        </div>
+                    </ps-carousel-item>
+                </ps-carousel>
+
+                <div class="code-block">
+                    <code>&lt;div class="carousel-header"&gt;
+  &lt;h3&gt;Featured Products&lt;/h3&gt;
+  &lt;button data-carousel-prev="carousel-2"&gt;←&lt;/button&gt;
+  &lt;button data-carousel-next="carousel-2"&gt;→&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;ps-carousel id="carousel-2"&gt;
+  &lt;ps-carousel-item&gt;...&lt;/ps-carousel-item&gt;
+&lt;/ps-carousel&gt;</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo 3: Overlaid Buttons - FULL BLEED -->
+        <div class="demo-section">
+            <div class="container">
+                <div class="demo-title">Overlaid Buttons (Full Bleed)</div>
+                <p class="demo-description">
+                    Navigation buttons positioned over the carousel with absolute positioning.
+                </p>
+            </div>
+
+            <div class="carousel-wrapper">
+                <button class="overlay-button prev" data-carousel-prev="carousel-3">‹</button>
+                <button class="overlay-button next" data-carousel-next="carousel-3">›</button>
+
+                <ps-carousel id="carousel-3" align="center" gap="2rem">
+                    <ps-carousel-item>
+                        <div class="wide-slide">Centered 1</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="wide-slide">Centered 2</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="wide-slide">Centered 3</div>
+                    </ps-carousel-item>
+                </ps-carousel>
+            </div>
+
+            <div class="container">
+                <div class="code-block">
+                    <code>&lt;div class="carousel-wrapper"&gt;
+  &lt;button class="overlay-button" data-carousel-prev="carousel-3"&gt;‹&lt;/button&gt;
+  &lt;button class="overlay-button" data-carousel-next="carousel-3"&gt;›&lt;/button&gt;
+
+  &lt;ps-carousel id="carousel-3" align="center"&gt;
+    &lt;ps-carousel-item&gt;...&lt;/ps-carousel-item&gt;
+  &lt;/ps-carousel&gt;
+&lt;/div&gt;</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo 4: Edge Bleed Mode - FULL BLEED -->
+        <div class="demo-section">
+            <div class="container">
+                <div class="demo-title">Edge Bleed Mode (Full Bleed)</div>
+                <p class="demo-description">
+                    First item flush left, content bleeds to the right edge. Perfect for image galleries.
+                </p>
+            </div>
+
+            <ps-carousel id="carousel-4" overflow-mode="edge-bleed" gap="1.5rem">
+                <ps-carousel-item>
+                    <div class="image-slide">Image 1</div>
+                </ps-carousel-item>
+                <ps-carousel-item>
+                    <div class="image-slide">Image 2</div>
+                </ps-carousel-item>
+                <ps-carousel-item>
+                    <div class="image-slide">Image 3</div>
+                </ps-carousel-item>
+                <ps-carousel-item>
+                    <div class="image-slide">Image 4</div>
+                </ps-carousel-item>
+            </ps-carousel>
+
+            <div class="container">
+                <div class="nav-buttons">
+                    <button class="nav-button" data-carousel-prev="carousel-4">← Previous</button>
+                    <button class="nav-button" data-carousel-next="carousel-4">Next →</button>
+                </div>
+
+                <div class="code-block">
+                    <code>&lt;ps-carousel id="carousel-4" overflow-mode="edge-bleed"&gt;
+  &lt;ps-carousel-item&gt;
+    &lt;div class="image-slide"&gt;Image 1&lt;/div&gt;
+  &lt;/ps-carousel-item&gt;
+&lt;/ps-carousel&gt;</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo 5: Multiple Button Sets - CONTAINED -->
+        <div class="demo-section contained">
+            <div class="container">
+                <div class="demo-title">Multiple Button Sets (Contained)</div>
+                <p class="demo-description">
+                    Same carousel controlled by multiple sets of navigation buttons in different locations.
+                </p>
+
+                <div class="carousel-header">
+                    <h3>Photo Gallery</h3>
+                    <div class="nav-buttons">
+                        <button class="nav-button" data-carousel-prev="carousel-5">←</button>
+                        <button class="nav-button" data-carousel-next="carousel-5">→</button>
+                    </div>
+                </div>
+
+                <ps-carousel id="carousel-5" align="start">
+                    <ps-carousel-item>
+                        <div class="slide">Photo 1</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="slide">Photo 2</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="slide">Photo 3</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="slide">Photo 4</div>
+                    </ps-carousel-item>
+                </ps-carousel>
+
+                <div class="nav-buttons">
+                    <button class="nav-button" data-carousel-prev="carousel-5">← Previous</button>
+                    <button class="nav-button" data-carousel-next="carousel-5">Next →</button>
+                </div>
+
+                <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                    Both sets of buttons control the same carousel. All buttons automatically disable at boundaries.
+                </p>
+            </div>
+        </div>
+
+        <!-- Demo 6: Programmatic Control & Events - CONTAINED -->
+        <div class="demo-section contained">
+            <div class="container">
+                <div class="demo-title">Programmatic Control & Events (Contained)</div>
+                <p class="demo-description">
+                    Control the carousel via JavaScript and listen to events.
+                </p>
+
+                <ps-carousel id="carousel-6" align="start">
+                    <ps-carousel-item>
+                        <div class="slide">1</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="slide">2</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="slide">3</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="slide">4</div>
+                    </ps-carousel-item>
+                    <ps-carousel-item>
+                        <div class="slide">5</div>
+                    </ps-carousel-item>
+                </ps-carousel>
+
+                <div class="nav-buttons">
+                    <button class="nav-button" onclick="carousel6.goToSlide(0)">Go to First</button>
+                    <button class="nav-button" onclick="carousel6.goToSlide(2)">Go to Slide 3</button>
+                    <button class="nav-button" onclick="carousel6.goToSlide(4)">Go to Last</button>
+                </div>
+
+                <div style="margin-top: 1rem">
+                    <strong>Events Log:</strong>
+                    <div id="events-log" class="events-log"></div>
+                </div>
+            </div>
+        </div>
+
+        <script type="module">
+            import './carousel.ts';
+            import './carousel-item.ts';
+
+            // Event logging for demo 6
+            const carousel6 = document.getElementById('carousel-6');
+            const eventsLog = document.getElementById('events-log');
+
+            window.carousel6 = carousel6; // Make available to onclick handlers
+
+            const logEvent = (eventName, detail = {}) => {
+                const entry = document.createElement('div');
+                entry.className = 'event-entry';
+                const time = new Date().toLocaleTimeString();
+                entry.innerHTML = `
+                    <span class="event-name">${eventName}</span>
+                    ${detail ? ` - ${JSON.stringify(detail)}` : ''}
+                    <span class="event-time"> @ ${time}</span>
+                `;
+                eventsLog.insertBefore(entry, eventsLog.firstChild);
+
+                // Keep only last 10 events
+                while (eventsLog.children.length > 10) {
+                    eventsLog.removeChild(eventsLog.lastChild);
+                }
+            };
+
+            carousel6.addEventListener('ps-slide-change', (e) => {
+                logEvent('ps-slide-change', {
+                    activeIndex: e.detail.activeIndex,
+                    previousIndex: e.detail.previousIndex,
+                });
+            });
+
+            carousel6.addEventListener('ps-scroll-start', () => {
+                logEvent('ps-scroll-start');
+            });
+
+            carousel6.addEventListener('ps-scroll-end', () => {
+                logEvent('ps-scroll-end');
+            });
+
+            logEvent('Demo loaded');
+        </script>
+    </body>
+</html>

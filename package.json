@@ -29,6 +29,11 @@
             "source": "src/styles/index.css",
             "distDir": "./dist",
             "outputFormat": "global"
+        },
+        "styles-wordpress": {
+            "source": "src/styles/index.wordpress.css",
+            "distDir": "./dist",
+            "outputFormat": "global"
         }
     },
     "main": "dist/preschool.cjs",
@@ -41,7 +46,8 @@
             "require": "./dist/preschool.cjs",
             "types": "./dist/preschool.d.ts"
         },
-        "./styles": "./dist/styles/index.css"
+        "./styles": "./dist/styles/index.css",
+        "./styles/wordpress": "./dist/styles/index.wordpress.css"
     },
     "@parcel/transformer-css": {
         "drafts": {

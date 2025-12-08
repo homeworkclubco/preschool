@@ -1,0 +1,612 @@
+---
+title: Modal
+description: Accessible modal dialog web component for confirmations, forms, and content overlays
+---
+
+import Iframe from '../../../components/Iframe.astro';
+
+A centered modal dialog overlay built as a web component (`<hc-modal>`). Perfect for confirmations, forms, alerts, and displaying content that requires user attention.
+
+**Key Features:**
+- Fully accessible with focus trapping and keyboard navigation
+- Declarative triggers with `data-modal` attribute (no JavaScript required)
+- Multiple sizes and vertical alignment options
+- Smooth animations with reduced motion support
+- Scroll locking when open
+- Customizable with CSS custom properties
+
+## Installation
+
+```bash
+npm install @hc/preschool
+```
+
+```js
+import { HcModal } from '@hc/preschool';
+```
+
+## Basic Usage
+
+The simplest way to use a modal is with the declarative `data-modal` trigger:
+
+```html
+<button data-modal="my-modal">Open Modal</button>
+
+<hc-modal id="my-modal" label="Confirm Action">
+  <p>Are you sure you want to continue?</p>
+  <div slot="footer">
+    <button data-close>Cancel</button>
+    <button data-close>Confirm</button>
+  </div>
+</hc-modal>
+```
+
+<Iframe>
+  <button class="btn btn--primary" data-modal="basic-demo">Open Modal</button>
+  <hc-modal id="basic-demo" label="Welcome">
+    <p>This is a basic modal with default settings.</p>
+    <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <button class="btn btn--outline" data-close>Cancel</button>
+      <button class="btn btn--primary" data-close>OK</button>
+    </div>
+  </hc-modal>
+</Iframe>
+
+## Programmatic Control
+
+You can also control modals with JavaScript:
+
+```html
+<button onclick="document.getElementById('settings').show()">
+  Open Settings
+</button>
+
+<hc-modal id="settings" label="Settings">
+  <p>Configure your preferences</p>
+</hc-modal>
+
+<script>
+  const modal = document.getElementById('settings');
+  modal.show();  // Open
+  modal.hide();  // Close
+</script>
+```
+
+## Sizes
+
+Control modal width with the `size` attribute:
+
+```html
+<!-- Small (20rem) -->
+<hc-modal size="sm" label="Small Modal">...</hc-modal>
+
+<!-- Medium (32rem) - default -->
+<hc-modal size="md" label="Medium Modal">...</hc-modal>
+
+<!-- Large (48rem) -->
+<hc-modal size="lg" label="Large Modal">...</hc-modal>
+
+<!-- Extra Large (64rem) -->
+<hc-modal size="xl" label="Extra Large Modal">...</hc-modal>
+
+<!-- Full Width (with margins) -->
+<hc-modal size="full" label="Full Width Modal">...</hc-modal>
+```
+
+<Iframe>
+  <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+    <button class="btn" data-modal="size-sm">Small</button>
+    <button class="btn" data-modal="size-md">Medium</button>
+    <button class="btn" data-modal="size-lg">Large</button>
+    <button class="btn" data-modal="size-xl">Extra Large</button>
+    <button class="btn" data-modal="size-full">Full</button>
+  </div>
+
+  <hc-modal id="size-sm" label="Small Modal" size="sm">
+    <p>Perfect for alerts and simple confirmations.</p>
+    <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <button class="btn btn--primary" data-close>Got it</button>
+    </div>
+  </hc-modal>
+
+  <hc-modal id="size-md" label="Medium Modal" size="md">
+    <p>Good for most use cases. This is the default size.</p>
+    <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <button class="btn btn--outline" data-close>Cancel</button>
+      <button class="btn btn--primary" data-close>OK</button>
+    </div>
+  </hc-modal>
+
+  <hc-modal id="size-lg" label="Large Modal" size="lg">
+    <p>Great for forms and detailed content that needs more space.</p>
+    <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <button class="btn btn--outline" data-close>Cancel</button>
+      <button class="btn btn--primary" data-close>OK</button>
+    </div>
+  </hc-modal>
+
+  <hc-modal id="size-xl" label="Extra Large Modal" size="xl">
+    <p>Perfect for rich content like galleries or complex forms.</p>
+    <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <button class="btn btn--outline" data-close>Cancel</button>
+      <button class="btn btn--primary" data-close>OK</button>
+    </div>
+  </hc-modal>
+
+  <hc-modal id="size-full" label="Full Width Modal" size="full">
+    <p>Uses nearly the entire viewport width. Great for immersive experiences.</p>
+    <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <button class="btn btn--outline" data-close>Cancel</button>
+      <button class="btn btn--primary" data-close>OK</button>
+    </div>
+  </hc-modal>
+</Iframe>
+
+## Vertical Alignment
+
+Position modals at the top, center, or bottom of the viewport:
+
+```html
+<hc-modal vertical-align="top">...</hc-modal>
+<hc-modal vertical-align="center">...</hc-modal>  <!-- default -->
+<hc-modal vertical-align="bottom">...</hc-modal>
+```
+
+<Iframe>
+  <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+    <button class="btn" data-modal="align-top">Top</button>
+    <button class="btn" data-modal="align-center">Center</button>
+    <button class="btn" data-modal="align-bottom">Bottom</button>
+  </div>
+
+  <hc-modal id="align-top" label="Top Aligned" vertical-align="top">
+    <p>This modal is aligned to the top of the viewport.</p>
+    <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <button class="btn btn--primary" data-close>Close</button>
+    </div>
+  </hc-modal>
+
+  <hc-modal id="align-center" label="Center Aligned" vertical-align="center">
+    <p>This modal is centered (default behavior).</p>
+    <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <button class="btn btn--primary" data-close>Close</button>
+    </div>
+  </hc-modal>
+
+  <hc-modal id="align-bottom" label="Bottom Aligned" vertical-align="bottom">
+    <p>This modal is aligned to the bottom of the viewport.</p>
+    <div slot="footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <button class="btn btn--primary" data-close>Close</button>
+    </div>
+  </hc-modal>
+</Iframe>
+
+## Animation Variants
+
+Customize the modal animation:
+
+```html
+<hc-modal animation="fade-up">...</hc-modal>  <!-- default -->
+<hc-modal animation="fade">...</hc-modal>
+<hc-modal animation="slide-up">...</hc-modal>
+<hc-modal animation="zoom">...</hc-modal>
+```
+
+## Slots
+
+The modal provides several slots for flexible content structure:
+
+```html
+<hc-modal label="User Profile">
+  <!-- Default slot: main content -->
+  <p>This goes in the body</p>
+
+  <!-- Named slots -->
+  <div slot="header-actions">
+    <button>Edit</button>
+  </div>
+
+  <button slot="close-button" onclick="this.closest('hc-modal').hide()">
+    ✕
+  </button>
+
+  <div slot="footer">
+    <button data-close>Close</button>
+  </div>
+</hc-modal>
+```
+
+**Available Slots:**
+- **(default)** - Main modal content (body)
+- **`header`** - Completely overrides the default header
+- **`label`** - Alternative to the `label` attribute
+- **`header-actions`** - Actions/buttons in the header
+- **`close-button`** - Custom close button
+- **`footer`** - Footer content (typically action buttons)
+
+## Forms with Autofocus
+
+Forms work seamlessly with automatic focus management:
+
+```html
+<hc-modal id="contact-form" label="Contact Us" size="lg">
+  <form>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" autofocus>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email">
+    </div>
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea id="message"></textarea>
+    </div>
+  </form>
+
+  <div slot="footer">
+    <button data-close>Cancel</button>
+    <button type="submit">Send</button>
+  </div>
+</hc-modal>
+```
+
+The input with `autofocus` will automatically receive focus when the modal opens.
+
+## Closing Modals
+
+Multiple ways to close a modal:
+
+### 1. Declarative with `data-close`
+
+```html
+<hc-modal id="confirm">
+  <p>Are you sure?</p>
+  <div slot="footer">
+    <button data-close>No</button>
+    <button data-close>Yes</button>
+  </div>
+</hc-modal>
+```
+
+### 2. ESC Key
+
+Press ESC to close (unless `no-modal` is set).
+
+### 3. Overlay Click
+
+Click outside the modal to close (configurable with `overlay-dismiss`).
+
+### 4. Programmatically
+
+```js
+document.getElementById('my-modal').hide();
+```
+
+## Configuration Options
+
+### Disable Overlay Dismiss
+
+Prevent closing when clicking outside the modal:
+
+```html
+<hc-modal overlay-dismiss="false">
+  <p>You must use a button to close this modal.</p>
+  <div slot="footer">
+    <button data-close>OK</button>
+  </div>
+</hc-modal>
+```
+
+### Hide Header
+
+Remove the header entirely:
+
+```html
+<hc-modal no-header>
+  <h2>Custom Header</h2>
+  <p>Create your own header layout in the body.</p>
+  <button data-close>Close</button>
+</hc-modal>
+```
+
+### Hide Close Button
+
+Keep the header but hide the default close button:
+
+```html
+<hc-modal label="Important" no-close-button>
+  <p>This modal has no X button in the header.</p>
+  <div slot="footer">
+    <button data-close>I Understand</button>
+  </div>
+</hc-modal>
+```
+
+### No Modal Mode
+
+Disable overlay and modal behavior (focus trap, ESC key):
+
+```html
+<hc-modal no-modal>
+  <p>This behaves more like a regular overlay.</p>
+</hc-modal>
+```
+
+## Preventing Close
+
+Use the `ps-request-close` event to prevent closing (e.g., for unsaved changes):
+
+```html
+<hc-modal id="edit-form" label="Edit Content">
+  <form id="my-form">
+    <input type="text" name="title">
+    <textarea name="content"></textarea>
+  </form>
+
+  <div slot="footer">
+    <button data-close>Cancel</button>
+    <button id="save">Save</button>
+  </div>
+</hc-modal>
+
+<script>
+  let isDirty = false;
+  const modal = document.getElementById('edit-form');
+  const form = document.getElementById('my-form');
+
+  // Track form changes
+  form.addEventListener('input', () => {
+    isDirty = true;
+  });
+
+  // Prevent closing if there are unsaved changes
+  modal.addEventListener('ps-request-close', (e) => {
+    if (isDirty && !confirm('You have unsaved changes. Continue?')) {
+      e.preventDefault();  // Block the close
+    } else {
+      isDirty = false;
+    }
+  });
+
+  // Save button
+  document.getElementById('save').addEventListener('click', () => {
+    // Save logic...
+    isDirty = false;
+    modal.hide();
+  });
+</script>
+```
+
+## Events
+
+The modal emits several custom events for lifecycle management:
+
+```js
+const modal = document.getElementById('my-modal');
+
+// Initialization
+modal.addEventListener('ps-ready', () => {
+  console.log('Modal is ready');
+});
+
+// Opening
+modal.addEventListener('ps-show', () => {
+  console.log('Modal is opening');
+});
+
+modal.addEventListener('ps-after-show', () => {
+  console.log('Modal animation complete');
+});
+
+// Closing
+modal.addEventListener('ps-hide', () => {
+  console.log('Modal is closing');
+});
+
+modal.addEventListener('ps-after-hide', () => {
+  console.log('Modal closed completely');
+});
+
+// Close request (cancelable)
+modal.addEventListener('ps-request-close', (e) => {
+  console.log('Close requested via:', e.detail.source);
+  // source can be: 'keyboard', 'overlay', 'data-close', 'close-button'
+
+  // Prevent closing
+  if (someCondition) {
+    e.preventDefault();
+  }
+});
+
+// Initial focus (cancelable)
+modal.addEventListener('ps-initial-focus', (e) => {
+  // Set focus yourself
+  e.preventDefault();
+  customElement.focus();
+});
+```
+
+## Customization
+
+The modal can be customized using CSS custom properties or CSS parts for more granular control.
+
+### CSS Custom Properties
+
+```css
+hc-modal {
+  /* Sizes */
+  --size-sm: 20rem;
+  --size-md: 32rem;
+  --size-lg: 48rem;
+  --size-xl: 64rem;
+  --size-full: calc(100vw - 4rem);
+
+  /* Spacing */
+  --header-spacing: 1.5rem;
+  --body-spacing: 1.5rem;
+  --footer-spacing: 1.5rem;
+
+  /* Animation */
+  --duration: 250ms;
+  --easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Colors */
+  --overlay-color: rgba(0, 0, 0, 0.5);
+  --color-bg: #ffffff;
+  --color-foreground: #000000;
+  --color-border: #e5e5e5;
+
+  /* Layout */
+  --max-height: calc(100vh - 4rem);
+  --border-radius: 0.25rem;
+}
+```
+
+### CSS Parts
+
+For more granular styling control, the modal exposes several CSS parts that can be styled using the `::part()` selector:
+
+**Available Parts:**
+- `base` - The outer modal container
+- `overlay` - The backdrop overlay
+- `panel` - The modal dialog panel
+- `header` - The header section
+- `title` - The title container
+- `header-actions` - The header actions container
+- `body` - The main content area
+- `footer` - The footer section
+
+```css
+/* Style the overlay */
+hc-modal::part(overlay) {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+/* Style the panel */
+hc-modal::part(panel) {
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Style the header */
+hc-modal::part(header) {
+  background: var(--color-primary);
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Style the body */
+hc-modal::part(body) {
+  background: var(--color-bg-secondary);
+  padding: 2rem;
+}
+
+/* Style the footer */
+hc-modal::part(footer) {
+  background: var(--color-bg-subtle);
+  border-top: 1px solid var(--color-border);
+}
+```
+
+### Custom Variant Example
+
+```css
+hc-modal[data-variant="danger"] {
+  --color-border: var(--color-red-600);
+}
+
+hc-modal[data-variant="danger"] .modal-header {
+  background-color: var(--color-red-50);
+}
+```
+
+```html
+<hc-modal data-variant="danger" label="Delete Account">
+  <p>This action cannot be undone.</p>
+  <div slot="footer">
+    <button data-close>Cancel</button>
+    <button class="btn--danger">Delete</button>
+  </div>
+</hc-modal>
+```
+
+## Accessibility
+
+The modal component is built with accessibility in mind:
+
+✅ **ARIA Attributes**
+- `role="dialog"` on the modal panel
+- `aria-modal="true"` for modal behavior
+- `aria-label` from the `label` attribute
+
+✅ **Keyboard Navigation**
+- **ESC** - Close the modal
+- **Tab** - Cycles through focusable elements (trapped within modal)
+- **Shift+Tab** - Reverse cycle through focusable elements
+
+✅ **Focus Management**
+- Automatically focuses first focusable element (or `autofocus` element)
+- Traps focus within the modal while open
+- Restores focus to the trigger element when closed
+
+✅ **Screen Readers**
+- Proper semantic structure with header, body, and footer
+- Label announced when modal opens
+
+✅ **Scroll Locking**
+- Page scroll is locked when modal is open
+- Scroll position restored when modal closes
+
+✅ **Reduced Motion**
+- Respects `prefers-reduced-motion` preference
+- Disables animations for users who prefer reduced motion
+
+## Best Practices
+
+### Do's
+- ✅ Use the `label` attribute for accessibility
+- ✅ Provide clear actions in the footer
+- ✅ Use `autofocus` on the primary input in forms
+- ✅ Limit modal nesting (avoid modals within modals)
+- ✅ Use `ps-request-close` to prevent accidental data loss
+
+### Don'ts
+- ❌ Don't use modals for critical navigation
+- ❌ Don't overuse modals - consider inline forms first
+- ❌ Don't remove all close options (always provide a way out)
+- ❌ Don't put complex multi-step workflows in a single modal
+
+### When to Use
+
+**Use a modal when:**
+- Requiring immediate user action or response
+- Displaying important information that needs full attention
+- Confirming destructive actions (delete, remove, etc.)
+- Collecting short-form data (login, signup, quick form)
+
+**Consider alternatives when:**
+- Displaying reference information (use a drawer or side panel)
+- Building multi-step processes (use a wizard or separate pages)
+- Showing non-critical notifications (use toast/alert components)
+
+## Mobile Behavior
+
+On mobile devices (max-width: 768px), modals automatically become fullscreen for better usability:
+
+```css
+@media (max-width: 768px) {
+  /* Modals are full-screen on mobile */
+  /* No padding, 100% width and height */
+  /* Border radius removed */
+}
+```
+
+## Browser Support
+
+- ✅ All modern browsers (Chrome, Firefox, Safari, Edge)
+- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
+- ✅ Requires JavaScript enabled
+- ✅ Uses Web Components (Custom Elements v1)

@@ -1,0 +1,145 @@
+/**
+ * Carousel Component Styles
+ */
+
+:host {
+    /* Public API - can be customized */
+    --carousel-gap: 1rem;
+    --carousel-aspect-ratio: auto;
+    --carousel-scroll-hint: 0;
+    --carousel-transition: 300ms;
+    --carousel-easing: ease-out;
+
+    /* Internal variables */
+    --_gap: var(--carousel-gap);
+    --_scroll-padding: var(--carousel-scroll-hint);
+
+    display: block;
+    position: relative;
+}
+
+/* Base container */
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Scroll container */
+.carousel__scroll-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    cursor: grab;
+}
+
+/* Hide scrollbar for Chrome/Safari */
+.carousel__scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Track */
+.carousel__track {
+    display: flex;
+    flex-shrink: 0;
+    gap: var(--_gap);
+    min-width: 100%;
+}
+
+/* Alignment modes */
+:host([align='start']) .carousel__scroll-container {
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline-start: var(--_scroll-padding);
+}
+
+:host([align='center']) .carousel__scroll-container {
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: calc(50% - var(--_scroll-padding));
+}
+
+/* Scroll snap for slotted children */
+:host([align='start']) ::slotted(*) {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+}
+
+:host([align='center']) ::slotted(*) {
+    scroll-snap-align: center;
+    scroll-snap-stop: normal;
+}
+
+/* Overflow modes */
+:host([overflow-mode='standard']) .carousel__scroll-container {
+    padding-inline: var(--carousel-gap);
+}
+
+:host([overflow-mode='edge-bleed']) .carousel__scroll-container {
+    padding-inline-start: 0;
+    padding-inline-end: var(--carousel-gap);
+}
+
+:host([overflow-mode='edge-bleed']) .carousel__track {
+    padding-inline-start: 0;
+}
+
+/* Aspect ratio for slotted children (if specified) */
+:host([aspect-ratio]) ::slotted(*) {
+    aspect-ratio: var(--carousel-aspect-ratio);
+}
+
+/* State classes for slotted items */
+::slotted(.carousel-item--active) {
+    /* Active slide - can be styled externally */
+}
+
+::slotted(.carousel-item--previous) {
+    /* Previous slide - can be styled externally */
+}
+
+::slotted(.carousel-item--next) {
+    /* Next slide - can be styled externally */
+}
+
+::slotted(.carousel-item--in-view) {
+    /* In-view slide - can be styled externally */
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .carousel__scroll-container {
+        scroll-behavior: auto;
+    }
+
+    ::slotted(*) {
+        scroll-snap-stop: normal;
+    }
+}
+
+/* Focus styles */
+.carousel:focus {
+    outline: 2px solid var(--color-focus, #0066cc);
+    outline-offset: 2px;
+}
+
+.carousel:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Scrolling state */
+.carousel--scrolling .carousel__scroll-container {
+    pointer-events: none;
+}
+
+/* Mouse dragging cursor */
+:host([mouse-dragging]) .carousel__scroll-container:active {
+    cursor: grabbing;
+}
+
+/* Navigation slot */
+slot[name='navigation'] {
+    display: contents;
+}

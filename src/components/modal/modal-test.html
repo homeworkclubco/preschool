@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Modal Component Test</title>
+        <style>
+            :root {
+                --space-md: 1.5rem;
+                --space-lg: 2rem;
+                --color-bg: #ffffff;
+                --color-foreground: #1a1a1a;
+                --color-border: #e5e5e5;
+                --color-accent: #2563eb;
+                --color-accent-hover: #1d4ed8;
+                --radius-lg: 0.5rem;
+            }
+
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                padding: 2rem;
+                max-width: 1200px;
+                margin: 0 auto;
+                line-height: 1.6;
+            }
+
+            h1 {
+                margin-bottom: 2rem;
+            }
+
+            .demo-section {
+                margin-bottom: 3rem;
+            }
+
+            .demo-section h2 {
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+
+            .demo-section p {
+                color: #666;
+                margin-bottom: 1rem;
+            }
+
+            .demo-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            /* Button styles */
+            .btn {
+                padding: 0.5rem 1rem;
+                border: 1px solid var(--color-border);
+                border-radius: 0.25rem;
+                background: white;
+                cursor: pointer;
+                font-size: 1rem;
+                transition: all 0.2s;
+            }
+
+            .btn:hover {
+                background: #f5f5f5;
+            }
+
+            .btn--primary {
+                background: var(--color-accent);
+                color: white;
+                border-color: var(--color-accent);
+            }
+
+            .btn--primary:hover {
+                background: var(--color-accent-hover);
+            }
+
+            .btn--outline {
+                background: transparent;
+                border: 1px solid var(--color-border);
+            }
+
+            .btn--outline:hover {
+                background: #f5f5f5;
+            }
+
+            /* Modal footer styles */
+            .modal-footer-actions {
+                display: flex;
+                gap: 0.5rem;
+                justify-content: flex-end;
+            }
+
+            /* Close button in header */
+            .close-btn {
+                width: 2rem;
+                height: 2rem;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                background: transparent;
+                cursor: pointer;
+                border-radius: 0.25rem;
+            }
+
+            .close-btn:hover {
+                background: #f5f5f5;
+            }
+
+            /* Form styles */
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: 500;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                width: 100%;
+                padding: 0.5rem;
+                border: 1px solid var(--color-border);
+                border-radius: 0.25rem;
+                font-size: 1rem;
+                font-family: inherit;
+            }
+
+            .form-group textarea {
+                min-height: 100px;
+                resize: vertical;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Modal Component Tests</h1>
+
+        <!-- Data-Modal Trigger -->
+        <div class="demo-section">
+            <h2>Data-Modal Trigger (Declarative)</h2>
+            <p>Use data-modal="modal-id" on any element to trigger a modal without JavaScript</p>
+            <div class="demo-buttons">
+                <button class="btn btn--primary" data-modal="declarative-modal">Open with data-modal</button>
+                <a href="#" class="btn" data-modal="declarative-modal"> Link with data-modal </a>
+            </div>
+        </div>
+
+        <hc-modal id="declarative-modal" label="Declarative Modal">
+            <p>This modal was opened using the <code>data-modal</code> attribute!</p>
+            <p>No JavaScript needed - just add <code>data-modal="declarative-modal"</code> to any element.</p>
+
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--outline" data-close>Cancel</button>
+                <button class="btn btn--primary" data-close>OK</button>
+            </div>
+        </hc-modal>
+
+        <!-- Basic Modal -->
+        <div class="demo-section">
+            <h2>Basic Modal (Programmatic)</h2>
+            <p>Simple modal with default settings using JavaScript</p>
+            <div class="demo-buttons">
+                <button class="btn btn--primary" onclick="document.getElementById('basic-modal').show()">
+                    Open Basic Modal
+                </button>
+            </div>
+        </div>
+
+        <hc-modal id="basic-modal" label="Basic Modal">
+            <p>This is a basic modal with default settings.</p>
+            <p>It has medium size and centers in the viewport.</p>
+
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--outline" data-close>Cancel</button>
+                <button class="btn btn--primary" data-close>OK</button>
+            </div>
+        </hc-modal>
+
+        <!-- Size Variants -->
+        <div class="demo-section">
+            <h2>Size Variants</h2>
+            <p>Different modal sizes: sm, md, lg, xl, full (using data-modal)</p>
+            <div class="demo-buttons">
+                <button class="btn" data-modal="modal-sm">Small</button>
+                <button class="btn" data-modal="modal-md">Medium</button>
+                <button class="btn" data-modal="modal-lg">Large</button>
+                <button class="btn" data-modal="modal-xl">Extra Large</button>
+                <button class="btn" data-modal="modal-full">Full Width</button>
+            </div>
+        </div>
+
+        <hc-modal id="modal-sm" label="Small Modal" size="sm">
+            <p>This is a small modal. Perfect for alerts and simple confirmations.</p>
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--primary" data-close>Got it</button>
+            </div>
+        </hc-modal>
+
+        <hc-modal id="modal-md" label="Medium Modal" size="md">
+            <p>This is a medium modal (default). Good for most use cases.</p>
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--outline" data-close>Cancel</button>
+                <button class="btn btn--primary" data-close>OK</button>
+            </div>
+        </hc-modal>
+
+        <hc-modal id="modal-lg" label="Large Modal" size="lg">
+            <p>This is a large modal. Great for forms and detailed content.</p>
+            <p>It provides more space for complex layouts.</p>
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--outline" data-close>Cancel</button>
+                <button class="btn btn--primary" data-close>OK</button>
+            </div>
+        </hc-modal>
+
+        <hc-modal id="modal-xl" label="Extra Large Modal" size="xl">
+            <p>This is an extra large modal. Perfect for rich content like galleries or complex forms.</p>
+            <p>It takes up most of the available screen space while maintaining comfortable margins.</p>
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--outline" data-close>Cancel</button>
+                <button class="btn btn--primary" data-close>OK</button>
+            </div>
+        </hc-modal>
+
+        <hc-modal id="modal-full" label="Full Width Modal" size="full">
+            <p>This is a full width modal. Uses nearly the entire viewport width.</p>
+            <p>Great for immersive experiences or maximum content display.</p>
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--outline" data-close>Cancel</button>
+                <button class="btn btn--primary" data-close>OK</button>
+            </div>
+        </hc-modal>
+
+        <!-- Vertical Alignment -->
+        <div class="demo-section">
+            <h2>Vertical Alignment</h2>
+            <p>Position modals at top, center, or bottom (using data-modal)</p>
+            <div class="demo-buttons">
+                <button class="btn" data-modal="modal-top">Top</button>
+                <button class="btn" data-modal="modal-center">Center</button>
+                <button class="btn" data-modal="modal-bottom">Bottom</button>
+            </div>
+        </div>
+
+        <hc-modal id="modal-top" label="Top Aligned" vertical-align="top">
+            <p>This modal is aligned to the top of the viewport.</p>
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--primary" data-close>Close</button>
+            </div>
+        </hc-modal>
+
+        <hc-modal id="modal-center" label="Center Aligned" vertical-align="center">
+            <p>This modal is centered (default behavior).</p>
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--primary" data-close>Close</button>
+            </div>
+        </hc-modal>
+
+        <hc-modal id="modal-bottom" label="Bottom Aligned" vertical-align="bottom">
+            <p>This modal is aligned to the bottom of the viewport.</p>
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--primary" data-close>Close</button>
+            </div>
+        </hc-modal>
+
+        <!-- Custom Close Button -->
+        <div class="demo-section">
+            <h2>Custom Close Button</h2>
+            <p>Override the default close button with custom styling</p>
+            <div class="demo-buttons">
+                <button class="btn btn--primary" onclick="document.getElementById('custom-close-modal').show()">
+                    Open with Custom Close
+                </button>
+            </div>
+        </div>
+
+        <hc-modal id="custom-close-modal" label="Custom Close Button">
+            <button slot="close-button" class="close-btn" onclick="this.closest('hc-modal').hide()">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    />
+                </svg>
+            </button>
+
+            <p>This modal has a custom close button in the header.</p>
+            <p>Notice the X icon in the top right corner.</p>
+
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--outline" data-close>Cancel</button>
+                <button class="btn btn--primary" data-close>OK</button>
+            </div>
+        </hc-modal>
+
+        <!-- Form Example -->
+        <div class="demo-section">
+            <h2>Form Example</h2>
+            <p>Modal with form content and autofocus</p>
+            <div class="demo-buttons">
+                <button class="btn btn--primary" onclick="document.getElementById('form-modal').show()">
+                    Open Form Modal
+                </button>
+            </div>
+        </div>
+
+        <hc-modal id="form-modal" label="Contact Form" size="lg">
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" autofocus />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" />
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message"></textarea>
+                </div>
+            </form>
+
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--outline" data-close>Cancel</button>
+                <button class="btn btn--primary" onclick="handleFormSubmit()">Send</button>
+            </div>
+        </hc-modal>
+
+        <!-- Data-Close Buttons -->
+        <div class="demo-section">
+            <h2>Data-Close Attribute</h2>
+            <p>Any element with data-close attribute can close the modal</p>
+            <div class="demo-buttons">
+                <button class="btn btn--primary" onclick="document.getElementById('data-close-modal').show()">
+                    Open Modal with Multiple Close Buttons
+                </button>
+            </div>
+        </div>
+
+        <hc-modal id="data-close-modal" label="Multiple Close Options">
+            <p>This modal demonstrates multiple ways to close using the data-close attribute.</p>
+            <p>You can add this attribute to any element inside the modal.</p>
+
+            <div style="margin-top: 1rem">
+                <button class="btn" data-close>Close via data-close</button>
+            </div>
+
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--outline" data-close>Cancel</button>
+                <button class="btn" data-close>No Thanks</button>
+                <button class="btn btn--primary" data-close>Accept</button>
+            </div>
+        </hc-modal>
+
+        <!-- No Overlay Dismiss -->
+        <div class="demo-section">
+            <h2>Overlay Dismiss Disabled</h2>
+            <p>Prevent closing when clicking outside the modal</p>
+            <div class="demo-buttons">
+                <button class="btn btn--primary" onclick="document.getElementById('no-dismiss-modal').show()">
+                    Open Modal (No Overlay Dismiss)
+                </button>
+            </div>
+        </div>
+
+        <hc-modal id="no-dismiss-modal" label="Cannot Click Outside to Close" overlay-dismiss="false">
+            <p>This modal cannot be closed by clicking the overlay.</p>
+            <p>You must use the buttons below or press ESC to close.</p>
+
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--outline" data-close>Cancel</button>
+                <button class="btn btn--primary" data-close>OK</button>
+            </div>
+        </hc-modal>
+
+        <!-- Prevent Close Event -->
+        <div class="demo-section">
+            <h2>Prevent Close (Unsaved Changes)</h2>
+            <p>Modal with form that prevents closing with unsaved changes</p>
+            <div class="demo-buttons">
+                <button class="btn btn--primary" onclick="openUnsavedModal()">Open Form with Unsaved Warning</button>
+            </div>
+        </div>
+
+        <hc-modal id="unsaved-modal" label="Edit Content">
+            <form>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" />
+                </div>
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea id="content" name="content"></textarea>
+                </div>
+            </form>
+
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--outline" id="unsaved-cancel">Cancel</button>
+                <button class="btn btn--primary" id="unsaved-save">Save</button>
+            </div>
+        </hc-modal>
+
+        <!-- No Header -->
+        <div class="demo-section">
+            <h2>No Header</h2>
+            <p>Modal without header section</p>
+            <div class="demo-buttons">
+                <button class="btn btn--primary" data-modal="no-header-modal">Open Modal (No Header)</button>
+            </div>
+        </div>
+
+        <hc-modal id="no-header-modal" no-header>
+            <div style="padding: 1rem 0">
+                <h2 style="margin-top: 0">Custom Content Header</h2>
+                <p>This modal has no header. The header is hidden using the no-header attribute.</p>
+                <p>You can create your own header layout in the body content.</p>
+
+                <button class="btn btn--primary" data-close>Close</button>
+            </div>
+        </hc-modal>
+
+        <!-- Full Example -->
+        <div class="demo-section">
+            <h2>Complete Example</h2>
+            <p>Combining data-modal trigger with data-close buttons</p>
+            <div class="demo-buttons">
+                <button class="btn btn--primary" data-modal="complete-example">Open Complete Example</button>
+            </div>
+        </div>
+
+        <hc-modal id="complete-example" label="Complete Example" size="lg">
+            <p><strong>This example demonstrates:</strong></p>
+            <ul>
+                <li>Declarative trigger with <code>data-modal="complete-example"</code></li>
+                <li>Multiple close buttons with <code>data-close</code> attribute</li>
+                <li>Custom close button in header slot</li>
+                <li>Form with autofocus</li>
+                <li>Footer with action buttons</li>
+            </ul>
+
+            <button slot="close-button" class="close-btn" onclick="this.closest('hc-modal').hide()">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    />
+                </svg>
+            </button>
+
+            <form style="margin-top: 1rem">
+                <div class="form-group">
+                    <label for="complete-name">Name</label>
+                    <input type="text" id="complete-name" autofocus />
+                </div>
+                <div class="form-group">
+                    <label for="complete-email">Email</label>
+                    <input type="email" id="complete-email" />
+                </div>
+            </form>
+
+            <div style="margin-top: 1rem">
+                <p>You can close this modal in multiple ways:</p>
+                <button class="btn" data-close>Close with data-close</button>
+            </div>
+
+            <div slot="footer" class="modal-footer-actions">
+                <button class="btn btn--outline" data-close>Cancel</button>
+                <button class="btn" data-close>Skip</button>
+                <button class="btn btn--primary">Submit</button>
+            </div>
+        </hc-modal>
+
+        <script type="module" src="./modal.ts"></script>
+        <script>
+        // Form submission handler
+        function handleFormSubmit() {
+            alert('Form submitted!');
+            document.getElementById('form-modal').hide();
+        }
+
+        // Unsaved changes example
+        let isDirty = false;
+
+        function openUnsavedModal() {
+            const modal = document.getElementById('unsaved-modal');
+            isDirty = false;
+            modal.show();
+        }
+
+        // Track changes in unsaved modal
+        document.getElementById('unsaved-modal').addEventListener('ps-show', () => {
+            const form = document.querySelector('#unsaved-modal form');
+            form.addEventListener('input', () => {
+                isDirty = true;
+            });
+        });
+
+        // Prevent closing with unsaved changes
+        document.getElementById('unsaved-modal').addEventListener('ps-request-close', (e) => {
+            if (isDirty && !confirm('You have unsaved changes. Are you sure you want to close?')) {
+                e.preventDefault();
+            } else {
+                isDirty = false;
+            }
+        });
+
+        // Save button
+        document.getElementById('unsaved-save').addEventListener('click', () => {
+            alert('Saved!');
+            isDirty = false;
+            document.getElementById('unsaved-modal').hide();
+        });
+
+        // Event logging for debugging
+        document.querySelectorAll('hc-modal').forEach(modal => {
+            modal.addEventListener('ps-show', () => console.log('Modal showing:', modal.id));
+            modal.addEventListener('ps-after-show', () => console.log('Modal shown:', modal.id));
+            modal.addEventListener('ps-hide', () => console.log('Modal hiding:', modal.id));
+            modal.addEventListener('ps-after-hide', () => console.log('Modal hidden:', modal.id));
+            modal.addEventListener('ps-request-close', (e) => {
+                console.log('Close requested:', modal.id, 'source:', e.detail.source);
+            });
+        });
+    </script>
+    </body>
+</html>

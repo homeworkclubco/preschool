@@ -1,0 +1,143 @@
+/**
+ * Floating Label Component
+ *
+ * Generic floating label styles that work with multiple form structures.
+ * Labels float up when input is focused or has content.
+ *
+ * REGULAR MARKUP (Password forms, custom forms):
+ *
+ * <div class="floating-label-field">
+ *   <input type="text" class="input" placeholder=" " />
+ *   <label>Label text</label>
+ * </div>
+ *
+ * Note: Input comes first, label after. The placeholder=" " (space) is required
+ * for the :not(:placeholder-shown) selector to detect content.
+ *
+ * CONTACT FORM 7 MARKUP:
+ *
+ * <label class="floating-label-container">
+ *   <span class="floating-label">Label text</span>
+ *   [text* field-name class:input placeholder " "]
+ * </label>
+ *
+ * CF7 renders as:
+ * <label class="floating-label-container">
+ *   <span class="floating-label">Label text</span>
+ *   <span class="wpcf7-form-control-wrap" data-name="field-name">
+ *     <input class="input" placeholder=" " ... />
+ *   </span>
+ * </label>
+ *
+ * Note: Always use placeholder " " (space character) in CF7 shortcodes
+ * for proper floating behavior when input has content.
+ *
+ * BROWSER SUPPORT:
+ * - Modern browsers: Uses :focus-within and :has() selectors
+ * - Older browsers: JavaScript fallback adds .is-focused and .has-content classes
+ * - Works without JS using :focus-within (no content detection in older browsers)
+ *
+ * JAVASCRIPT ENHANCEMENT:
+ * Automatic progressive enhancement via utilities/floating-label/floating-label.ts
+ * - Adds .has-content class when input has value
+ * - Adds .is-focused class for better accessibility
+ * - No configuration needed - works automatically
+ */
+
+/* Generic floating label component */
+.floating-label-field {
+    position: relative;
+    display: block;
+    margin-bottom: var(--space-sm);
+}
+
+.floating-label-field .input:focus {
+    outline: none;
+}
+
+.floating-label-container {
+    position: relative;
+    display: block;
+}
+
+/* Adjust floating label position for textarea */
+.floating-label-container--textarea {
+    .floating-label {
+        top: 1ch;
+    }
+}
+
+/* To deal with CF7's line break after the label */
+.floating-label-container br {
+    display: none;
+}
+
+.floating-label-container .input:focus {
+    outline: none;
+}
+
+/* Shared label styles for both structures */
+.floating-label-field label,
+.floating-label {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+}
+
+/* Password form: input and label are siblings (label after input) */
+/* Use ~ sibling selector to target label after input */
+.floating-label-field .input:focus ~ label,
+.floating-label-field .input:not(:placeholder-shown) ~ label {
+    top: -0.5rem;
+    transform: translateY(0);
+    font-size: 0.75rem;
+    opacity: 1;
+}
+
+/* Contact Form 7: input is nested, use :focus-within on container */
+/* CF7 structure: label.floating-label-container > span.floating-label + span.wpcf7-form-control-wrap > input */
+/* Modern browsers: use :focus-within and :has() */
+.floating-label-container:focus-within .floating-label,
+.floating-label-container:has(.input:not(:placeholder-shown)) .floating-label,
+/* Fallback for older browsers: use JS-added classes */
+.floating-label-container.is-focused .floating-label,
+.floating-label-container.has-content .floating-label {
+    top: -0.5rem;
+    transform: translateY(0);
+    font-size: 0.75rem;
+    opacity: 1;
+}
+
+/* Textarea specific adjustments - default position */
+.floating-label-field textarea.input ~ label,
+.floating-label-container textarea.input ~ .floating-label {
+    top: 1.5rem;
+}
+
+/* Textarea specific adjustments - floated state */
+.floating-label-field textarea.input:focus ~ label,
+.floating-label-field textarea.input:not(:placeholder-shown) ~ label,
+/* Modern browsers: use :has() */
+.floating-label-container:has(textarea.input:focus) .floating-label,
+.floating-label-container:has(textarea.input:not(:placeholder-shown)) .floating-label,
+/* Fallback for older browsers: use JS-added classes */
+.floating-label-container.is-focused .floating-label,
+.floating-label-container.has-content .floating-label {
+    top: -0.5rem;
+}
+
+/* Optional: Enhanced focus indication for better accessibility */
+/* Uncomment these styles if you want more prominent focus feedback */
+/*
+.floating-label-field.is-focused,
+.floating-label-container.is-focused {
+    .input {
+        border-color: var(--color-accent, currentColor);
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+    }
+}
+*/

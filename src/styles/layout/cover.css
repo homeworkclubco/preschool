@@ -37,12 +37,12 @@
     margin-block: auto;
 }
 
-@ruler utility({
+/* @ruler utility({
     selector: '.cover--space',
     property: '--cover-space',
     scale: 'space',
     generateAllCrossPairs: true,
-});
+}); */
 
 .cover--height-screen {
     --cover-min-height: 100vh;

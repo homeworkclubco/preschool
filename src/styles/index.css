@@ -8,8 +8,8 @@
 
 @import './reset.css' layer(reset);
 @import './prose.css' layer(base);
-@import './utilities.css' layer(utilites);
 
+@import-glob './utilities/*.css' layer(utilities);
 @import-glob "./tokens/*.css" layer(tokens);
 @import-glob "./layout/*.css" layer(layout);
 @import-glob "./components/*.css" layer(components);

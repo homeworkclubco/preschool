@@ -1,0 +1,341 @@
+---
+title: Floating Label
+---
+
+Floating Label provides progressive enhancement for form inputs with labels that animate when the field is focused or contains content. It works with both standard HTML forms and Contact Form 7 markup, with automatic fallbacks for older browsers.
+
+## Installation
+
+```bash
+npm install preschool
+```
+
+## Basic Usage
+
+### Import the CSS
+
+The CSS is automatically included when you import the main Preschool styles, or you can import it separately:
+
+```css
+@import 'preschool/utilities/floating-label/floating-label.css';
+```
+
+### Import and Initialize JavaScript
+
+```js
+import { FloatingLabel } from 'preschool';
+
+// Initialize on DOM ready
+FloatingLabel.init();
+```
+
+## HTML Markup
+
+### Standard HTML Forms
+
+For regular forms, the input comes first, followed by the label. The `placeholder=" "` (space character) is required for the `:not(:placeholder-shown)` selector to detect when the input has content.
+
+```html
+<div class="floating-label-field">
+  <input type="text" class="input" placeholder=" " />
+  <label>Your Name</label>
+</div>
+
+<div class="floating-label-field">
+  <input type="email" class="input" placeholder=" " />
+  <label>Email Address</label>
+</div>
+
+<div class="floating-label-field">
+  <textarea class="input" placeholder=" " rows="4"></textarea>
+  <label>Message</label>
+</div>
+```
+
+### Contact Form 7 Markup
+
+For Contact Form 7, use the `floating-label-container` class on the label wrapper and `floating-label` on the span containing the label text.
+
+```html
+<label class="floating-label-container">
+  <span class="floating-label">Your Name</span>
+  [text* your-name class:input placeholder " "]
+</label>
+
+<label class="floating-label-container">
+  <span class="floating-label">Email Address</span>
+  [email* your-email class:input placeholder " "]
+</label>
+
+<label class="floating-label-container">
+  <span class="floating-label">Message</span>
+  [textarea* your-message class:input placeholder " "]
+</label>
+```
+
+**Important:** Always include `placeholder " "` (with a space) in your Contact Form 7 shortcodes. This is required for the floating behavior to work when the input has content.
+
+## Browser Support
+
+### Modern Browsers
+
+In modern browsers, floating labels work using:
+- `:focus-within` selector for focus detection
+- `:has()` selector for content detection
+- `:not(:placeholder-shown)` for fallback content detection
+
+### Older Browsers
+
+For older browsers without `:has()` support, the JavaScript enhancement provides:
+- `.is-focused` class added on focus
+- `.has-content` class added when input has a value
+- Works without JavaScript using `:focus-within` (but content detection won't work)
+
+The feature gracefully degrades, so it will work to some degree even without JavaScript, though the label won't float when content is present (only on focus).
+
+## JavaScript API
+
+### Initialization
+
+```js
+import { FloatingLabel } from 'preschool';
+
+// Initialize - finds all .floating-label-field and .floating-label-container elements
+FloatingLabel.init();
+```
+
+### Methods
+
+#### `init()`
+Initialize floating labels for all containers on the page. Safe to call multiple times - won't reinitialize already-setup containers.
+
+```js
+FloatingLabel.init();
+```
+
+#### `refresh()`
+Find and setup any new floating label containers that were added to the page after initialization.
+
+```js
+// Add new form fields dynamically
+document.body.innerHTML += `
+  <div class="floating-label-field">
+    <input type="text" class="input" placeholder=" " />
+    <label>New Field</label>
+  </div>
+`;
+
+// Setup the new field
+FloatingLabel.refresh();
+```
+
+#### `destroy()`
+Remove all event listeners, cleanup, and reset to initial state.
+
+```js
+FloatingLabel.destroy();
+```
+
+### Chaining
+
+All methods return the API object, so you can chain calls:
+
+```js
+FloatingLabel
+  .init()
+  .refresh();
+```
+
+## Styling
+
+### Default Behavior
+
+By default, labels:
+- Start positioned in the center of the input field
+- Have 70% opacity
+- Float to the top with 100% opacity and smaller font size when:
+  - Input is focused
+  - Input contains content
+- Animate with a 0.2s ease transition
+
+### Customizing Styles
+
+You can customize the floating label appearance using CSS:
+
+```css
+/* Custom label position and styling */
+.floating-label-field label,
+.floating-label {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  left: 1rem; /* Adjust horizontal position */
+}
+
+/* Custom floated state */
+.floating-label-field .input:focus ~ label,
+.floating-label-field .input:not(:placeholder-shown) ~ label,
+.floating-label-container.is-focused .floating-label,
+.floating-label-container.has-content .floating-label {
+  top: -0.75rem; /* Adjust vertical position */
+  font-size: 0.7rem; /* Smaller font when floated */
+  color: var(--color-primary);
+  background: white; /* Add background if overlapping border */
+  padding: 0 0.25rem;
+}
+
+/* Custom transition */
+.floating-label-field label,
+.floating-label {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Textarea positioning */
+.floating-label-field textarea.input ~ label,
+.floating-label-container textarea.input ~ .floating-label {
+  top: 2rem; /* Adjust textarea label position */
+}
+```
+
+### Enhanced Focus Indication
+
+The CSS includes commented-out styles for enhanced focus feedback. Uncomment these in your custom CSS if you want more prominent focus indication:
+
+```css
+.floating-label-field.is-focused,
+.floating-label-container.is-focused {
+  .input {
+    border-color: var(--color-accent, currentColor);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+}
+```
+
+## Form Input Styling
+
+The floating label CSS expects inputs to have the `.input` class. Make sure your form inputs are styled appropriately:
+
+```css
+.input {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+```
+
+## Complete Example
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="path/to/preschool.css">
+</head>
+<body>
+  <form>
+    <div class="floating-label-field">
+      <input type="text" class="input" placeholder=" " required />
+      <label>Full Name</label>
+    </div>
+
+    <div class="floating-label-field">
+      <input type="email" class="input" placeholder=" " required />
+      <label>Email Address</label>
+    </div>
+
+    <div class="floating-label-field">
+      <input type="tel" class="input" placeholder=" " />
+      <label>Phone Number</label>
+    </div>
+
+    <div class="floating-label-field">
+      <textarea class="input" placeholder=" " rows="4" required></textarea>
+      <label>Message</label>
+    </div>
+
+    <button type="submit">Send Message</button>
+  </form>
+
+  <script type="module">
+    import { FloatingLabel } from 'preschool';
+    FloatingLabel.init();
+  </script>
+</body>
+</html>
+```
+
+## WordPress/Contact Form 7 Example
+
+```html
+<!-- Contact Form 7 form configuration -->
+<label class="floating-label-container">
+  <span class="floating-label">Your Name</span>
+  [text* your-name class:input placeholder " "]
+</label>
+
+<label class="floating-label-container">
+  <span class="floating-label">Your Email</span>
+  [email* your-email class:input placeholder " "]
+</label>
+
+<label class="floating-label-container">
+  <span class="floating-label">Subject</span>
+  [text your-subject class:input placeholder " "]
+</label>
+
+<label class="floating-label-container">
+  <span class="floating-label">Your Message</span>
+  [textarea* your-message class:input placeholder " "]
+</label>
+
+[submit "Send"]
+```
+
+```js
+// Initialize in your theme's JavaScript
+import { FloatingLabel } from 'preschool';
+
+document.addEventListener('DOMContentLoaded', () => {
+  FloatingLabel.init();
+
+  // Refresh after Contact Form 7 loads (if needed)
+  document.addEventListener('wpcf7mailsent', () => {
+    FloatingLabel.refresh();
+  });
+});
+```
+
+## Accessibility
+
+The floating label pattern maintains good accessibility:
+
+- Labels remain programmatically associated with inputs
+- Screen readers will announce the label correctly
+- The `.is-focused` class provides additional visual feedback
+- Works with keyboard navigation
+- Compatible with browser autofill
+
+However, consider these best practices:
+
+1. Always use proper `<label>` elements associated with inputs
+2. Include `required` attributes where appropriate
+3. Provide clear error messages for validation
+4. Ensure sufficient color contrast for labels in both states
+5. Test with screen readers to ensure proper announcement
+
+## Performance
+
+The floating label JavaScript is lightweight and performant:
+
+- No dependencies required
+- Event listeners are added only to relevant elements
+- Proper cleanup with `destroy()` method
+- No polling or continuous checks
+- Works efficiently with dynamic content via `refresh()`
