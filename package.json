@@ -69,7 +69,7 @@
         "docs:build": "cd docs && npm run build",
         "docs:preview": "cd docs && npm run preview"
     },
-    "author": "",
+    "author": "Kurt Stubbings",
     "license": "MIT",
     "dependencies": {
         "@parcel/bundler-library": "^2.16.0",
