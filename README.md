@@ -2,6 +2,10 @@
 
 A minimal, extensible CSS framework and web component library.
 
+# A WARNING
+
+This is very early and a complete mess. Don't use it yet.
+
 ## Philosophy
 
 Preschool is a barebones starter framework meant to be extended and customized for your specific needs. It provides:
@@ -40,6 +44,7 @@ import 'preschool';
 ```
 
 This gives you:
+
 - ✅ All CSS styles (tokens, utilities, components, animations)
 - ✅ All web components (Dropdown, Accordion, AccordionItem)
 - ✅ Programmatic access to components
@@ -53,8 +58,8 @@ import { AOS, Dropdown, HcAccordion, HcAccordionItem } from 'preschool';
 
 // Initialize AOS with custom options
 AOS.init({
-  rootMargin: '0px 0px -20% 0px',
-  once: true
+    rootMargin: '0px 0px -20% 0px',
+    once: true,
 });
 
 // Components are automatically registered as custom elements
@@ -69,16 +74,16 @@ Apply color schemes globally or to specific sections:
 ```html
 <!-- Global color scheme -->
 <html data-color-scheme="light">
-  ...
+    ...
 </html>
 
 <!-- Section-level theming -->
 <section data-color-scheme="dark">
-  <!-- This section uses dark theme -->
+    <!-- This section uses dark theme -->
 </section>
 
 <section data-color-scheme="accent">
-  <!-- This section uses accent theme -->
+    <!-- This section uses accent theme -->
 </section>
 ```
 
@@ -87,6 +92,7 @@ Apply color schemes globally or to specific sections:
 Preschool includes a modern implementation of scroll animations using the IntersectionObserver API for performant, hardware-accelerated animations.
 
 **How it works:**
+
 - Uses **IntersectionObserver** to detect when elements enter/exit the viewport
 - Applies CSS classes (`aos-animate`) to trigger **hardware-accelerated CSS transforms**
 - Supports **ResizeObserver** to handle dynamic content and responsive layouts
@@ -98,13 +104,9 @@ Preschool includes a modern implementation of scroll animations using the Inters
 Add the `data-aos` attribute to any element:
 
 ```html
-<div data-aos="fade-up">
-  This will fade in from below as you scroll
-</div>
+<div data-aos="fade-up">This will fade in from below as you scroll</div>
 
-<div data-aos="zoom-in" data-aos-duration="1000">
-  This will zoom in over 1 second
-</div>
+<div data-aos="zoom-in" data-aos-duration="1000">This will zoom in over 1 second</div>
 ```
 
 #### Available Animations
@@ -133,22 +135,11 @@ Animation timing and behavior can be customized per-element using HTML `data-aos
 #### Example with Per-Element Configuration
 
 ```html
-<div
-  data-aos="fade-up"
-  data-aos-duration="800"
-  data-aos-delay="200"
-  data-aos-easing="ease-in-out"
-  data-aos-once="true"
->
-  This element animates with custom timing
+<div data-aos="fade-up" data-aos-duration="800" data-aos-delay="200" data-aos-easing="ease-in-out" data-aos-once="true">
+    This element animates with custom timing
 </div>
 
-<div
-  data-aos="zoom-in"
-  data-aos-root-margin="0px 0px -30% 0px"
->
-  This triggers when 30% from bottom of viewport
-</div>
+<div data-aos="zoom-in" data-aos-root-margin="0px 0px -30% 0px">This triggers when 30% from bottom of viewport</div>
 ```
 
 #### Global Configuration Options
@@ -156,25 +147,25 @@ Animation timing and behavior can be customized per-element using HTML `data-aos
 You can configure AOS globally with these JavaScript options:
 
 ```js
-import AOS from 'preschool/aos'
+import AOS from 'preschool/aos';
 
 AOS.init({
-  // IntersectionObserver options
-  rootMargin: '0px 0px -20% 0px',  // When to trigger (CSS margin syntax)
-  threshold: 0,                     // Intersection threshold (0-1)
+    // IntersectionObserver options
+    rootMargin: '0px 0px -20% 0px', // When to trigger (CSS margin syntax)
+    threshold: 0, // Intersection threshold (0-1)
 
-  // Behavior options
-  once: true,                       // Animate only once (true/false)
+    // Behavior options
+    once: true, // Animate only once (true/false)
 
-  // Class names
-  animatedClassName: 'aos-animate', // Class added when animated
-  initClassName: 'aos-init',        // Class added on initialization
+    // Class names
+    animatedClassName: 'aos-animate', // Class added when animated
+    initClassName: 'aos-init', // Class added on initialization
 
-  // Advanced options
-  startEvent: 'DOMContentLoaded',   // When to start observing
-  useClassNames: false,             // Use data-aos value as class name
-  disableMutationObserver: false,   // Disable auto-detection of new elements
-})
+    // Advanced options
+    startEvent: 'DOMContentLoaded', // When to start observing
+    useClassNames: false, // Use data-aos value as class name
+    disableMutationObserver: false, // Disable auto-detection of new elements
+});
 ```
 
 **Note:** Animation properties like `duration`, `delay`, and `easing` are set via HTML `data-aos-*` attributes, not JavaScript options. These are handled purely by CSS.
@@ -184,20 +175,20 @@ AOS.init({
 AOS provides methods for manual control:
 
 ```js
-import AOS from 'preschool/aos'
+import AOS from 'preschool/aos';
 
 // Refresh AOS (recalculate element positions)
-AOS.refresh()
+AOS.refresh();
 
 // Disable all animations
-AOS.disable()
+AOS.disable();
 
 // Get current state
-const state = AOS.getState()
-console.log(state) // { initialized: true, elementCount: 10, ... }
+const state = AOS.getState();
+console.log(state); // { initialized: true, elementCount: 10, ... }
 
 // Get all AOS elements
-const elements = AOS.getElements()
+const elements = AOS.getElements();
 ```
 
 ### WordPress Theme Usage (with Build Tools)
@@ -205,11 +196,13 @@ const elements = AOS.getElements()
 If you're using a modern WordPress theme setup with Webpack/Vite/Parcel:
 
 **Install the package:**
+
 ```bash
 npm install preschool
 ```
 
 **In your theme's main JS file (e.g., `src/index.js`):**
+
 ```js
 import 'preschool';
 
@@ -218,6 +211,7 @@ import 'preschool';
 ```
 
 **In your theme's PHP template:**
+
 ```php
 <div data-aos="fade-up">
   <h2>Animated Heading</h2>
@@ -235,6 +229,7 @@ import 'preschool';
 If you're not using a bundler, copy the built files from `node_modules/preschool/dist/` to your theme and enqueue them:
 
 **In your `functions.php`:**
+
 ```php
 function enqueue_preschool() {
   // Enqueue CSS
@@ -266,6 +261,7 @@ add_action('wp_enqueue_scripts', 'enqueue_preschool');
 ## Development
 
 This project uses **Parcel** for building and bundling. We maintain two separate configurations:
+
 - **Development** - Uses default Parcel config for serving `index.html`
 - **Library builds** - Uses library bundler for npm package distribution
 
@@ -282,12 +278,15 @@ rm -rf .parcel-cache
 ### Development Workflows
 
 **Quick Component Testing:**
+
 ```bash
 npm run dev
 ```
+
 Serves `index.html` at http://localhost:1234 with hot module reload. Perfect for rapid prototyping and testing components in isolation.
 
 **Documentation Development:**
+
 ```bash
 # Terminal 1: Watch and rebuild on changes
 npm run watch
@@ -295,13 +294,17 @@ npm run watch
 # Terminal 2: Run Astro docs site
 npm run docs:dev
 ```
+
 This setup watches your source files, rebuilds to `dist/` on changes, and Astro hot-reloads the documentation site. The docs use iframes that import the built package for isolated component demos.
 
 **Building for Distribution:**
+
 ```bash
 npm run build
 ```
+
 Builds the library package to `dist/` using the library bundler. Outputs:
+
 - `dist/preschool.js` - Main entry (CommonJS)
 - `dist/module.js` - ES Module entry
 - `dist/preschool.*.css` - Bundled styles
@@ -335,50 +338,61 @@ npm run format:check
 If you're new to building frameworks, here's how this package gets from your code to users' projects:
 
 ### 1. Source Code (`/src`)
+
 Your framework's source code lives in `/src`:
+
 - `src/index.ts` - Main entry point that imports everything
 - `src/styles/` - CSS source files with PostCSS features
 - `src/components/` - Web component TypeScript/Lit code
 - `src/utilities/` - Utilities like AOS
 
 ### 2. Build Process (`npm run build`)
+
 When you run `npm run build`, Parcel:
+
 1. Reads `src/index.ts` as the entry point (defined in `package.json` → `"source"`)
 2. Bundles all imports (CSS, TypeScript, dependencies)
 3. Processes CSS through PostCSS plugins (nesting, custom media, etc.)
 4. Compiles TypeScript to JavaScript
 5. Generates multiple output formats in `dist/`:
-   - **CommonJS** (`preschool.js`) - For Node.js and older bundlers
-   - **ES Modules** (`module.js`) - For modern bundlers and browsers
-   - **CSS** (`preschool.*.css`) - All styles bundled into one file
-   - **TypeScript types** (`types.d.ts`) - For TypeScript projects
+    - **CommonJS** (`preschool.js`) - For Node.js and older bundlers
+    - **ES Modules** (`module.js`) - For modern bundlers and browsers
+    - **CSS** (`preschool.*.css`) - All styles bundled into one file
+    - **TypeScript types** (`types.d.ts`) - For TypeScript projects
 
 ### 3. Package Publishing
+
 When you publish to npm (`npm publish`):
+
 - Only the `dist/` folder gets published (defined in `package.json` → `"files"`)
 - Your `package.json` tells bundlers which files to use:
-  - `"main": "dist/preschool.js"` - Default entry for require()
-  - `"module": "dist/module.js"` - Entry for ESM imports
-  - `"types": "dist/types.d.ts"` - TypeScript definitions
+    - `"main": "dist/preschool.js"` - Default entry for require()
+    - `"module": "dist/module.js"` - Entry for ESM imports
+    - `"types": "dist/types.d.ts"` - TypeScript definitions
 
 ### 4. User Installation
+
 When someone runs `npm install preschool`:
+
 1. npm downloads your `dist/` folder to their `node_modules/preschool/`
 2. Their bundler reads your `package.json` to find entry points
 3. When they write `import 'preschool'`, their bundler:
-   - Uses `module` entry for modern builds (preferred)
-   - Uses `main` entry for CommonJS builds
-   - Automatically includes the CSS file
-   - Gets TypeScript types from `types` entry
+    - Uses `module` entry for modern builds (preferred)
+    - Uses `main` entry for CommonJS builds
+    - Automatically includes the CSS file
+    - Gets TypeScript types from `types` entry
 
 ### 5. What Gets Included
+
 When a user imports your framework:
+
 - **`import 'preschool'`** → Pulls in everything from `src/index.ts`:
-  - All CSS (automatically bundled)
-  - All web component registrations (Dropdown, Accordion, etc.)
-  - All exports (AOS, Dropdown, HcAccordion, etc.)
+    - All CSS (automatically bundled)
+    - All web component registrations (Dropdown, Accordion, etc.)
+    - All exports (AOS, Dropdown, HcAccordion, etc.)
 
 This is why in your `src/index.ts`:
+
 ```typescript
 import './styles/index.css';  // ← Ensures CSS is included
 import './components/dropdown/dropdown.ts';  // ← Registers <hc-dropdown>
