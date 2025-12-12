@@ -1,5 +1,5 @@
 {
-    "name": "@hc/preschool",
+    "name": "@kurto/preschool",
     "version": "0.0.1",
     "description": "A minimal, extensible CSS framework and web component library",
     "source": "src/index.ts",
