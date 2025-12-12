@@ -18,6 +18,7 @@ coverage/
 *.swp
 *.swo
 *~
+.parcel-cache/
 
 # OS
 .DS_Store
