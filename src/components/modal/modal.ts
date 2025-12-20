@@ -414,7 +414,9 @@ export class HcModal extends LitElement {
     }
 
     private handleClick(e: MouseEvent) {
-        const target = e.target as HTMLElement;
+        // Use composedPath to get the actual clicked element (handles shadow DOM)
+        const path = e.composedPath();
+        const target = path[0] as HTMLElement;
 
         // Check for data-close attribute (Micromodal delegation pattern)
         if (target.closest('[data-close]')) {
