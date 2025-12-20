@@ -24,6 +24,8 @@ import { property, query, state } from 'lit/decorators.js';
  * @fires ps-initial-focus - Emitted when the drawer is about to receive focus. Call event.preventDefault() to set focus yourself
  * @fires ps-request-close - Emitted when the user attempts to close the drawer (via overlay click, escape key, or close button). Call event.preventDefault() to prevent closing. detail: {source: 'close-button' | 'keyboard' | 'overlay'}
  *
+ * @attr {number} autofocus-skip - Number of focusable elements to skip when setting initial focus. Useful to skip the close button and focus the first link instead. Default: 0
+ *
  * @cssprop --size - The preferred size of the drawer (width for left/right, height for top/bottom). Default: 25rem for sides, 100% for top/bottom
  * @cssprop --header-spacing - The amount of padding to use for the header. Default: 1.5rem
  * @cssprop --body-spacing - The amount of padding to use for the body. Default: 1.5rem
@@ -42,6 +44,13 @@ import { property, query, state } from 'lit/decorators.js';
  *     <button>Cancel</button>
  *     <button>Save</button>
  *   </div>
+ * </hc-drawer>
+ *
+ * @example
+ * <!-- Skip close button and focus first link -->
+ * <hc-drawer label="Navigation" placement="right" autofocus-skip="1">
+ *   <a href="/home">Home</a>
+ *   <a href="/about">About</a>
  * </hc-drawer>
  */
 export class HcDrawer extends LitElement {
@@ -259,6 +268,10 @@ export class HcDrawer extends LitElement {
     /** Color scheme for theming the drawer */
     @property({ type: String, attribute: 'data-color-scheme', reflect: true })
     colorScheme?: string;
+
+    /** Number of focusable elements to skip when setting initial focus (useful to skip close button). Default: 0 */
+    @property({ type: Number, attribute: 'autofocus-skip', reflect: true })
+    autofocusSkip = 0;
 
     @state()
     private isVisible = false;
@@ -512,9 +525,10 @@ export class HcDrawer extends LitElement {
         // Update focusable elements list
         this.updateFocusableElements();
 
-        // Focus first focusable element or panel
+        // Focus element at autofocusSkip index, or panel if no focusable elements
         if (this.focusableElements.length > 0) {
-            this.focusableElements[0].focus();
+            const focusIndex = Math.min(this.autofocusSkip, this.focusableElements.length - 1);
+            this.focusableElements[focusIndex].focus();
         } else {
             this.panel.focus();
         }
